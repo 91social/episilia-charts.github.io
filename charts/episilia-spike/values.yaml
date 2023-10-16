@@ -1,0 +1,382 @@
+imageTag: &release "2.1.0"
+replicaCount: 1
+
+image:
+  repository: episilia/spike
+  pullPolicy: IfNotPresent
+  tag: *release
+
+imagePullSecrets:
+  - name: regcred 
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP 
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+      - path: /
+        backend:
+          serviceName: chart-example.local
+          servicePort: 80
+  tls: []
+
+resources:
+  limits:
+    memory: 500Mi
+    cpu: 500m
+  requests:
+    memory: 100Mi
+    cpu: 300m
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# To enable the required servers. Note: episilia-log-indexer, episilia-search should be enabled for Episilia to work.
+
+
+redpanda:
+  enabled: &redpanda true
+episilia-log-indexer:
+  enabled: true
+
+episilia-search:
+  enabled: true
+
+episilia-search-fixed:
+  enabled: true
+
+episilia-log-indexer-opt:
+  enabled: true
+
+grafana:
+  enabled: true
+
+tags:
+  alert: &alert true
+  tail: &tail true
+
+global:
+  alert:
+    rules:
+      file:
+        url: "/episilia-s3/shivam/alert-config/alert_rules.json"  
+  client:
+    id: "EpisUASM"
+    env: "spike-test"
+    license:
+      key: "SPwdB49REpisUASM"
+    tenant:
+        id: EpisUASMsaas
+
+  kafka:
+    group:
+      search: episilia-search-group
+      spike: episilia-spike-group
+      logwatcher:
+        consumer: episilia-logwatcher-group
+        tail: episilia-logwatcher-tail-group
+        alert: episilia-logwatcher-alert-group
+    topic:
+      index:
+        live: stagefiles
+        optimized: optfiles
+      optimize:
+        request: stagefolder
+      
+      tail:
+        request:
+          in: tail_in
+        response:
+          out: tail_out
+      alert:
+        response:
+          out: alert_out
+    indexer:
+      broker:
+        list: redpanda:9092
+        security:
+          mode: none
+          protocol: SASL_SSL
+        sasl:
+          mechanism: SCRAM-SHA-512
+          username: episilia
+          password: episilia123
+      logs:
+        topics: logs   #topic need to be changed
+      group: episilia-indexer-group
+      
+
+    internal:
+      broker:
+        list: redpanda:9092
+    
+
+
+    
+#You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
+
+
+  datastore:
+    s3:
+      accesskey: "DO00Z9HEJHJGT3744X47"
+      secretkey: "Fd9TE2/ePjcNNWKv6h7ayfu0Zaw56h10chogPhgtutQ"        
+      region: "blr1"
+      endpoint:
+        url: "blr1.digitaloceanspaces.com"
+      sign:
+        payload: true
+      bucket: nikhil
+      folder: test-helmchart
+      work:
+        folder: work-folder
+      url:
+        prefix: s3://
+      useArn: false
+      assumeRole: "arn:aws:iam::804271767483:role/test_arn_role"
+
+  indexer:
+    image:
+      repository: episilia/log-indexer    # docker image of episilia-log-indexer
+      tag: *release
+    replicaCount: "1"        # kubernetes pod replicas of episilia-log-indexer
+    annotations:
+      deploy:
+      service:
+    resources:
+      limits:
+        cpu: 800m            # cpu limit on episilia-log-indexer 
+        memory: 1024Mi       # memory limit on episilia-log-indexer
+      requests:
+        cpu: 400m            # cpu request on episilia-log-indexer
+        memory: 300Mi        # memory request on episilia-log-indexer
+    schema:
+      appid:
+        fixed: "defaultApp"      # If appid is a fixed string
+        keys: "project.app_id"   # label(s) for app identifier
+      tenantid:        
+        fixed: "defaultTenant"   # If tenantid is a fixed string  
+        keys: "test"                 # label(s) for tenant identifier        
+      message:
+        key: "log"               # actual log message key
+      timestamp:
+        key: "time"              # timestamp key
+        formats: "%Y-%m-%dT%H:%M:%S"  #to specify timestamp format (ex: %Y-%m-%dT%H:%M:%S )
+      exclude: "time"            # labels to be excluded from the list
+    
+
+    logs:
+      source: kafka         # source: kafka  # s3 or kafka
+    
+    ops:
+      alert:
+        enable: "false"
+      tail:
+        enable: "true"
+  #optimizer server configuration
+      
+  optimizer:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-optimizer  
+    resources:
+      limits:
+        cpu: 800m              # cpu limit on episilia-optimizer
+        memory: 1024Mi         # memory limit on episilia-optimizer
+      requests:
+        cpu: 500m              # cpu request on episilia-optimizer        
+        memory: 300Mi 
+   
+  #logwatcher server configuration
+  logwatcher:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-logwatcher  
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-logwatcher
+        memory: 600Mi         # memory limit on episilia-logwatcher
+      requests:
+        cpu: 300m              # cpu request on episilia-logwatcher        
+        memory: 300Mi          # memory request on episilia-logwatcher    
+    ops:
+      tail.enable  : *tail # to enable tail server
+      alert.enable : *alert # to enable alert server
+    live:
+      block.maxrecord.count: 10000
+      block.maxwait.ms: 3
+
+    rules:
+      file:
+        url: "/episilia-s3/shivam/alert-config/alert_rules.json"           #s3 path of alert rules file
+    prometheus:
+      gateway: localhost:5070  # push-gateway url 
+  
+# tail server configurations
+  tail:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-tail
+    image:
+      repository: episilia/tail    # docker image of episilia-tail
+      tag: *release
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-tail
+        memory: 600Mi         # memory limit on episilia-tail
+      requests:
+        cpu: 300m              # cpu request on episilia-tail        
+        memory: 300Mi          # memory request on episilia-tail    
+
+
+  #config for search engine
+  search:
+    image:
+      repository: episilia/search   # docker image of episilia-search
+      tag: *release
+    service:
+      type: ClusterIP
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+    replicaCount: "1"                        # kubernetes pod replicas of episilia-search 
+    resources:
+      limits:
+        cpu: "1"                             # cpu limit on episilia-search
+        memory: 2048Mi                       # memory limit on episilia-search
+      requests:
+        cpu: 500m                            # cpu request on episilia-search
+        memory: 600Mi                     # memory request on episilia-search
+
+    api:
+      timeout:
+        seconds: 60                         # timeout for search while querying
+    
+    live:
+      from:
+        hours: 48                           # hours from when the required index blocks should be loaded
+      to:
+        hours: 0                            # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+    labels:
+      display.max.count: "400"
+      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+  #config for historic search engine
+  fixedSearch:
+    bucket: "nikhil"             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: "spike-pulse"             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    replicaCount: "1"      # kubernetes pod replicas of historic episilia-search 
+    resources:
+      limits:
+        cpu: "1"          # cpu limit on historic episilia-search
+        memory: 1024Mi    # memory limit on historic episilia-search
+      requests:
+        cpu: 500m         # cpu request on historic episilia-search
+        memory: 600Mi     # memory request on historic episilia-search
+    fixed:
+      from:
+        yyyymmddhh: "2021092100"    # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+      to:
+        yyyymmddhh: "2021092202"    # the date till when the required index blocks should be loaded (YYYYMMDDHH)
+
+    api:
+      timeout:
+        seconds: 60       # timeout for search while querying
+
+    labels:
+      display.max.count: "400"
+      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+ # config for Gateway
+  # gateway:
+  #   image:
+  #     repository: episilia/gateway   # docker image of episilia-gateway
+  #     tag: *release
+  #   service:
+  #     type: ClusterIP                         # service type of episilia-gateway
+  #   annotations:
+  #     service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+  #   replicaCount: "1"                         # kubernetes pod replicas of episilia-gateway
+  #   resources:
+  #     limits:
+  #       cpu: 500m                             # cpu limit on episilia-gateway
+  #       memory: 600Mi                         # memory limit on episilia-gateway
+  #     requests:
+  #       cpu: 300m                             # cpu request on episilia-gateway
+  #       memory: 200Mi                         # memory request on episilia-gateway
+
+ 
+
+    
+  
+
+
+# Redpanda
+  redpanda:                   # kubernetes pod replicas of episilia-gateway
+    enabled: *redpanda
+    resources:
+      limits:
+        cpu: 500m                             # cpu limit on redpanda
+        memory: 1250Mi                         # memory limit on redpanda
+      requests:
+        cpu: 300m                             # cpu request on redpanda
+        memory: 600Mi                         # memory request on redpanda
+    ports:
+      admin: "9644"
+      kafka: "9092"
+      proxy: "8082"
+    pvcSize: "10Gi"
+    provMem: "1G"
+    resMem: "200M"
+    retention: "10800000"
+
+# Grafana
+  grafana:
+    service: 
+      type: "LoadBalancer"
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+        
+ # Persistance Volume   
+  persistence:
+    enabled: true                             # to enable PVC 
+    mountPath: "/data"                          # mount path of PVC 
+    storageClassName: gp2     # storage class name (differs on the cloud services that are used)
+    accessModes:
+    - ReadWriteOnce                             # access modes
+    size: "4Gi"                                # size of PVC which will be mounted to episilia-search for live search
+    historicSize: "2Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    # annotations: {}
+    finalizers:
+     - kubernetes.io/pvc-protection
+    # selectorLabels: {}
+    # subPath: ""
+    # existingClaim:
+
+
+  
