@@ -82,7 +82,7 @@ episilia-log-indexer-opt:
   enabled: true
 
 grafana:
-  enabled: true
+  enabled: false
 
 tags:
   alert: &alert true
@@ -92,14 +92,14 @@ global:
   alert:
     rules:
       file:
-        url: "/episilia-s3/shivam/alert-config/alert_rules.json"  
+        url:                   #alert config url need to be update here
   client:
-    id: "EpisUASM"
-    env: "spike-test"
+    id: episilia-helm   
+    env: test-helm
     license:
-      key: "SPwdB49REpisUASM"
+      key: episilia
     tenant:
-        id: EpisUASMsaas
+        id: episilia
 
   kafka:
     group:
@@ -151,21 +151,21 @@ global:
 
   datastore:
     s3:
-      accesskey: "DO00Z9HEJHJGT3744X47"
-      secretkey: "Fd9TE2/ePjcNNWKv6h7ayfu0Zaw56h10chogPhgtutQ"        
-      region: "blr1"
+      accesskey: ""  # filestorage access key (eg: AWS S3 access key)
+      secretkey: ""  # filestorage secret key (eg: AWS S3 secret key)   
+      region: ""     # filestorage region (eg: AWS S3 region)
       endpoint:
-        url: "blr1.digitaloceanspaces.com"
+        url: # filestorage endpoint URL (eg: AWS S3 endpoint URL)
       sign:
         payload: true
-      bucket: nikhil
-      folder: test-helmchart
+      bucket: episilia-bucket  # filestorage bucket (eg: AWS S3 bucket)
+      folder: episilia-folder  # filestorage folder URL (eg: AWS S3 folder)
       work:
         folder: work-folder
       url:
         prefix: s3://
       useArn: false
-      assumeRole: "arn:aws:iam::804271767483:role/test_arn_role"
+      assumeRole: ""    # ARN role
 
   indexer:
     image:
@@ -236,7 +236,7 @@ global:
 
     rules:
       file:
-        url: "/episilia-s3/shivam/alert-config/alert_rules.json"           #s3 path of alert rules file
+        url:            #s3 path of alert rules file
     prometheus:
       gateway: localhost:5070  # push-gateway url 
   
@@ -288,8 +288,8 @@ global:
 
   #config for historic search engine
   fixedSearch:
-    bucket: "nikhil"             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
-    folder: "spike-pulse"             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    bucket: ""             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: ""             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
     replicaCount: "1"      # kubernetes pod replicas of historic episilia-search 
     resources:
       limits:
@@ -300,9 +300,9 @@ global:
         memory: 600Mi     # memory request on historic episilia-search
     fixed:
       from:
-        yyyymmddhh: "2021092100"    # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"    # the date from when the required index blocks should be loaded (YYYYMMDDHH)
       to:
-        yyyymmddhh: "2021092202"    # the date till when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102202"    # the date till when the required index blocks should be loaded (YYYYMMDDHH)
 
     api:
       timeout:
@@ -311,31 +311,7 @@ global:
     labels:
       display.max.count: "400"
       exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
-
- # config for Gateway
-  # gateway:
-  #   image:
-  #     repository: episilia/gateway   # docker image of episilia-gateway
-  #     tag: *release
-  #   service:
-  #     type: ClusterIP                         # service type of episilia-gateway
-  #   annotations:
-  #     service.beta.kubernetes.io/aws-load-balancer-internal: "false"
-  #   replicaCount: "1"                         # kubernetes pod replicas of episilia-gateway
-  #   resources:
-  #     limits:
-  #       cpu: 500m                             # cpu limit on episilia-gateway
-  #       memory: 600Mi                         # memory limit on episilia-gateway
-  #     requests:
-  #       cpu: 300m                             # cpu request on episilia-gateway
-  #       memory: 200Mi                         # memory request on episilia-gateway
-
  
-
-    
-  
-
-
 # Redpanda
   redpanda:                   # kubernetes pod replicas of episilia-gateway
     enabled: *redpanda
