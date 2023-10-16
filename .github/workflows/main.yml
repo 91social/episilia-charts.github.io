@@ -4,28 +4,8 @@ on:
   push:
     branches:
       - main
-      # - develop
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install Helm
-      run: |
-        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-        chmod 700 get_helm.sh
-        ./get_helm.sh
-        helm version
-      shell: bash
-
-    - name: Helm Lint
-      run: |
-        helm lint charts/episilia-spike
-      shell: bash
-
   deploy_pages:
     runs-on: ubuntu-latest
     steps:
@@ -77,9 +57,8 @@ jobs:
         helm repo index --url https://91social.github.io/episilia-deploy/release .
       shell: bash
 
-    - name: Move index.yaml and .tgz files
+    - name: Move index.yaml and .tgz files to Release Directory
       run: |
-      
         mv index.yaml ./public/release
         mv *.tgz ./public/release
       shell: bash
@@ -109,6 +88,3 @@ jobs:
       with:
         personal_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
-      if: github.ref == 'refs/heads/main'
-
-  
