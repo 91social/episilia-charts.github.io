@@ -68,9 +68,9 @@ jobs:
         helm package charts/*
       shell: bash
 
-    - name: Copy index.html to Release Directory
-      run: cp -r index.html ./public/release
-      shell: bash
+    # - name: Copy index.html to Release Directory
+    #   run: cp -r index.html ./public/release
+    #   shell: bash
 
     - name: Helm Repo Index
       run: |
