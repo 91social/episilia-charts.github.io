@@ -1,0 +1,442 @@
+# Default values for episilia-cpanel.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+imageTag: &release "2.1.0"
+replicaCount: 1
+
+image:
+  repository: episilia/cpanel
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: *release
+
+imagePullSecrets:
+  - name: regcred 
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP 
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+      - path: /
+        backend:
+          serviceName: chart-example.local
+          servicePort: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  limits:
+    memory: 500Mi
+    cpu: 500m
+  requests:
+    memory: 100Mi
+    cpu: 300m
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+cpanel:
+  config:
+    # provide episilia-search service IP address and port
+    cpanel.gateway.server: episilia-gateway:9002
+    
+# To enable the required servers. Note: episilia-log-indexer, episilia-search, episilia-gateway should be enabled for Episilia to work.
+redpanda:
+  enabled: &redpanda false
+episilia-ingester:
+  enabled: &ingester false
+episilia-log-indexer:
+  enabled: true
+episilia-search:
+  enabled: true
+episilia-search-fixed:
+  enabled: true
+episilia-gateway:
+  enabled: true
+episilia-log-indexer-opt:
+  enabled: true
+grafana:
+  enabled: true
+
+tags:
+  alert: &alert true
+  tail: &tail true
+
+# Each consumer will have unique client name and env provided, the same is to be used here.
+global:
+  client:
+    id: "EPISBJCT"
+    env: "spike-test"
+    license:
+      key: "661c33c1-c2d0-4d0e-b2b8-0892056eff5b"
+
+# All common ops.
+  ops:
+    log:
+      debug: on # Enable to get debug logs in all the servers
+    license:
+      url: episilia-cpanel:8080
+    cpanel:
+      data:
+        publish:
+          interval:
+            seconds: 600 # Time interval in which cpanel will be pushing metrics to console
+    
+#kafka config
+  kafka:
+    group:      
+      search: episilia-search-group   # Kafka consumer-group for search
+      cpanel: episilia-cpanel-group   # Kafka consumer-group for cpanel
+      logwatcher:
+        consumer: episilia-logwatcher-group  # Kafka consumer-group for log-watcher
+        tail: episilia-logwatcher-tail-group  # Kafka consumer-group for log-watcher-tail
+        alert: episilia-logwatcher-alert-group  # Kafka consumer-group for log-watcher-alert
+    topic:
+      index:
+        live: stagefiles # Topic for internal publish indexed files - stage.topic
+        optimized: optfiles # Topic for internal optimize.topic:  publish file names post optimization
+      optimize:
+        request: stagefolder #optimize.request.topic send folders to optimize
+      cpanel:
+        in: cpaneld # Internal topic cpanel.data.topic
+        out: cpaneld # Internal topic cpanel.data.topic
+      tail:
+        request:
+          in: tail_in # incoming requests for tail requests
+        response:
+          out: tail_out # publish results for tail
+      alert:
+        response:
+          out: alert_out
+    internal:
+      broker:
+        list: 144.126.252.81:9093
+    indexer:
+      broker:
+        list: 144.126.252.81:9093 # The kafka broker for logs. If this is not set, it will use the default broker
+        security.mode: none # values are [none|login|oauth|kerberos]
+        security.protocol: SASL_SSL #plaintext, ssl, sasl_plaintext, sasl_ssl
+      sasl:
+        mechanism: SCRAM-SHA-512 #PLAIN, SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
+        username: episilia
+        password: episilia123
+      logs:
+        topics: nikhil-demo # Topic from where logs are loaded.
+      group: episilia-indexer-group  # Kafka consumer-group for indexer
+
+# Where indexed data is stored
+  datastore:
+    s3:
+      accesskey: "DO00Z9HEJHJGT3744X47"  # filestorage access key (eg: AWS S3 access key)
+      secretkey: "Fd9TE2/ePjcNNWKv6h7ayfu0Zaw56h10chogPhgtutQ"  # filestorage secret key (eg: AWS S3 secret key)
+      region: "blr1"     # filestorage region (eg: AWS S3 region)
+      endpoint.url: "blr1.digitaloceanspaces.com"     # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+      sign.payload: true
+      bucket: nikhil  # filestorage bucket (eg: AWS S3 bucket)
+      folder: episilia-nikhil  # filestorage folder URL (eg: AWS S3 folder)
+      work.folder: episilia-nikhil/work-folder 
+      # accesskey: "DO00Z9HEJHJGT3744X47"  # filestorage access key (eg: AWS S3 access key)
+      # secretkey: "Fd9TE2/ePjcNNWKv6h7ayfu0Zaw56h10chogPhgtutQ"  # filestorage secret key (eg: AWS S3 secret key)
+      # region: "ap-south-1"     # filestorage region (eg: AWS S3 region)
+      # endpoint.url: ""     # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+      # sign.payload: true
+      # bucket: nikhil  # filestorage bucket (eg: AWS S3 bucket)
+      # folder: s3-arn-test  # filestorage folder URL (eg: AWS S3 folder)
+      # work.folder: episilia-s3/work-folder   # Folder name to store s3 limit/write results
+      # url.prefix: s3://   # filestorage prefix URL (default to AWS S3)
+      # useArn: false     # To enable ARN access to aws S3
+      # assumeRole: "arn:aws:iam::804271767483:role/test_arn_role"    # ARN role
+
+# Config for Ingester
+  ingester:
+    enabled: *ingester
+    service:
+      type: "ClusterIP"
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false" 
+    image:
+      repository: episilia/ingester    # docker image of episilia-ingester
+      tag: *release
+    replicaCount: "1"        # kubernetes pod replicas of episilia-ingester
+    resources:
+      limits:
+        cpu: 800m            # cpu limit on episilia-ingester
+        memory: 1024Mi       # memory limit on episilia-ingester
+      requests:
+        cpu: 400m            # cpu request on episilia-ingester
+        memory: 300Mi        # memory request on episilia-ingester
+    env:
+      JVM_MIN_SIZE: "800m"    
+      JVM_MAX_SIZE: "1000m"
+      JVM_NEWGEN_MIN_SIZE: "750m"
+      JVM_NEWGEN_MAX_SIZE: "950m"
+
+# Config for indexer and optimizer
+  indexer:
+    image:
+      repository: episilia/log-indexer    # docker image of episilia-log-indexer
+      tag: *release
+    replicaCount: "1"        # kubernetes pod replicas of episilia-log-indexer
+    annotations:
+      deploy:
+      service:
+    resources:
+      limits:
+        cpu: 800m            # cpu limit on episilia-log-indexer 
+        memory: 1024Mi       # memory limit on episilia-log-indexer
+      requests:
+        cpu: 400m            # cpu request on episilia-log-indexer
+        memory: 300Mi        # memory request on episilia-log-indexer
+
+
+    logs:
+      source: kafka         # source: kafka  # s3 or kafka
+    schema:
+      appid:
+        fixed: "defaultApp"      # If appid is a fixed string
+        keys: "project.app_id"   # label(s) for app identifier
+      tenantid:        
+        fixed: "defaultTenant"   # If tenantid is a fixed string  
+        keys: "project.tenant_id" # label(s) for tenant identifier        
+      message:
+        key: "log"               # actual log message key
+      timestamp:
+        key: "time"              # timestamp key
+        formats: "%Y-%m-%dT%H:%M:%S"  #to specify timestamp format (ex: %Y-%m-%dT%H:%M:%S )
+      exclude: "time"            # labels to be excluded from the list
+
+#optimizer server configuration
+  optimizer:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-optimizer  
+    resources:
+      limits:
+        cpu: 800m              # cpu limit on episilia-optimizer
+        memory: 1024Mi         # memory limit on episilia-optimizer
+      requests:
+        cpu: 500m              # cpu request on episilia-optimizer        
+        memory: 300Mi          # memory request on episilia-optimizer
+
+#logwatcher server configuration
+  logwatcher:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-logwatcher  
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-logwatcher
+        memory: 600Mi         # memory limit on episilia-logwatcher
+      requests:
+        cpu: 300m              # cpu request on episilia-logwatcher        
+        memory: 300Mi          # memory request on episilia-logwatcher    
+    ops:
+      tail.enable  : *tail # to enable tail server
+      alert.enable : *alert # to enable alert server
+    live:
+      block.maxrecord.count: 10000
+      block.maxwait.ms: 3
+
+    rules:
+      file:
+        url:            #s3 path of alert rules file
+    prometheus:
+      gateway: localhost:5070  # push-gateway url 
+  
+# tail server configurations
+  tail:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-tail
+    image:
+      repository: episilia/dev-tail    # docker image of episilia-tail
+      tag: 230829-test
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-tail
+        memory: 600Mi         # memory limit on episilia-tail
+      requests:
+        cpu: 300m              # cpu request on episilia-tail        
+        memory: 300Mi          # memory request on episilia-tail    
+
+
+  #config for search engine
+  search:
+    image:
+      repository: episilia/search   # docker image of episilia-search
+      tag: *release
+    replicaCount: "1"                        # kubernetes pod replicas of episilia-search 
+    resources:
+      limits:
+        cpu: "1"                             # cpu limit on episilia-search
+        memory: 2048Mi                       # memory limit on episilia-search
+      requests:
+        cpu: 500m                            # cpu request on episilia-search
+        memory: 600Mi                        # memory request on episilia-search
+
+    api:
+      timeout:
+        seconds: 40                         # timeout for search while querying
+    
+    live:
+      from:
+        hours: 48                           # hours from when the required index blocks should be loaded
+      to:
+        hours: 0                            # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+    labels:
+      display.max.count: "400"
+      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+  #config for historic search engine
+  fixedSearch:
+    bucket: "nikhil"             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: "episilia-nikhil"             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    replicaCount: "1"      # kubernetes pod replicas of historic episilia-search 
+    resources:
+      limits:
+        cpu: "1"          # cpu limit on historic episilia-search
+        memory: 1024Mi    # memory limit on historic episilia-search
+      requests:
+        cpu: 500m         # cpu request on historic episilia-search
+        memory: 600Mi     # memory request on historic episilia-search
+    fixed:
+      from:
+        yyyymmddhh: "2023082800"    # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+      to:
+        yyyymmddhh: "2023082914"    # the date till when the required index blocks should be loaded (YYYYMMDDHH)
+
+    api:
+      timeout:
+        seconds: 40       # timeout for search while querying
+
+    labels:
+      display.max.count: "400"
+      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+ # config for Gateway
+  gateway:
+    image:
+      repository: episilia/gateway   # docker image of episilia-gateway
+      tag: *release
+    service:
+      type: ClusterIP                         # service type of episilia-gateway
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+    replicaCount: "1"                         # kubernetes pod replicas of episilia-gateway
+    resources:
+      limits:
+        cpu: 500m                             # cpu limit on episilia-gateway
+        memory: 600Mi                         # memory limit on episilia-gateway
+      requests:
+        cpu: 300m                             # cpu request on episilia-gateway
+        memory: 200Mi  
+    fixed:
+      url: "episilia-search-fixed:4041"
+      timeout:
+         seconds: "120" 
+      enabled: "true"                       # memory request on episilia-gateway
+
+    search:
+      timeout:
+        seconds: 40                           # timeout of the query from gateway 
+ 
+ # Control Panel
+  cpanel:
+    ops:
+      healthchecks:
+        interval:
+          mins: "5"                          # time interval in which metrics are pushed
+        exclude:
+          list: ""                           # to exclude the specific metrics
+    api:
+      access:                                # Unique keys to access the episilia console
+        key: token                           
+        token: 98f4b6223f5908c16ed54962010500908d98f8c6
+      console:
+        server: "https://episilia-console-dev-pjyzk.ondigitalocean.app"      # Url of the console
+      get:
+        server: "episilia-gateway:9002"
+      grpc:
+        port: "8080"
+      metrics:
+        port: "8090"
+
+# Redpanda
+  redpanda:                   # kubernetes pod replicas of episilia-gateway
+    enabled: *redpanda
+    resources:
+      limits:
+        cpu: 500m                             # cpu limit on redpanda
+        memory: 1250Mi                         # memory limit on redpanda
+      requests:
+        cpu: 300m                             # cpu request on redpanda
+        memory: 600Mi                         # memory request on redpanda
+    ports:
+      admin: "9644"
+      kafka: "9092"
+      proxy: "8082"
+    pvcSize: "10Gi"
+    provMem: "1G"
+    resMem: "200M"
+    retention: "10800000"
+
+# Grafana
+  grafana:
+    service: 
+      type: "ClusterIP"
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+        
+ # Persistance Volume   
+  persistence:
+    enabled: true                              # to enable PVC 
+    mountPath: "/data"                          # mount path of PVC 
+    storageClassName: do-block-storage        # storage class name (differs on the cloud services that are used)
+    accessModes:
+    - ReadWriteOnce                             # access modes
+    size: "4Gi"                                # size of PVC which will be mounted to episilia-search for live search
+    historicSize: "2Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    # annotations: {}
+    finalizers:
+     - kubernetes.io/pvc-protection
+    # selectorLabels: {}
+    # subPath: ""
+    # existingClaim:
