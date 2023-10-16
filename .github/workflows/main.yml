@@ -40,17 +40,17 @@ jobs:
         helm version
       shell: bash
 
-    # - name: Create Public Directory
-    #   run: mkdir -p ./public
-    #   shell: bash
+    - name: Create Public Directory
+      run: mkdir -p ./public
+      shell: bash
 
-    # - name: List Files in Public Directory
-    #   run: ls ./public
-    #   shell: bash
+    - name: List Files in Public Directory
+      run: ls ./public
+      shell: bash
 
-    # - name: Create Release Directory
-    #   run: mkdir -p ./public/release
-    #   shell: bash
+    - name: Create Release Directory
+      run: mkdir -p ./public/release
+      shell: bash
 
     - name: Create robots.txt
       run: |
@@ -63,46 +63,46 @@ jobs:
         helm dependency update charts/episilia-spike
       shell: bash
 
-    # - name: Helm Package
-    #   run: |
-    #     helm package charts/*
-    #   shell: bash
+    - name: Helm Package
+      run: |
+        helm package charts/*
+      shell: bash
 
-    # - name: Copy index.html to Release Directory
-    #   run: cp -r index.html ./public/release
-    #   shell: bash
+    - name: Copy index.html to Release Directory
+      run: cp -r index.html ./public/release
+      shell: bash
 
     - name: Helm Repo Index
       run: |
         helm repo index --url https://91social.github.io/episilia-deploy/ .
       shell: bash
 
-    # - name: Move index.yaml and .tgz files
-    #   run: |
-      
-    #     cp index.yaml ./public/release
-    #     mv *.tgz ./public/release
-    #   shell: bash
+    - name: Move index.yaml and .tgz files
+      run: |
 
-    # - name: Print Working Directory
-    #   run: pwd
-    #   shell: bash
+        cp index.yaml ./public/release
+        mv *.tgz ./public/release
+      shell: bash
 
-    # - name: Print Deployment URL
-    #   run: echo "https://91social.github.io/episilia-deploy/"
-    #   shell: bash
+    - name: Print Working Directory
+      run: pwd
+      shell: bash
 
-    # - name: List Files
-    #   run: ls
-    #   shell: bash
+    - name: Print Deployment URL
+      run: echo "https://91social.github.io/episilia-deploy/"
+      shell: bash
 
-    # - name: List Files in Public Directory
-    #   run: ls ./public
-    #   shell: bash
+    - name: List Files
+      run: ls
+      shell: bash
 
-    # - name: Cat index.yaml in Release Directory
-    #   run: cat ./public/release/index.yaml
-    #   shell: bash
+    - name: List Files in Public Directory
+      run: ls ./public
+      shell: bash
+
+    - name: Cat index.yaml in Release Directory
+      run: cat ./public/release/index.yaml
+      shell: bash
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
