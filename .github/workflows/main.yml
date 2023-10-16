@@ -40,22 +40,22 @@ jobs:
         helm version
       shell: bash
 
-    - name: Create Public Directory
-      run: mkdir -p ./public
-      shell: bash
+    # - name: Create Public Directory
+    #   run: mkdir -p ./public
+    #   shell: bash
 
-    - name: List Files in Public Directory
-      run: ls ./public
-      shell: bash
+    # - name: List Files in Public Directory
+    #   run: ls ./public
+    #   shell: bash
 
-    - name: Create Release Directory
-      run: mkdir -p ./public/release
-      shell: bash
+    # - name: Create Release Directory
+    #   run: mkdir -p ./public/release
+    #   shell: bash
 
     - name: Create robots.txt
       run: |
-        echo "User-Agent: *" > ./public/robots.txt
-        echo "Disallow: /" >> ./public/robots.txt
+        echo "User-Agent: *" > ./robots.txt
+        echo "Disallow: /" >> ./robots.txt
       shell: bash
 
     - name: Helm Dependency Update
