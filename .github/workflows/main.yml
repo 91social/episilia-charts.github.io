@@ -63,10 +63,10 @@ jobs:
         helm dependency update charts/episilia-spike
       shell: bash
 
-    - name: Helm Package
-      run: |
-        helm package charts/*
-      shell: bash
+    # - name: Helm Package
+    #   run: |
+    #     helm package charts/*
+    #   shell: bash
 
     # - name: Copy index.html to Release Directory
     #   run: cp -r index.html ./public/release
