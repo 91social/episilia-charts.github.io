@@ -81,7 +81,7 @@ jobs:
       run: |
 
         cp index.yaml ./public/release
-        mv *.tgz ./public/release
+        cp *.tgz ./public/release
       shell: bash
 
     - name: Print Working Directory
