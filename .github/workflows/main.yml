@@ -68,47 +68,47 @@ jobs:
         helm package charts/*
       shell: bash
 
-    - name: Copy index.html to Release Directory
-      run: cp -r index.html ./public/release
-      shell: bash
+    # - name: Copy index.html to Release Directory
+    #   run: cp -r index.html ./public/release
+    #   shell: bash
 
     - name: Helm Repo Index
       run: |
         helm repo index --url https://91social.github.io/episilia-deploy/ .
       shell: bash
 
-    - name: Move index.yaml and .tgz files
-      run: |
+    # - name: Move index.yaml and .tgz files
+    #   run: |
       
-        cp index.yaml ./public/release
-        mv *.tgz ./public/release
-      shell: bash
+    #     cp index.yaml ./public/release
+    #     mv *.tgz ./public/release
+    #   shell: bash
 
-    - name: Print Working Directory
-      run: pwd
-      shell: bash
+    # - name: Print Working Directory
+    #   run: pwd
+    #   shell: bash
 
-    - name: Print Deployment URL
-      run: echo "https://91social.github.io/episilia-deploy/"
-      shell: bash
+    # - name: Print Deployment URL
+    #   run: echo "https://91social.github.io/episilia-deploy/"
+    #   shell: bash
 
-    - name: List Files
-      run: ls
-      shell: bash
+    # - name: List Files
+    #   run: ls
+    #   shell: bash
 
-    - name: List Files in Public Directory
-      run: ls ./public
-      shell: bash
+    # - name: List Files in Public Directory
+    #   run: ls ./public
+    #   shell: bash
 
-    - name: Cat index.yaml in Release Directory
-      run: cat ./public/release/index.yaml
-      shell: bash
+    # - name: Cat index.yaml in Release Directory
+    #   run: cat ./public/release/index.yaml
+    #   shell: bash
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         personal_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        publish_dir: .
       if: github.ref == 'refs/heads/main'
 
   
