@@ -80,7 +80,7 @@ jobs:
     - name: Move index.yaml and .tgz files
       run: |
       
-        mv index.yaml ./public/release
+        cp index.yaml ./public/release
         mv *.tgz ./public/release
       shell: bash
 
