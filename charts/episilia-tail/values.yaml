@@ -87,3 +87,4 @@ tail:
     gateway.search.url: "episilia-search:4040"
     gateway.api.http.port: "9005"
     ops.server.mode: "tail"
+    ops.work.dir: "/data"
