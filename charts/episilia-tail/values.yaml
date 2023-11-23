@@ -88,3 +88,4 @@ tail:
     gateway.api.http.port: "9005"
     ops.server.mode: "tail"
     ops.work.dir: "/data"
+    search.labels.exclude: '@timestamp,project.*,file,time,.*internal.*,message,test.*'
