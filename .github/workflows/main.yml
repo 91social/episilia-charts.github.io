@@ -3,7 +3,7 @@ name: Helm Deployment
 on:
   push:
     branches:
-      - main
+      - nikhil
       # - develop
 
 jobs:
