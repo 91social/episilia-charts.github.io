@@ -2,7 +2,7 @@ apiVersion: v2
 name: episilia-spike
 description: A Helm chart for Kubernetes
 
-chatVersion : &version "0.2.1"
+chatVersion : &version "0.2.0"
 dependencies: 
 - name: episilia-log-indexer
   version: *version
