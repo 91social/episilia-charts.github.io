@@ -65,7 +65,7 @@ jobs:
 
     - name: Helm Package
       run: |
-        helm package charts/*
+        helm package charts/
       shell: bash
 
     # - name: Copy index.html to Release Directory
