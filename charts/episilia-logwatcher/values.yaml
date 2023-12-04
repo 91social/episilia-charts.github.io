@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: episilia/log-indexer
+  repository: episilia/dev-log-indexer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.1.0"
+  tag: "230915-dev"
 
 imagePullSecrets: 
   - name: regcred
