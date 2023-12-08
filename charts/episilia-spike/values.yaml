@@ -79,7 +79,7 @@ episilia-search-fixed:
   enabled: false
 
 episilia-log-indexer-opt:
-  enabled: true
+  enabled: false
 
 episilia-spike-ui:
   enabled: true
