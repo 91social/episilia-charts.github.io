@@ -3,7 +3,7 @@ name: Helm Deployment
 on:
   push:
     branches:
-      - main
+      - sowmyaa
       # - develop
 
 jobs:
@@ -104,11 +104,11 @@ jobs:
     #   run: cat ./public/release/index.yaml
     #   shell: bash
 
-    # - name: Deploy to GitHub Pages
-    #   uses: peaceiris/actions-gh-pages@v3
-    #   with:
-    #     personal_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: .
-      if: github.ref == 'refs/heads/main'
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+      if: github.ref == 'refs/heads/sowmyaa'
 
   
