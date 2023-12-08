@@ -48,7 +48,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: episilia-config
-                  key: dev-api-pulse.episilia.net
+                  key: pulse.host
           livenessProbe:
             httpGet:
               path: /
