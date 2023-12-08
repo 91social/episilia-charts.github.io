@@ -76,7 +76,7 @@ episilia-search:
   enabled: true
 
 episilia-search-fixed:
-  enabled: true
+  enabled: false
 
 episilia-log-indexer-opt:
   enabled: true
