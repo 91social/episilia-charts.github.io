@@ -1,8 +1,8 @@
-imageTag: &release "2.1.0"
+imageTag: &release "231116-18"
 replicaCount: 1
 
 image:
-  repository: episilia/spike
+  repository: episilia/dev-spike
   pullPolicy: IfNotPresent
   tag: *release
 
@@ -68,17 +68,20 @@ affinity: {}
 
 
 redpanda:
-  enabled: &redpanda true
+  enabled: &redpanda false
 episilia-log-indexer:
-  enabled: true
+  enabled: false
 
 episilia-search:
-  enabled: true
+  enabled: false
 
 episilia-search-fixed:
-  enabled: true
+  enabled: false
 
 episilia-log-indexer-opt:
+  enabled: false
+
+episilia-spike-ui:
   enabled: true
 
 grafana:
@@ -92,41 +95,41 @@ global:
   alert:
     rules:
       file:
-        url:                   #alert config url need to be update here
+        url: /episilia-s3/shivam/alert-config/alert_rules.json                   #alert config url need to be update here
   client:
-    id: episilia-helm   
-    env: test-helm
+    id: epis8sgy   
+    env: sowmya
     license:
-      key: episilia
+      key: Ht9JUqavepis8sgy
     tenant:
-        id: episilia
+        id: epis8sgysaas
 
   kafka:
     group:
-      search: episilia-search-group
+      search: sowmya-search
       spike: episilia-spike-group
       logwatcher:
-        consumer: episilia-logwatcher-group
-        tail: episilia-logwatcher-tail-group
-        alert: episilia-logwatcher-alert-group
+        consumer: sowmya-logwatcher
+        tail: sowmya-logwatcher-tail
+        alert: sowmya-logwatcher-alert
     topic:
       index:
-        live: stagefiles
-        optimized: optfiles
+        live: sowmya-index
+        optimized: sowmya-opt
       optimize:
-        request: stagefolder
+        request: sowmya-opt_req
       
       tail:
         request:
-          in: tail_in
+          in: sowmya-tail_in
         response:
-          out: tail_out
+          out: sowmya-tail_out
       alert:
         response:
-          out: alert_out
+          out: sowmya-alert_out
     indexer:
       broker:
-        list: redpanda:9092
+        list: 157.230.196.212:9093
         security:
           mode: none
           protocol: SASL_SSL
@@ -135,13 +138,13 @@ global:
           username: episilia
           password: episilia123
       logs:
-        topics: logs   #topic need to be changed
-      group: episilia-indexer-group
+        topics: stestt-license-check   #topic need to be changed
+      group: sowmya-logs
       
 
     internal:
       broker:
-        list: redpanda:9093
+        list: 157.230.196.212:9093
     
 
 
@@ -151,26 +154,26 @@ global:
 
   datastore:
     s3:
-      accesskey: ""  # filestorage access key (eg: AWS S3 access key)
-      secretkey: ""  # filestorage secret key (eg: AWS S3 secret key)   
-      region: ""     # filestorage region (eg: AWS S3 region)
-      endpoint:
-        url: # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+      accesskey: "DO00Z9HEJHJGT3744X47"  # filestorage access key (eg: AWS S3 access key)
+      secretkey: "Fd9TE2/ePjcNNWKv6h7ayfu0Zaw56h10chogPhgtutQ"  # filestorage secret key (eg: AWS S3 secret key)   
+      region: "blr1"     # filestorage region (eg: AWS S3 region)
+      endpoint: 
+        url: blr1.digitaloceanspaces.com # filestorage endpoint URL (eg: AWS S3 endpoint URL)
       sign:
         payload: true
-      bucket: episilia-bucket  # filestorage bucket (eg: AWS S3 bucket)
-      folder: episilia-folder  # filestorage folder URL (eg: AWS S3 folder)
+      bucket: nikhil  # filestorage bucket (eg: AWS S3 bucket)
+      folder: stest2  # filestorage folder URL (eg: AWS S3 folder)
       work:
-        folder: work-folder
+        folder: stest2/work-folder
       url:
         prefix: s3://
       useArn: false
-      assumeRole: ""    # ARN role
+      assumeRole: "arn:aws:iam::804271767483:role/test_arn_role"    # ARN role
 
   indexer:
     image:
-      repository: episilia/log-indexer    # docker image of episilia-log-indexer
-      tag: *release
+      repository: episilia/dev-log-indexer    # docker image of episilia-log-indexer
+      tag: "230915-dev"
     replicaCount: "1"        # kubernetes pod replicas of episilia-log-indexer
     annotations:
       deploy:
@@ -185,10 +188,10 @@ global:
     schema:
       appid:
         fixed: "defaultApp"      # If appid is a fixed string
-        keys: "project.app_id"   # label(s) for app identifier
+        keys: "app_id"   # label(s) for app identifier
       tenantid:        
         fixed: "defaultTenant"   # If tenantid is a fixed string  
-        keys: "test"                 # label(s) for tenant identifier        
+        keys: "tenant_id"                 # label(s) for tenant identifier        
       message:
         key: "log"               # actual log message key
       timestamp:
@@ -219,7 +222,7 @@ global:
    
   #logwatcher server configuration
   logwatcher:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-logwatcher  
+    replicaCount: "0"           # kubernetes pod replicas of episilia-logwatcher  
     resources:
       limits:
         cpu: 500m              # cpu limit on episilia-logwatcher
@@ -244,8 +247,8 @@ global:
   tail:
     replicaCount: "1"           # kubernetes pod replicas of episilia-tail
     image:
-      repository: episilia/tail    # docker image of episilia-tail
-      tag: *release
+      repository: episilia/dev-tail    # docker image of episilia-tail
+      tag: "20230915-dev"
     resources:
       limits:
         cpu: 500m              # cpu limit on episilia-tail
@@ -254,12 +257,25 @@ global:
         cpu: 300m              # cpu request on episilia-tail        
         memory: 300Mi          # memory request on episilia-tail    
 
+# spike ui server configurations
+  spike-ui:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-spike-ui
+    image:
+      repository: episilia/dev-spike-ui    # docker image of episilia-spike-ui
+      tag: "28112314"
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-spike -ui
+        memory: 800Mi         # memory limit on episilia-spike -ui
+      requests:
+        cpu: 300m              # cpu request on episilia-spike -ui        
+        memory: 500Mi          # memory request on episilia-spike-ui
 
   #config for search engine
   search:
     image:
-      repository: episilia/search   # docker image of episilia-search
-      tag: *release
+      repository: episilia/dev-search   # docker image of episilia-search
+      tag: "20230920-dev"
     service:
       type: ClusterIP
     annotations:
@@ -334,18 +350,18 @@ global:
 # Grafana
   grafana:
     service: 
-      type: "LoadBalancer"
+      type: "LoadBalancer"  
     annotations:
       service.beta.kubernetes.io/aws-load-balancer-internal: "false"
         
  # Persistance Volume   
   persistence:
-    enabled: false                             # to enable PVC 
+    enabled: true                             # to enable PVC 
     mountPath: "/data"                          # mount path of PVC 
-    storageClassName: gp2     # storage class name (differs on the cloud services that are used)
+    storageClassName: do-block-storage     # storage class name (differs on the cloud services that are used)
     accessModes:
     - ReadWriteOnce                             # access modes
-    size: "4Gi"                                # size of PVC which will be mounted to episilia-search for live search
+    size: "5Gi"                                # size of PVC which will be mounted to episilia-search for live search
     historicSize: "2Gi"                        # size of PVC which will be mounted to episilia-search for historic search
     # annotations: {}
     finalizers:
