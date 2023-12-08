@@ -141,7 +141,7 @@ global:
 
     internal:
       broker:
-        list: redpanda:9092
+        list: redpanda:9093
     
 
 

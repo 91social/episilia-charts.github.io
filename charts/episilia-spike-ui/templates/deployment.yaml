@@ -19,7 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "episilia-spike-ui.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
+	      {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
@@ -44,11 +44,11 @@ spec:
           - configMapRef:
               name: episilia-config
 	        env:
-           - name: REACT_APP_URL
-             valueFrom:
-               configMapKeyRef:
-                 name: episilia-config
-                 key: dev-api-pulse.episilia.net
+            - name: REACT_APP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: episilia-config
+                  key: dev-api-pulse.episilia.net
           livenessProbe:
             httpGet:
               path: /
