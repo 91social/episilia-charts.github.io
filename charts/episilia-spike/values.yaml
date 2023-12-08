@@ -81,6 +81,9 @@ episilia-search-fixed:
 episilia-log-indexer-opt:
   enabled: true
 
+episilia-spike-ui:
+  enabled: true
+
 grafana:
   enabled: false
 
@@ -254,6 +257,19 @@ global:
         cpu: 300m              # cpu request on episilia-tail        
         memory: 300Mi          # memory request on episilia-tail    
 
+# spike ui server configurations
+  spike-ui:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-spike-ui
+    image:
+      repository: episilia/spike-ui    # docker image of episilia-spike-ui
+      tag: *release
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-spike -ui
+        memory: 800Mi         # memory limit on episilia-spike -ui
+      requests:
+        cpu: 300m              # cpu request on episilia-spike -ui        
+        memory: 500Mi          # memory request on episilia-spike-ui
 
   #config for search engine
   search:

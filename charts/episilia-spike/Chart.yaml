@@ -20,6 +20,10 @@ dependencies:
   version: *version
   repository: "file://../episilia-log-indexer-opt"
   condition: episilia-log-indexer-opt.enabled
+- name: episilia-spike-ui
+  version: *version
+  repository: "file://../episilia-spike-ui"
+  condition: episilia-spike-ui.enabled
 - name: episilia-logwatcher
   version: *version
   repository: "file://../episilia-logwatcher"
@@ -68,4 +72,4 @@ version: *version
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: 2.1.1
+appVersion: 2.1.0
