@@ -44,11 +44,11 @@ spec:
           - configMapRef:
               name: episilia-config
 	        env:
-            - name: REACT_APP_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: dev-api-pulse.episilia.net
+           - name: REACT_APP_URL
+             valueFrom:
+               configMapKeyRef:
+                 name: episilia-config
+                 key: pulse.host
           livenessProbe:
             httpGet:
               path: /
