@@ -41,7 +41,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           envFrom:
-            - configMapRef:
+          - configMapRef:
               name: episilia-config
 	  env:
             - name: REACT_APP_URL
