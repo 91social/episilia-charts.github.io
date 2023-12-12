@@ -61,9 +61,9 @@ data:
   search.api.timeout.seconds: {{ .Values.global.search.api.timeout.seconds | quote }}
   search.live.from.hours: {{ .Values.global.search.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.search.live.to.hours | quote }}
-  gateway.api.http.port: {{ .Values.httpport | quote }}
-  gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
-  gateway.search.url: {{ .Values.gatewayurl | quote }}
+  #gateway.api.http.port: {{ .Values.httpport | quote }}
+  #gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
+  #gateway.search.url: {{ .Values.gatewayurl | quote }}
   ops.log.debug: {{ .Values.debug | quote }}
   search.api.grpc.port: {{ .Values.grpcport | quote }}
   search.api.response.max.mb: {{ .Values.maxmb | quote }}
