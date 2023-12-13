@@ -1,114 +1,172 @@
-name: Helm Deployment
+name: Helm Charts CI/CD
 
 on:
   push:
     branches:
-      - main
-      # - develop
+      - master
+      - develop
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chart: [episilia-spike]  # Add other charts if needed
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install Helm
-      run: |
-        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-        chmod 700 get_helm.sh
-        ./get_helm.sh
-        helm version
-      shell: bash
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          helm version
+        shell: bash
 
-    - name: Helm Lint
-      run: |
-        helm lint charts/episilia-spike
-      shell: bash
+      - name: Helm Lint
+        run: |
+          helm lint charts/${{ matrix.chart }}
+        shell: bash
 
-  deploy_pages:
+  deploy_master:
     runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        chart: [episilia-spike]  # Add other charts if needed
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Helm
-      run: |
-        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-        chmod 700 get_helm.sh
-        ./get_helm.sh
-        helm version
-      shell: bash
+      - name: Setup Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          helm version
+        shell: bash
 
-    # - name: Create Public Directory
-    #   run: mkdir -p ./public
-    #   shell: bash
+      - name: Create Public Directory
+        run: mkdir -p ./public
+        shell: bash
 
-    # - name: List Files in Public Directory
-    #   run: ls ./public
-    #   shell: bash
+      - name: Create Release Directory
+        run: mkdir -p ./public/release
+        shell: bash
 
-    # - name: Create Release Directory
-    #   run: mkdir -p ./public/release
-    #   shell: bash
+      - name: Create robots.txt
+        run: |
+          echo "User-Agent: *" > ./public/robots.txt
+          echo "Disallow: /" >> ./public/robots.txt
+        shell: bash
 
-    - name: Create robots.txt
-      run: |
-        echo "User-Agent: *" > ./robots.txt
-        echo "Disallow: /" >> ./robots.txt
-      shell: bash
+      - name: Helm Dependency Update
+        run: |
+          helm dependency update charts/${{ matrix.chart }}
+        shell: bash
 
-    - name: Helm Dependency Update
-      run: |
-        helm dependency update charts/episilia-spike
-      shell: bash
+      - name: Helm Package
+        run: |
+          helm package charts/*
+        shell: bash
 
-    - name: Helm Package
-      run: |
-        helm package charts/*
-      shell: bash
+      - name: Copy index.html to Release Directory
+        run: cp -r index.html ./public/release
+        shell: bash
 
-    # - name: Copy index.html to Release Directory
-    #   run: cp -r index.html ./public/release
-    #   shell: bash
+      - name: Helm Repo Index
+        run: |
+          helm repo index --url https://91social.github.io/episilia-deploy/release .
+        shell: bash
 
-    - name: Helm Repo Index
-      run: |
-        helm repo index --url https://91social.github.io/episilia-deploy/ .
-      shell: bash
+      - name: Move index.yaml and .tgz files
+        run: |
+          cp index.yaml ./public/release
+          cp *.tgz ./public/release
+        shell: bash
 
-    # - name: Move index.yaml and .tgz files
-    #   run: |
+      - name: Print Working Directory
+        run: pwd
+        shell: bash
 
-    #     cp index.yaml ./public/release
-    #     cp *.tgz ./public/release
-    #   shell: bash
+      - name: Print Deployment URL
+        run: echo "https://91social.github.io/episilia-deploy/release"
+        shell: bash
 
-    # - name: Print Working Directory
-    #   run: pwd
-    #   shell: bash
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public/release
 
-    # - name: Print Deployment URL
-    #   run: echo "https://91social.github.io/episilia-deploy/"
-    #   shell: bash
+  deploy_develop:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        chart: [episilia-spike]  # Add other charts if needed
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    # - name: List Files
-    #   run: ls
-    #   shell: bash
+      - name: Setup Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+          helm version
+        shell: bash
 
-    # - name: List Files in Public Directory
-    #   run: ls ./public
-    #   shell: bash
+      - name: Create Public Directory
+        run: mkdir -p ./public
+        shell: bash
 
-    # - name: Cat index.yaml in Release Directory
-    #   run: cat ./public/release/index.yaml
-    #   shell: bash
+      - name: Create Release Directory
+        run: mkdir -p ./public/dev
+        shell: bash
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        personal_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
-      if: github.ref == 'refs/heads/main'
+      - name: Create robots.txt
+        run: |
+          echo "User-Agent: *" > ./public/robots.txt
+          echo "Disallow: /" >> ./public/robots.txt
+        shell: bash
 
-  
+      - name: Helm Dependency Update
+        run: |
+          helm dependency update charts/${{ matrix.chart }}
+        shell: bash
+
+      - name: Helm Package
+        run: |
+          helm package charts/*
+        shell: bash
+
+      - name: Copy index.html to Release Directory
+        run: cp -r index.html ./public/dev
+        shell: bash
+
+      - name: Helm Repo Index
+        run: |
+          helm repo index --url https://91social.github.io/episilia-deploy/dev .
+        shell: bash
+
+      - name: Move index.yaml and .tgz files
+        run: |
+          cp index.yaml ./public/dev
+          cp *.tgz ./public/dev
+        shell: bash
+
+      - name: Print Working Directory
+        run: pwd
+        shell: bash
+
+      - name: Print Deployment URL
+        run: echo "https://91social.github.io/episilia-deploy/dev"
+        shell: bash
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public/dev
