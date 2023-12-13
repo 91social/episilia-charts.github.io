@@ -3,7 +3,6 @@ name: Helm Charts CI/CD
 on:
   push:
     branches:
-      - master
       - develop
 
 jobs:
@@ -99,6 +98,8 @@ jobs:
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public/release
+        if: github.ref == 'refs/heads/main'
+
           
   deploy_develop:
     runs-on: ubuntu-latest
@@ -170,3 +171,4 @@ jobs:
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public/dev
+        if: github.ref == 'refs/heads/develop'
