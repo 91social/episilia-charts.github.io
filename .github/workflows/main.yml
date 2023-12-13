@@ -96,9 +96,8 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
-          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
-          charts_dir: ./public/release
-          skip_existing: 
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          publish_dir: ./public/release
     if: github.ref == 'refs/heads/main'
 
           
@@ -155,30 +154,20 @@ jobs:
 
       - name: Move index.yaml and .tgz files
         run: |
-          cp index.yaml ./public/dev
-          cp *.tgz ./public/dev
+          mv index.yaml ./public/dev
+          mv *.tgz ./public/dev
+          pwd
+          echo "https://91social.github.io/episilia-deploy/dev"
+          ls
+          ls ./public
+          cat ./public/dev/index.yaml
         shell: bash
 
-      - name: Print Working Directory
-        run: pwd
-        shell: bash
+      
 
-      - name: Print Deployment URL
-        run: echo "https://91social.github.io/episilia-deploy/dev"
-        shell: bash
-
-      - name: Set up Chart Releaser
-        run: |
-          curl -LJO https://github.com/helm/chart-releaser/releases/download/v1.6.0/chart-releaser_1.6.0_linux_amd64.tar.gz
-          tar -zxvf chart-releaser_1.6.0_linux_amd64.tar.gz
-          mv cr /usr/local/bin/cr
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          args: upload -o owner -r repository -p ./public/dev
-        env:
-          CR_TOKEN: ${{ secrets.CR_TOKEN }}
-        
-        
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public/dev
     if: github.ref == 'refs/heads/develop'
