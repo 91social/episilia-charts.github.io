@@ -68,7 +68,7 @@ affinity: {}
 
 
 redpanda:
-  enabled: &redpanda true
+  enabled: &redpanda false
 episilia-log-indexer:
   enabled: true
 
@@ -126,7 +126,7 @@ global:
           out: alert_out
     indexer:
       broker:
-        list: redpanda:9092
+        list: redpanda:9093
         security:
           mode: none
           protocol: SASL_SSL
