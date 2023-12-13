@@ -173,7 +173,12 @@ jobs:
           tar -zxvf chart-releaser_1.6.0_linux_amd64.tar.gz
           mv cr /usr/local/bin/cr
 
-      - name: Package and Release Helm Chart
-        run: |
-          cr upload -o owner -r repository -p ./public/dev --token ${{ secrets.CR_TOKEN }}
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          args: upload -o owner -r repository -p ./public/dev
+        env:
+          CR_TOKEN: ${{ secrets.CR_TOKEN }}
+        
+        
     if: github.ref == 'refs/heads/develop'
