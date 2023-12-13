@@ -96,8 +96,9 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          publish_dir: ./public/release
+          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+          charts_dir: ./public/release
+          skip_existing: 
     if: github.ref == 'refs/heads/main'
 
           
@@ -169,6 +170,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          publish_dir: ./public/dev
+          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+          charts_dir: ./public/dev
     if: github.ref == 'refs/heads/develop'
