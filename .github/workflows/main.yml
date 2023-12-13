@@ -176,8 +176,4 @@ jobs:
       - name: Package and Release Helm Chart
         run: |
           cr upload -o owner -r repository -p ./public/dev --token ${{ secrets.CR_TOKEN }}
-
-        env:
-          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
-          charts_dir: ./public/dev
     if: github.ref == 'refs/heads/develop'
