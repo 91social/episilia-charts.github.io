@@ -83,21 +83,27 @@ jobs:
         run: |
           cp index.yaml ./public/release
           cp *.tgz ./public/release
+          pwd
+          echo "https://91social.github.io/episilia-deploy/release"
+          ls
+          ls ./public
+          cat ./public/release/index.yaml
         shell: bash
+        
 
-      - name: Print Working Directory
-        run: pwd
-        shell: bash
+      # - name: Print Working Directory
+      #   run: pwd
+      #   shell: bash
 
-      - name: Print Deployment URL
-        run: echo "https://91social.github.io/episilia-deploy/release"
-        shell: bash
+      # - name: Print Deployment URL
+      #   run: echo "https://91social.github.io/episilia-deploy/release"
+      #   shell: bash
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          publish_dir: ./public/release
+      # - name: Run chart-releaser
+      #   uses: helm/chart-releaser-action@v1.6.0
+      #   env:
+      #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #     publish_dir: ./public/release
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
