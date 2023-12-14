@@ -3,7 +3,7 @@ name: Helm Charts CI/CD
 on:
   push:
     branches:
-      - main
+      - develop
   
 
 jobs:
