@@ -112,7 +112,7 @@ jobs:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
   
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
 
           
   deploy_develop:
