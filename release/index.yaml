@@ -3,62 +3,62 @@ entries:
   episilia-log-indexer:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.771683018Z"
+    created: "2023-12-14T11:17:40.935144269Z"
     description: Indexing logs
-    digest: a668cdada7749c09c6f711c7d0ef96aa832fd89bdae227265c97f3a1c9602909
+    digest: 4bd50605e55bea69e40672f6b02c30dfb21dadf9e75a4d0b71f42800cdd92571
     name: episilia-log-indexer
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-log-indexer-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-log-indexer-0.2.0.tgz
     version: 0.2.0
   episilia-log-indexer-opt:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.772613447Z"
+    created: "2023-12-14T11:17:40.93549898Z"
     description: Optimizing the indexed logs
-    digest: 61435197ce09b84067d42010f88edced756f3a79db196710840afe3f6ff0c4af
+    digest: 333635412f2dff9acee6abc21eaad74c65a38754c7edae2435c717479c57550c
     name: episilia-log-indexer-opt
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-log-indexer-opt-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-log-indexer-opt-0.2.0.tgz
     version: 0.2.0
   episilia-logwatcher:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.773517918Z"
+    created: "2023-12-14T11:17:40.935840798Z"
     description: Episilia alert and tail server
-    digest: 1764269c0100485490c45cb490ecfbc00ed32ddbe460a243c9bbc6ebf4d2cf63
+    digest: 1ecf69db338729221459ba0fd594c99151692c6871781df6f7a20e0b9f2b2cf2
     name: episilia-logwatcher
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-logwatcher-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-logwatcher-0.2.0.tgz
     version: 0.2.0
   episilia-search:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.773935419Z"
+    created: "2023-12-14T11:17:40.936213002Z"
     description: Search Engine for episilia
-    digest: 36ea87d0339033dc9873ae3fdb554d53a92e31b458737a46e7504e23b9386103
+    digest: 42268547b09b54af7bff34c4c8170136bd2ff2c01d20c04417b31dadb593bee4
     name: episilia-search
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-search-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-search-0.2.0.tgz
     version: 0.2.0
   episilia-search-fixed:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.774312964Z"
+    created: "2023-12-14T11:17:40.936548438Z"
     description: Historic Search Engine for episilia
-    digest: 68fa0e2de407c3268c5a045485f2f95970e8f93968d0dbd2fad74af2cd39a1f8
+    digest: 7a3fb8329e30dc412e0379b34af0ccc13eacb2d6a6337b191d95ac347be65a69
     name: episilia-search-fixed
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-search-fixed-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-search-fixed-0.2.0.tgz
     version: 0.2.0
   episilia-spike:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.779104883Z"
+    created: "2023-12-14T11:17:40.941759131Z"
     dependencies:
     - condition: episilia-log-indexer.enabled
       name: episilia-log-indexer
@@ -100,40 +100,40 @@ entries:
       repository: file://../grafana
       version: 6.13.9
     description: A Helm chart for Kubernetes
-    digest: bbba8a5a88ac0c879662be545703efc3e1699aa3e0e361e4182b912c00081913
+    digest: 45751edd846ba46513bb883d60ab1ea9476d6273bfac0c73b4bbf92f180eb141
     name: episilia-spike
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-spike-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-spike-0.2.0.tgz
     version: 0.2.0
   episilia-spike-ui:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.779456841Z"
+    created: "2023-12-14T11:17:40.942455619Z"
     description: A Helm chart for Kubernetes
-    digest: bc97a14d81a62de433f6ab3f21020fdb8ffc1ea1bba87a426df1340961a0a8a6
+    digest: a9cf87629d0a985e23bd74a217fe9d59527524f3d7c0162448123dda714e1b25
     name: episilia-spike-ui
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-spike-ui-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-spike-ui-0.2.0.tgz
     version: 0.2.0
   episilia-tail:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-14T11:14:55.779789493Z"
+    created: "2023-12-14T11:17:40.942800482Z"
     description: Tail searver for episilia
-    digest: 17251e9cec0e0e7d9427538acf7ac371df108fa86d9bbb01b27becf33aa46661
+    digest: c685198706831545f763eee1a9e6b4f1dde092cb3cc8f728662ec2175da46325
     name: episilia-tail
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/episilia-tail-0.2.0.tgz
+    - https://91social.github.io/episilia-deploy/release/episilia-tail-0.2.0.tgz
     version: 0.2.0
   grafana:
   - apiVersion: v2
     appVersion: 8.0.5
-    created: "2023-12-14T11:14:55.782472465Z"
+    created: "2023-12-14T11:17:40.944395909Z"
     description: The leading tool for querying and visualizing time series and metrics.
-    digest: 53aa6dc46359b3bd1fa3dcc52c12003bf5ded20f4f4d8a7396be4930bb419093
+    digest: 9370fb89fac543579e72da9632dd1f955d3b0db24f0bec4a6f3327ae3fab1e41
     home: https://grafana.net
     icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
     kubeVersion: ^1.8.0-0
@@ -142,17 +142,17 @@ entries:
     - https://github.com/grafana/grafana
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/grafana-6.13.9.tgz
+    - https://91social.github.io/episilia-deploy/release/grafana-6.13.9.tgz
     version: 6.13.9
   redpanda:
   - apiVersion: v2
     appVersion: 21.11.14
-    created: "2023-12-14T11:14:55.782841626Z"
+    created: "2023-12-14T11:17:40.944759768Z"
     description: A Helm chart for Kubernetes
-    digest: 835c753cf7679ad889c48730cb37c8b7a85ade9ec268a2b7dd36b740ae5148e0
+    digest: 6874c12d1e42e114f686021a838a7931f0d8070a4fa08be19e050dd57f67229b
     name: redpanda
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/dev/redpanda-0.1.10.tgz
+    - https://91social.github.io/episilia-deploy/release/redpanda-0.1.10.tgz
     version: 0.1.10
-generated: "2023-12-14T11:14:55.77079623Z"
+generated: "2023-12-14T11:17:40.934601406Z"
