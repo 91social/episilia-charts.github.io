@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "episilia-log-indexer-opt.name" . }}
+  labels:
+    {{- include "episilia-log-indexer-opt.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 9080
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "episilia-log-indexer-opt.selectorLabels" . | nindent 4 }}
