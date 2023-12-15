@@ -51,9 +51,15 @@ spec:
                   name: episilia-config
                   key: kafka.internal.broker.list
             - name: search.fixed.from.yyyymmddhh
-              value: "2023091105"
+              valueFrom:
+                configMapKeyRef:
+                  name: episilia-config
+                  key: search.fixed.from.yyyymmddhh
             - name: search.fixed.to.yyyymmddhh 
-              value: "2023091120"
+              valueFrom:
+                configMapKeyRef:
+                  name: episilia-config
+                  key: search.fixed.to.yyyymmddhh
           resources:
             {{- toYaml .Values.global.tail.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
