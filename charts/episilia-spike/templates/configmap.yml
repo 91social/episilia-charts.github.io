@@ -61,8 +61,8 @@ data:
   search.api.timeout.seconds: {{ .Values.global.search.api.timeout.seconds | quote }}
   search.live.from.hours: {{ .Values.global.search.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.search.live.to.hours | quote }}
-  search.fixed.from.yyyymmddhh: {{.Values.global.fixedSearch.fixed.from.yyyymmddhh}}
-  search.fixed.to.yyyymmddhh: {{.Values.global.fixedSearch.fixed.to.yyyymmddhh}}
+  search.fixed.from.yyyymmddhh: {{.Values.global.fixedSearch.fixed.from.yyyymmddhh | quote }}
+  search.fixed.to.yyyymmddhh: {{.Values.global.fixedSearch.fixed.to.yyyymmddhh | quote }}
   #gateway.api.http.port: {{ .Values.httpport | quote }}
   #gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
   #gateway.search.url: {{ .Values.gatewayurl | quote }}
