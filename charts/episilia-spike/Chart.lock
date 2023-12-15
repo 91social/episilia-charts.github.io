@@ -20,6 +20,9 @@ dependencies:
 - name: episilia-tail
   repository: file://../episilia-tail
   version: 0.2.0
+- name: episilia-tail-fixed
+  repository: file://../episilia-tail-fixed
+  version: 0.2.0
 - name: redpanda
   repository: file://../redpanda
   version: 0.1.10
