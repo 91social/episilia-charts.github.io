@@ -45,9 +45,9 @@ spec:
               name: episilia-config
           env:
             - name: ops.server.mode
-              value: tail
+              value: search
 	    - name: search.mode
-              value: fixed
+              value: "fixed"
             - name: gateway.api.http.port
               value: "9006"
             - name: kafka.metadata.broker.list
