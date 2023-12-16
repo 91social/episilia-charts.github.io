@@ -44,7 +44,7 @@ spec:
           - configMapRef:
               name: episilia-config
           env:
-            - name: ops.server.mode
+	    - name: ops.server.node
               value: tail
             - name: search.mode
               value: "fixed"  
