@@ -46,6 +46,8 @@ spec:
           env:
 	    - name: ops.server.node
               value: tail
+            - name: search.mode
+              value: "fixed"  
             - name: gateway.api.http.port
               value: "9006"
             - name: kafka.metadata.broker.list
