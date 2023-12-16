@@ -34,22 +34,20 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-	  image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-	  ports:
+          ports:
             - name: http
-              containerPort: "9006"
+              containerPort: 9006
               protocol: TCP
           envFrom:
           - configMapRef:
               name: episilia-config
-	  env:
+          env:
             - name: ops.server.mode
               value: tail
-	    - name: search.mode
-              value: "fixed"
             - name: gateway.api.http.port
-              value: "9006"
+              value: "9005"
             - name: kafka.metadata.broker.list
               valueFrom:
                 configMapKeyRef:
