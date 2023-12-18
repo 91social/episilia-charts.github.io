@@ -102,5 +102,5 @@ tail:
   config:
     # provide episilia-search service IP address and port
     gateway.search.url: "episilia-search-fixed:4040"
-    gateway.api.http.port: "9006"
+    gateway.api.http.port: "9005"
     ops.server.mode: "tail"
