@@ -65,7 +65,7 @@ spec:
                 configMapKeyRef:
                   name: episilia-config
                   key: search.fixed.to.yyyymmddhh
-	    - name: ops.work.dir
+            - name: ops.work.dir
               valueFrom:
 	        configMapKeyRef:
 	          name: episilia-config
