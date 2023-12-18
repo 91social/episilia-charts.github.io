@@ -67,20 +67,20 @@ spec:
                   key: search.fixed.to.yyyymmddhh
             - name: ops.work.dir
               valueFrom:
-	        configMapKeyRef:
-	          name: episilia-config
-	          key: ops.work.dir
-	    - name: search.live.from.hours
+	              configMapKeyRef:
+	                name: episilia-config
+	                key: ops.work.dir
+	          - name: search.live.from.hours
               valueFrom:
                 configMapKeyRef:
                   name: episilia-config
                   key: search.live.from.hours
-	    - name: search.live.to.hours
+	          - name: search.live.to.hours
               valueFrom:
                 configMapKeyRef:
                   name: episilia-config
                   key: search.live.to.hours
-	    - name: gateway.search.url
+	          - name: gateway.search.url
               valueFrom:
                 configMapKeyRef:
                   name: episilia-config
