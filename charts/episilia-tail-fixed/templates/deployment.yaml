@@ -81,10 +81,7 @@ spec:
                   name: episilia-config
                   key: search.live.to.hours
             - name: gateway.search.url
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: gateway.search.url    
+              value: episilia-search-fixed:4040    
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.nodeSelector }}
