@@ -1,50 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "episilia-tail.name" . }}
+  name: {{ include "episilia-tail-fixed.fullname" . }}
   labels:
-    {{- include "episilia-tail.labels" . | nindent 4 }}
+    {{- include "episilia-tail-fixed.labels" . | nindent 4 }}
 spec:
-{{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.global.tail.replicaCount }}
-{{- end }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      {{- include "episilia-tail.selectorLabels" . | nindent 6 }}
+      {{- include "episilia-tail-fixed.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
       labels:
-        {{- include "episilia-tail.selectorLabels" . | nindent 8 }}
+        {{- include "episilia-tail-fixed.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "episilia-tail.serviceAccountName" . }}
+      serviceAccountName: {{ include "episilia-tail-fixed.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.tail.image.repository }}:{{ .Values.global.tail.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 9005
+              containerPort: 9006
               protocol: TCP
           envFrom:
-          - configMapRef:
-              name: episilia-config
+            - configMapRef:
+                name: episilia-config
           env:
             - name: ops.server.mode
               value: tail
+            - name: search.mode
+              value: fixed  
             - name: gateway.api.http.port
-              value: "9005"
+              value: "9006"
             - name: kafka.metadata.broker.list
               valueFrom:
                 configMapKeyRef:
@@ -60,8 +65,6 @@ spec:
                 configMapKeyRef:
                   name: episilia-config
                   key: search.fixed.to.yyyymmddhh
-            - name: search.mode
-              value: "live"
             - name: ops.work.dir
               valueFrom:
                 configMapKeyRef:
@@ -78,21 +81,26 @@ spec:
                   name: episilia-config
                   key: search.live.to.hours
             - name: gateway.search.url
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: gateway.search.url
+              value: episilia-search-fixed:4040    
           resources:
-            {{- toYaml .Values.global.tail.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.nodeSelector }}
+          #   volumeMounts:
+          #     {{- toYaml . | nindent 12 }}
+          # {{- end }}
+          # {{- with .Values.volumes }}
+          #   volumes:
+          #     {{- toYaml . | nindent 8 }}
+          # {{- end }}
+          # {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}

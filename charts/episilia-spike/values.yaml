@@ -90,6 +90,7 @@ grafana:
 tags:
   alert: &alert true
   tail: &tail true
+  tail-fixed: &tail-fixed true
 
 global:
   alert:
@@ -248,6 +249,20 @@ global:
     replicaCount: "1"           # kubernetes pod replicas of episilia-tail
     image:
       repository: episilia/tail    # docker image of episilia-tail
+      tag: *release
+    resources:
+      limits:
+        cpu: 500m              # cpu limit on episilia-tail
+        memory: 600Mi         # memory limit on episilia-tail
+      requests:
+        cpu: 300m              # cpu request on episilia-tail        
+        memory: 300Mi          # memory request on episilia-tail    
+
+# tail-fixed server configurations
+  tail-fixed:
+    replicaCount: "1"           # kubernetes pod replicas of episilia-tail
+    image:
+      repository: episilia/tail-fixed    # docker image of episilia-tail
       tag: *release
     resources:
       limits:
