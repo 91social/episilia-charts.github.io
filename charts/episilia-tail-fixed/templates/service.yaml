@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "episilia-tail-fixed.fullname" . }}
+  name: {{ include "episilia-tail-fixed.name" . }}
   labels:
     {{- include "episilia-tail-fixed.labels" . | nindent 4 }}
 {{- with .Values.global.search.annotations }}
