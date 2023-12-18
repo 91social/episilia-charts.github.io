@@ -60,6 +60,28 @@ spec:
                 configMapKeyRef:
                   name: episilia-config
                   key: search.fixed.to.yyyymmddhh
+            - name: search.mode
+              value: "live"
+            - name: ops.work.dir
+              valueFrom:
+                configMapRef:
+                  name: episilia-config
+                  key: ops.work.dir
+            - name: search.live.from.hours
+              valueFrom:
+                configMapRef:
+                  name: episilia-config
+                  key: search.live.from.hours
+            - name: search.live.to.hours
+              valueFrom:
+                configMapRef:
+                  name: episilia-config
+                  key: search.live.to.hours
+            - name: gateway.search.url
+              valueFrom:
+                configMapRef:
+                  name: episilia-config
+                  key: gateway.search.url
           resources:
             {{- toYaml .Values.global.tail.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
