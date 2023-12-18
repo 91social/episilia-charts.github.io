@@ -72,7 +72,7 @@ data:
   ops.license.url: {{ .Values.licenseurl | quote }}
   client.tenant.id: {{ .Values.tenantid | quote }}
   spike.api.grpc.port: {{ .Values.spikeport | quote }}
-  ops.work.dir: {{ .Values.workdir | quote }}
+  #ops.work.dir: {{ .Values.workdir | quote }}
   search.host: {{ .Values.searchhost | quote }}
   pulse.host: {{ .Values.pulsehost | quote }}
   pulse.port: {{ .Values.pulseport | quote }}
