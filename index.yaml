@@ -3,9 +3,9 @@ entries:
   episilia-log-indexer:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.308626859Z"
+    created: "2023-12-18T16:52:55.522226963Z"
     description: Indexing logs
-    digest: 1f327f068fc40a94a405888bd9f1b1daeabf1fdcfe4d5df2d3ff0ce61674ac5e
+    digest: 1212ebae1e3887a780af6b278aaaa6fbe8259f2683c86daf0ec92c9261047c62
     name: episilia-log-indexer
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   episilia-log-indexer-opt:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.308990356Z"
+    created: "2023-12-18T16:52:55.522579896Z"
     description: Optimizing the indexed logs
-    digest: aa9883bc6ac6a1e1b4ba4ca44f919d9b63f198d46c01de254fe83c9b0d6c18fb
+    digest: fbc1582385dd368c853c9e7a62bbfee9ba99ac6c52e28d33f3de1d9fe894d0b3
     name: episilia-log-indexer-opt
     type: application
     urls:
@@ -25,9 +25,9 @@ entries:
   episilia-logwatcher:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.309321764Z"
+    created: "2023-12-18T16:52:55.522925466Z"
     description: Episilia alert and tail server
-    digest: 1a3556ae4ec7120c1790fa9c11b8b01e9c0b18a942b59bb5a0c836234bb75934
+    digest: 24eb58e9890f76726603ad0f4d2170a6c50dacbd64a08e44ace0e5b7ace0da88
     name: episilia-logwatcher
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
   episilia-search:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.309672297Z"
+    created: "2023-12-18T16:52:55.523281806Z"
     description: Search Engine for episilia
-    digest: b39c086200eecb8bc00a1e014bd2d9dff18de28743f9cf2ae56f411182d9b740
+    digest: 27381f1707f46529fd8a62fc63a5107e49c09da7848763fdc8d762fe8f861a1e
     name: episilia-search
     type: application
     urls:
@@ -47,9 +47,9 @@ entries:
   episilia-search-fixed:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.309994727Z"
+    created: "2023-12-18T16:52:55.523608711Z"
     description: Historic Search Engine for episilia
-    digest: eca492940108c117883756316b9ed74fb133520d03d88a2683d92dc4ae90ad16
+    digest: ec8d46393d416972a2dd01ae01350b597cd9d18f6d49f83a31f01793c8cad303
     name: episilia-search-fixed
     type: application
     urls:
@@ -58,7 +58,7 @@ entries:
   episilia-spike:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.316102194Z"
+    created: "2023-12-18T16:52:55.528654927Z"
     dependencies:
     - condition: episilia-log-indexer.enabled
       name: episilia-log-indexer
@@ -105,7 +105,7 @@ entries:
       repository: file://../grafana
       version: 6.13.9
     description: A Helm chart for Kubernetes
-    digest: 9ccec99bc6ea9ddee03b6beb9efac3dff9353b62214f46c9be71017d2b7170f9
+    digest: 6e640a609c0847cea15cf50eb8898314fca884abff232eaa230a5a0a6379485b
     name: episilia-spike
     type: application
     urls:
@@ -114,9 +114,9 @@ entries:
   episilia-spike-ui:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.31663671Z"
+    created: "2023-12-18T16:52:55.529023309Z"
     description: A Helm chart for Kubernetes
-    digest: 5a6e21b057db543cca90854b7917d766d0be70087b8bba12cb33e0133fc5e145
+    digest: 153bc2212cc836d107532210f6b857f309740caf3b42db333de929b76e093f86
     name: episilia-spike-ui
     type: application
     urls:
@@ -125,9 +125,9 @@ entries:
   episilia-tail:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.316971904Z"
+    created: "2023-12-18T16:52:55.535569447Z"
     description: Tail searver for episilia
-    digest: 073775b6af0b9020c6471622a8fa4f99b6330665a2923a4c4e758f8051d52b56
+    digest: 6d30482c5c4dc48a6d5252c7291a2af12758112baab5cd4f027db2d23f571f64
     name: episilia-tail
     type: application
     urls:
@@ -136,9 +136,9 @@ entries:
   episilia-tail-fixed:
   - apiVersion: v2
     appVersion: 2.1.0
-    created: "2023-12-18T16:19:03.317321486Z"
+    created: "2023-12-18T16:52:55.536296784Z"
     description: A Helm chart for Kubernetes
-    digest: 41bf39e3f421720b31bc2ce7f0da4f06aadf0d271dfba6dd0bed6f5cf0feb14c
+    digest: 042c144ae8082aeaa47a2aaf5c960f4b177fd03c33f3c1d0eac018eab3d3e240
     name: episilia-tail-fixed
     type: application
     urls:
@@ -147,9 +147,9 @@ entries:
   grafana:
   - apiVersion: v2
     appVersion: 8.0.5
-    created: "2023-12-18T16:19:03.318949418Z"
+    created: "2023-12-18T16:52:55.53814079Z"
     description: The leading tool for querying and visualizing time series and metrics.
-    digest: 741ce31a9cda5b17b35d515040cb5ee2869bf3de5011fd18a7259140a3e681c9
+    digest: 1caeb34a5ff325721fc82d60885bf2eaa7451174b603d355dab7dd9e2e9b0331
     home: https://grafana.net
     icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
     kubeVersion: ^1.8.0-0
@@ -163,12 +163,12 @@ entries:
   redpanda:
   - apiVersion: v2
     appVersion: 21.11.14
-    created: "2023-12-18T16:19:03.319300112Z"
+    created: "2023-12-18T16:52:55.538496649Z"
     description: A Helm chart for Kubernetes
-    digest: 89d09b6a0f7a394f5e356e8f7afc0a365457356198c8268773b248150aa0a0df
+    digest: b20626993505bf3bf01a12eda1da8c4b0317e19e0a76e1e05617f32eeb536b48
     name: redpanda
     type: application
     urls:
     - https://91social.github.io/episilia-deploy/redpanda-0.1.10.tgz
     version: 0.1.10
-generated: "2023-12-18T16:19:03.308121207Z"
+generated: "2023-12-18T16:52:55.521695559Z"

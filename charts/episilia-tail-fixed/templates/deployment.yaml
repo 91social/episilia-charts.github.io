@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "episilia-tail-fixed.fullname" . }}
+  name: {{ include "episilia-tail-fixed.name" . }}
   labels:
     {{- include "episilia-tail-fixed.labels" . | nindent 4 }}
 spec:
