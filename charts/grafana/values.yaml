@@ -452,7 +452,7 @@ datasources:
       isDefault: false
     - name: Episilia-historic-search
       type: loki
-      url: episilia-episilia-tail-fixed:9006
+      url: episilia-tail-fixed:9006
       access: proxy
       isDefault: false
     - name: Episilia-tail
