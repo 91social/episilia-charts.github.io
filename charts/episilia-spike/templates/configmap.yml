@@ -66,17 +66,17 @@ data:
   #gateway.api.http.port: {{ .Values.httpport | quote }}
   #gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
   #gateway.search.url: {{ .Values.gatewayurl | quote }}
-  ops.log.debug: {{ .Values.debug | quote }}
-  search.api.grpc.port: {{ .Values.grpcport | quote }}
-  search.api.response.max.mb: {{ .Values.maxmb | quote }}
-  ops.license.url: {{ .Values.licenseurl | quote }}
-  client.tenant.id: {{ .Values.tenantid | quote }}
-  spike.api.grpc.port: {{ .Values.spikeport | quote }}
-  #ops.work.dir: {{ .Values.workdir | quote }}
-  search.host: {{ .Values.searchhost | quote }}
-  pulse.host: {{ .Values.pulsehost | quote }}
-  pulse.port: {{ .Values.pulseport | quote }}
-  search.labels.exclude: "time"
+  # ops.log.debug: {{ .Values.debug | quote }}
+  # search.api.grpc.port: {{ .Values.grpcport | quote }}
+  # search.api.response.max.mb: {{ .Values.maxmb | quote }}
+  # ops.license.url: {{ .Values.licenseurl | quote }}
+  # client.tenant.id: {{ .Values.tenantid | quote }}
+  # spike.api.grpc.port: {{ .Values.spikeport | quote }}
+  # #ops.work.dir: {{ .Values.workdir | quote }}
+  # search.host: {{ .Values.searchhost | quote }}
+  # pulse.host: {{ .Values.pulsehost | quote }}
+  # pulse.port: {{ .Values.pulseport | quote }}
+  # search.labels.exclude: "time"
   gateway.api.http.port: "9002"
   gateway.search.timeout.seconds: "120"
   gateway.search.url: "episilia-search:4040"
