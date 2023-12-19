@@ -45,9 +45,9 @@ spec:
                 name: episilia-config
           env:
             - name: ops.server.mode
-              value: tail
+              value: "tail"
             - name: search.mode
-              value: fixed  
+              value: "fixed"
             - name: gateway.api.http.port
               value: "9006"
             - name: kafka.metadata.broker.list
@@ -56,35 +56,16 @@ spec:
                   name: episilia-config
                   key: kafka.internal.broker.list
             - name: search.fixed.from.yyyymmddhh
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: search.fixed.from.yyyymmddhh
+              value: "{{.Values.global.fixedSearch.fixed.from.yyyymmddhh}}"
             - name: search.fixed.to.yyyymmddhh 
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: search.fixed.to.yyyymmddhh
+              value: "{{.Values.global.fixedSearch.fixed.to.yyyymmddhh}}"
             - name: ops.work.dir
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: ops.work.dir
-            - name: search.live.from.hours
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: search.live.from.hours
-            - name: search.live.to.hours
-              valueFrom:
-                configMapKeyRef:
-                  name: episilia-config
-                  key: search.live.to.hours
+              value: "{{.Values.global.persistence.mountPath}}"
             - name: gateway.search.url
               value: episilia-search-fixed:4040    
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.global.fixedSearch.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
           #   volumeMounts:
           #     {{- toYaml . | nindent 12 }}
           # {{- end }}
