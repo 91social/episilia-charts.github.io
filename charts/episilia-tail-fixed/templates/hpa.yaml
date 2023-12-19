@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "episilia-tail-fixed.fullname" . }}
+  name: {{ include "episilia-tail-fixed.name" . }}
   labels:
     {{- include "episilia-tail-fixed.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "episilia-tail-fixed.fullname" . }}
+    name: {{ include "episilia-tail-fixed.name" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
