@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "episilia-tail-fixed.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "episilia-tail-fixed.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "episilia-tail-fixed.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

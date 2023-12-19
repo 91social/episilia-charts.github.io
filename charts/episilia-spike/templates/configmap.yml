@@ -91,3 +91,4 @@ data:
   pulse.host: "dev-api-pulse.episilia.net"
   pulse.port: "50051"
   search.labels.exclude: "@timestamp,log"
+  search.ops.index.cache.resetonstart: "true"
