@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "episilia-spike.name" . }}
+  labels:
+    {{- include "episilia-spike.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  ports:
+    - name: service
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: grpc
+      protocol: TCP
+      port: 50051
+      targetPort: 50051
+    - name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP
+  selector:
+    {{- include "episilia-spike.selectorLabels" . | nindent 4 }}
