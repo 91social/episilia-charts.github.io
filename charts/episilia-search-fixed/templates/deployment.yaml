@@ -53,7 +53,7 @@ spec:
             - name: search.mode
               value: "fixed"
           volumeMounts:
-          - name: {{ template "episilia-search.name" . }}
+          - name: {{ template "episilia-search.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"
           resources:
             {{- toYaml .Values.global.fixedSearch.resources | nindent 12 }}
