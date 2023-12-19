@@ -30,4 +30,4 @@ dependencies:
   repository: file://../grafana
   version: 6.13.9
 digest: sha256:2eb86bf8bf83f19ca2c0a9977857b59f137e776985007273155f2c44d4d7a001
-generated: "2023-12-19T07:06:27.546509756Z"
+generated: "2023-12-19T07:10:03.738003553Z"
