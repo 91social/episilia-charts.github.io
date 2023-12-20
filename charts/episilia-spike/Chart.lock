@@ -1,0 +1,30 @@
+dependencies:
+- name: episilia-log-indexer
+  repository: file://../episilia-log-indexer
+  version: 0.2.0
+- name: episilia-search
+  repository: file://../episilia-search
+  version: 0.2.0
+- name: episilia-search-fixed
+  repository: file://../episilia-search-fixed
+  version: 0.2.0
+- name: episilia-log-indexer-opt
+  repository: file://../episilia-log-indexer-opt
+  version: 0.2.0
+- name: episilia-spike-ui
+  repository: file://../episilia-spike-ui
+  version: 0.2.0
+- name: episilia-logwatcher
+  repository: file://../episilia-logwatcher
+  version: 0.2.0
+- name: episilia-tail
+  repository: file://../episilia-tail
+  version: 0.2.0
+- name: redpanda
+  repository: file://../redpanda
+  version: 0.1.10
+- name: grafana
+  repository: file://../grafana
+  version: 6.13.9
+digest: sha256:986d863d726750d447b362a8b325989a7a7b52ae9075af4c585e819415346994
+generated: "2023-12-08T13:07:30.341649176+05:30"
