@@ -3,8 +3,8 @@ name: Deploy Helm Charts
 on:
   push:
     branches:
-      - main
-      # - develop
+      # - main
+      - develop
       
 jobs:
   lint:
@@ -94,7 +94,7 @@ jobs:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public/release
 
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
 
   # deploy_develop:
   #   runs-on: ubuntu-latest
