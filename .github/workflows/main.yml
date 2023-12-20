@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - main
 
 
 jobs:
@@ -112,7 +113,7 @@ jobs:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public/release
   
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
 
           
   deploy_develop:
