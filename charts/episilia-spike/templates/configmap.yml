@@ -51,6 +51,8 @@ data:
   kafka.indexer.broker.sasl.mechanism: {{ .Values.global.kafka.indexer.broker.sasl.mechanism | quote }}
   kafka.indexer.broker.sasl.username: {{ .Values.global.kafka.indexer.broker.sasl.username | quote }}
   kafka.indexer.broker.sasl.password: {{ .Values.global.kafka.indexer.broker.sasl.password | quote }}
+  kafka.indexer.broker.rack.aware: {{ .Values.global.kafka.indexer.broker.rack.aware | quote }}
+  kafka.indexer.broker.rack.client: {{ .Values.global.kafka.indexer.broker.rack.client | quote }}  
   kafka.internal.broker.list: {{ .Values.global.kafka.internal.broker.list | quote }}
   kafka.topic.alert.response.out: {{ .Values.global.kafka.topic.alert.response.out | quote }}
   kafka.topic.tail.request.in: {{ .Values.global.kafka.topic.tail.request.in | quote }}
