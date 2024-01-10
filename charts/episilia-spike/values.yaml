@@ -138,6 +138,9 @@ global:
           mechanism: SCRAM-SHA-512
           username: episilia
           password: episilia123
+        rack:
+          aware: false   #for rack awareness make it true
+          client: ""     # zone ID (eg: aps1-az1, aps1-az2)
       logs:
         topics: logs   #topic need to be changed
       group: episilia-indexer-group
