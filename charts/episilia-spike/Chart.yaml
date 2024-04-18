@@ -39,11 +39,7 @@ dependencies:
 #   version: *version
 #   repository: "file://../episilia-tail-fixed"
 #   tags:
-#     - tail-fixed
-- name: episilia-tail-fixed
-  version: *version
-  repository: "file://../episilia-tail-fixed"
-  condition: episilia-tail-fixed.enabled
+#     - tail
 - name: redpanda
   version: 0.1.10
   repository: "file://../redpanda"

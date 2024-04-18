@@ -68,7 +68,7 @@ affinity: {}
 
 
 redpanda:
-  enabled: &redpanda false
+  enabled: &redpanda true
 episilia-log-indexer:
   enabled: true
 
@@ -82,7 +82,7 @@ episilia-log-indexer-opt:
   enabled: false
 
 episilia-spike-ui:
-  enabled: false
+  enabled: true
 
 grafana:
   enabled: false
@@ -90,7 +90,6 @@ grafana:
 tags:
   alert: &alert true
   tail: &tail true
-  tail-fixed: &tail-fixed false
 
 global:
   alert:
@@ -138,9 +137,6 @@ global:
           mechanism: SCRAM-SHA-512
           username: episilia
           password: episilia123
-        rack:
-          aware: "false"   # for rack awareness make it true
-          client: ""     # zone ID (eg: aps1-az1, aps1-az2)
       logs:
         topics: logs   #topic need to be changed
       group: episilia-indexer-group
@@ -192,10 +188,10 @@ global:
     schema:
       appid:
         fixed: "defaultApp"      # If appid is a fixed string
-        keys: "app_id"   # label(s) for app identifier
+        keys: "project.app_id"   # label(s) for app identifier
       tenantid:        
         fixed: "defaultTenant"   # If tenantid is a fixed string  
-        keys: "tenant_id"                 # label(s) for tenant identifier        
+        keys: "test"                 # label(s) for tenant identifier        
       message:
         key: "log"               # actual log message key
       timestamp:
@@ -260,20 +256,6 @@ global:
       requests:
         cpu: 300m              # cpu request on episilia-tail        
         memory: 300Mi          # memory request on episilia-tail    
-
-# tail-fixed server configurations
-  tail-fixed:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-tail-fixed
-    image:
-      repository: episilia/tail    # docker image of episilia-tail
-      tag: *release
-    resources:
-      limits:
-        cpu: 500m              # cpu limit on episilia-tail-fixed
-        memory: 600Mi         # memory limit on episilia-tail-fixed
-      requests:
-        cpu: 300m              # cpu request on episilia-tail-fixed        
-        memory: 300Mi          # memory request on episilia-tail-fixed    
 
 # spike ui server configurations
   spike-ui:
@@ -379,8 +361,8 @@ global:
     storageClassName: gp2     # storage class name (differs on the cloud services that are used)
     accessModes:
     - ReadWriteOnce                             # access modes
-    size: "10Gi"                                # size of PVC which will be mounted to episilia-search for live search
-    historicSize: "5Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    size: "4Gi"                                # size of PVC which will be mounted to episilia-search for live search
+    historicSize: "2Gi"                        # size of PVC which will be mounted to episilia-search for historic search
     # annotations: {}
     finalizers:
      - kubernetes.io/pvc-protection

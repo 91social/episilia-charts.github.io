@@ -346,7 +346,7 @@ global:
     accessModes:
     - ReadWriteOnce                             # access modes
     size: "4Gi"                                # size of PVC which will be mounted to episilia-search for live search
-    historicSize: "4Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    historicSize: "2Gi"                        # size of PVC which will be mounted to episilia-search for historic search
     # annotations: {}
     finalizers:
      - kubernetes.io/pvc-protection
