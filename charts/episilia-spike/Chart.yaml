@@ -16,6 +16,10 @@ dependencies:
   version: *version
   repository: "file://../episilia-search-fixed"
   condition: episilia-search-fixed.enabled
+- name: episilia-search-ondemand
+  version: *version
+  repository: "file://../episilia-search-ondemand"
+  condition: episilia-search-ondemand.enabled
 - name: episilia-log-indexer-opt
   version: *version
   repository: "file://../episilia-log-indexer-opt"
