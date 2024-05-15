@@ -69,7 +69,7 @@ livenessProbe:
 
 image:
   repository: grafana/grafana
-  tag: 10.4.2
+  tag: 8.0.5
   sha: ""
   pullPolicy: IfNotPresent
 
@@ -452,7 +452,7 @@ datasources:
       isDefault: false
     - name: Episilia-historic-search
       type: loki
-      url: episilia-gateway-fixed:9006
+      url: episilia-tail-fixed:9006
       access: proxy
       isDefault: false
     - name: Episilia-tail
