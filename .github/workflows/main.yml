@@ -3,7 +3,7 @@ name: Helm Deployment
 on:
   push:
     branches:
-      - sowmyaa
+      - v3
       # - develop
 
 jobs:
@@ -109,6 +109,6 @@ jobs:
       with:
         personal_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: .
-      if: github.ref == 'refs/heads/sowmyaa'
+      if: github.ref == 'refs/heads/v3'
 
   
