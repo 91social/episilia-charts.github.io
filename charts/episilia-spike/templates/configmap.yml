@@ -51,6 +51,8 @@ data:
   kafka.indexer.broker.sasl.mechanism: {{ .Values.global.kafka.indexer.broker.sasl.mechanism | quote }}
   kafka.indexer.broker.sasl.username: {{ .Values.global.kafka.indexer.broker.sasl.username | quote }}
   kafka.indexer.broker.sasl.password: {{ .Values.global.kafka.indexer.broker.sasl.password | quote }}
+  kafka.indexer.broker.rack.aware: {{ .Values.global.kafka.indexer.broker.rack.aware | quote }}
+  kafka.indexer.broker.rack.client: {{ .Values.global.kafka.indexer.broker.rack.client | quote }}  
   kafka.internal.broker.list: {{ .Values.global.kafka.internal.broker.list | quote }}
   kafka.topic.alert.response.out: {{ .Values.global.kafka.topic.alert.response.out | quote }}
   kafka.topic.tail.request.in: {{ .Values.global.kafka.topic.tail.request.in | quote }}
@@ -61,6 +63,8 @@ data:
   search.api.timeout.seconds: {{ .Values.global.search.api.timeout.seconds | quote }}
   search.live.from.hours: {{ .Values.global.search.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.search.live.to.hours | quote }}
+  search.fixed.from.yyyymmddhh: {{.Values.global.fixedSearch.fixed.from.yyyymmddhh | quote }}
+  search.fixed.to.yyyymmddhh: {{.Values.global.fixedSearch.fixed.to.yyyymmddhh | quote }}
   #gateway.api.http.port: {{ .Values.httpport | quote }}
   #gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
   #gateway.search.url: {{ .Values.gatewayurl | quote }}
@@ -70,7 +74,7 @@ data:
   ops.license.url: {{ .Values.licenseurl | quote }}
   client.tenant.id: {{ .Values.tenantid | quote }}
   spike.api.grpc.port: {{ .Values.spikeport | quote }}
-  ops.work.dir: {{ .Values.workdir | quote }}
+  #ops.work.dir: {{ .Values.workdir | quote }}
   search.host: {{ .Values.searchhost | quote }}
   pulse.host: {{ .Values.pulsehost | quote }}
   pulse.port: {{ .Values.pulseport | quote }}
@@ -89,3 +93,4 @@ data:
   pulse.host: "dev-api-pulse.episilia.net"
   pulse.port: "50051"
   search.labels.exclude: "@timestamp,log"
+  search.ops.index.cache.resetonstart: "true"

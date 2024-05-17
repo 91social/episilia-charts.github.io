@@ -69,7 +69,7 @@ livenessProbe:
 
 image:
   repository: grafana/grafana
-  tag: 10.4.2
+  tag: 8.0.5
   sha: ""
   pullPolicy: IfNotPresent
 
@@ -137,7 +137,7 @@ podPortName: grafana
 # annotations: {}
 
 ## Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
-## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it
+## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
 ## ref: http://kubernetes.io/docs/user-guide/services/
 ##
 service:
@@ -452,7 +452,7 @@ datasources:
       isDefault: false
     - name: Episilia-historic-search
       type: loki
-      url: episilia-gateway-fixed:9006
+      url: episilia-tail-fixed:9006
       access: proxy
       isDefault: false
     - name: Episilia-tail
