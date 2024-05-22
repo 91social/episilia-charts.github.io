@@ -59,7 +59,7 @@ entries:
   - apiVersion: v2
     appVersion: 2.1.0
     created: "2024-05-15T14:20:55.345632017+05:30"
-    description: Search Ondemand Engine for episilia
+    description: Search On demand Engine for episilia
     digest: c882c492f23c59ec24d70a8520d5d93ba48032d4ce9247468a352f01ab6c3edb
     name: episilia-search-ondemand
     type: application
