@@ -78,6 +78,9 @@ episilia-search:
 episilia-search-fixed:
   enabled: false
 
+episilia-search-ondemand:
+  enabled: false
+
 episilia-log-indexer-opt:
   enabled: false
 
@@ -319,6 +322,35 @@ global:
     labels:
       display.max.count: "400"
       exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+  #config for search-ondemand engine
+  ondemand:
+    replicaCount: "1"                        # kubernetes pod replicas of episilia-search-ondemand
+    resources:
+      limits:
+        cpu: "1"                             # cpu limit on episilia-search-ondemand
+        memory: 2048Mi                       # memory limit on episilia-search-ondemand
+      requests:
+        cpu: 500m                            # cpu request on episilia-search-ondemand
+        memory: 600Mi                     # memory request on episilia-search-ondemand
+
+    prewarm:
+      enabled: "true"
+      # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
+      from:
+        hours: "2"                           # hours from when the required labels should be loaded
+      to:
+        hours: "0"                            # hours till when the required labels should be loaded
+      from:
+        yyyymmddhh: "2023102100"    # the date from when the required labels should be loaded (YYYYMMDDHH)
+      to:
+        yyyymmddhh: "2023102100"    # the date till when the required labels should be loaded (YYYYMMDDHH)
+
+    labels:
+      display.max.count: "400"
+      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+
+
 
   #config for historic search engine
   fixedSearch:
