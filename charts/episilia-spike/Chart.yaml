@@ -16,10 +16,6 @@ dependencies:
   version: *version
   repository: "file://../episilia-search-fixed"
   condition: episilia-search-fixed.enabled
-- name: episilia-search-ondemand
-  version: *version
-  repository: "file://../episilia-search-ondemand"
-  condition: episilia-search-ondemand.enabled
 - name: episilia-log-indexer-opt
   version: *version
   repository: "file://../episilia-log-indexer-opt"
@@ -43,11 +39,7 @@ dependencies:
 #   version: *version
 #   repository: "file://../episilia-tail-fixed"
 #   tags:
-#     - tail-fixed
-- name: episilia-tail-fixed
-  version: *version
-  repository: "file://../episilia-tail-fixed"
-  condition: episilia-tail-fixed.enabled
+#     - tail
 - name: redpanda
   version: 0.1.10
   repository: "file://../redpanda"
