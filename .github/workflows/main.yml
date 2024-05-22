@@ -74,7 +74,7 @@ jobs:
 
     - name: Helm Repo Index
       run: |
-        helm repo index --url https://91social.github.io/episilia-deploy/ .
+        helm repo index --url https://episilia.github.io/episilia-deploy/ .
       shell: bash
 
     # - name: Move index.yaml and .tgz files
@@ -89,7 +89,7 @@ jobs:
     #   shell: bash
 
     # - name: Print Deployment URL
-    #   run: echo "https://91social.github.io/episilia-deploy/"
+    #   run: echo "https://episilia.github.io/episilia-deploy/"
     #   shell: bash
 
     # - name: List Files
