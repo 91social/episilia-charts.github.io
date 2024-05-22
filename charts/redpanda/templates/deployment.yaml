@@ -75,7 +75,7 @@ spec:
             runAsGroup: 101
       containers:
         - name: redpanda
-          image: vectorized/redpanda:latest
+          image: vectorized/redpanda:v23.2.10
           command:
             - /usr/bin/rpk
           args:

@@ -8,6 +8,9 @@ dependencies:
 - name: episilia-search-fixed
   repository: file://../episilia-search-fixed
   version: 0.2.0
+- name: episilia-search-ondemand
+  repository: file://../episilia-search-ondemand
+  version: 0.2.0
 - name: episilia-log-indexer-opt
   repository: file://../episilia-log-indexer-opt
   version: 0.2.0
@@ -20,11 +23,14 @@ dependencies:
 - name: episilia-tail
   repository: file://../episilia-tail
   version: 0.2.0
+- name: episilia-tail-fixed
+  repository: file://../episilia-tail-fixed
+  version: 0.2.0
 - name: redpanda
   repository: file://../redpanda
   version: 0.1.10
 - name: grafana
   repository: file://../grafana
   version: 6.13.9
-digest: sha256:986d863d726750d447b362a8b325989a7a7b52ae9075af4c585e819415346994
-generated: "2023-12-08T13:07:30.341649176+05:30"
+digest: sha256:c37bdefde624f773972517e60604426ae232115205e847d5026f02f266a19d09
+generated: "2024-05-15T14:19:51.288689534+05:30"
