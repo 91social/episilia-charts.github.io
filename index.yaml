@@ -9,7 +9,7 @@ entries:
     name: episilia-log-indexer
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-log-indexer-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-log-indexer-0.2.0.tgz
     version: 0.2.0
   episilia-log-indexer-opt:
   - apiVersion: v2
@@ -20,7 +20,7 @@ entries:
     name: episilia-log-indexer-opt
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-log-indexer-opt-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-log-indexer-opt-0.2.0.tgz
     version: 0.2.0
   episilia-logwatcher:
   - apiVersion: v2
@@ -31,7 +31,7 @@ entries:
     name: episilia-logwatcher
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-logwatcher-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-logwatcher-0.2.0.tgz
     version: 0.2.0
   episilia-search:
   - apiVersion: v2
@@ -42,7 +42,7 @@ entries:
     name: episilia-search
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-search-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-search-0.2.0.tgz
     version: 0.2.0
   episilia-search-fixed:
   - apiVersion: v2
@@ -53,18 +53,18 @@ entries:
     name: episilia-search-fixed
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-search-fixed-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-search-fixed-0.2.0.tgz
     version: 0.2.0
   episilia-search-ondemand:
   - apiVersion: v2
     appVersion: 2.1.0
     created: "2024-05-15T14:20:55.345632017+05:30"
-    description: Search Ondemand Engine for episilia
+    description: Search On demand Engine for episilia
     digest: c882c492f23c59ec24d70a8520d5d93ba48032d4ce9247468a352f01ab6c3edb
     name: episilia-search-ondemand
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-search-ondemand-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-search-ondemand-0.2.0.tgz
     version: 0.2.0
   episilia-spike:
   - apiVersion: v2
@@ -123,7 +123,7 @@ entries:
     name: episilia-spike
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-spike-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-spike-0.2.0.tgz
     version: 0.2.0
   episilia-spike-ui:
   - apiVersion: v2
@@ -134,7 +134,7 @@ entries:
     name: episilia-spike-ui
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-spike-ui-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-spike-ui-0.2.0.tgz
     version: 0.2.0
   episilia-tail:
   - apiVersion: v2
@@ -145,7 +145,7 @@ entries:
     name: episilia-tail
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-tail-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-tail-0.2.0.tgz
     version: 0.2.0
   episilia-tail-fixed:
   - apiVersion: v2
@@ -156,7 +156,7 @@ entries:
     name: episilia-tail-fixed
     type: application
     urls:
-    - https://91social.github.io/episilia-deploy/episilia-tail-fixed-0.2.0.tgz
+    - https://episilia.github.io/episilia-deploy/episilia-tail-fixed-0.2.0.tgz
     version: 0.2.0
   grafana:
   - apiVersion: v2
