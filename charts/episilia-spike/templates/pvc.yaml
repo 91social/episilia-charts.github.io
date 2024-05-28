@@ -1,0 +1,33 @@
+{{- if and .Values.global.persistence.enabled (not .Values.global.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "episilia-spike.name" . }}
+  #namespace: {{ template "episilia-search.name" . }}
+  labels:
+    {{- include "episilia-spike.labels" . | nindent 4 }}
+  {{- with .Values.global.persistence.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+  {{- with .Values.global.persistence.finalizers  }}
+  finalizers:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    {{- range .Values.global.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.global.persistence.size | quote }}
+  {{- if .Values.global.persistence.storageClassName }}
+  storageClassName: {{ .Values.global.persistence.storageClassName }}
+  {{- end -}}
+  {{- with .Values.global.persistence.selectorLabels }}
+  selector:
+    matchLabels:
+{{ toYaml . | indent 6 }}
+  {{- end }}
+{{- end }}

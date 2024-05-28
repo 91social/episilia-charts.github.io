@@ -75,7 +75,7 @@ resources:
 ## Persist data to a persitent volume
 persistence:
   type: pvc
-#enabled: true
+  enabled: true
 # storageClassName: do-block-storage 
 # accessModes:
 # - ReadWriteOnce

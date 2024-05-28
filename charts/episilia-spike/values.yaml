@@ -30,7 +30,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP 
+  type: NodePort 
 
 ingress:
   enabled: false
@@ -65,6 +65,7 @@ tolerations: []
 affinity: {}
 
 # To enable the required servers. Note: episilia-log-indexer, episilia-search should be enabled for Episilia to work.
+
 
 
 redpanda:
@@ -107,6 +108,12 @@ global:
       key: episilia
     tenant:
         id: episilia
+  login:
+    mode: local
+  
+  JVM_MAX_SIZE: 1536m
+  JVM_NEWGEN_MIN_SIZE: 800m
+  JVM_NEWGEN_MAX_SIZE: 900m
 
   kafka:
     group:
@@ -122,6 +129,8 @@ global:
         optimized: optfiles
       optimize:
         request: stagefolder
+      s3logs:
+        files: s3logs
       
       tail:
         request:
@@ -143,7 +152,7 @@ global:
           password: episilia123
         rack:
           aware: "false"   # for rack awareness make it true
-          client: ""     # zone ID (eg: aps1-az1, aps1-az2)
+
       logs:
         topics: logs   #topic need to be changed
       group: episilia-indexer-group
@@ -152,6 +161,7 @@ global:
     internal:
       broker:
         list: redpanda:9092
+  
     
 
 
@@ -176,6 +186,10 @@ global:
         prefix: s3://
       useArn: false
       assumeRole: ""    # ARN role
+      sourcefolder: sourcefolder
+    s3logs:
+      enabled: true  # to load logs from s3 bucket
+    
 
   indexer:
     image:
@@ -209,12 +223,37 @@ global:
 
     logs:
       source: kafka         # source: kafka  # s3 or kafka
+
+    tail:
+      enable: "true"
+    alert:
+      enable: "false"
+      rules:
+        file:
+          url: "s3 path after s3.bucket and s3.folder"
+      prometheus:
+        gateway: localhost:5070  
     
     ops:
       alert:
         enable: "false"
       tail:
         enable: "true"
+      pause: 
+        consume:                                      #pauses injest at the below thresholds
+          file:
+           max:
+             count: "100"                                # applicable for file messages
+          record:
+            max:
+              count: "500000"                           # applicable for log messages
+            size:
+              max: 
+                mb: "100"                            # applicable for log messages
+      s3:
+        reader:
+          enable: "false"
+      
   #optimizer server configuration
       
   optimizer:

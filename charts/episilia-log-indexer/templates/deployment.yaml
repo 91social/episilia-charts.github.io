@@ -24,15 +24,31 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "episilia-log-indexer.serviceAccountName" . }}
+      serviceAccountName: {{ include "episilia-log-indexer.name" . }}
+      volumes:
+      - name: node-info
+        emptyDir: {}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - episilia-log-indexer
+            topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.global.indexer.image.repository }}:{{ .Values.global.indexer.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - mountPath: /node
+              name: node-info
           ports:
             - name: http
               containerPort: 9090
@@ -41,8 +57,33 @@ spec:
           - configMapRef:
               name: episilia-config
           env:
-          - name: ops.server.mode
-            value: indexer
+            - name: RES_CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: requests.cpu
+            - name: RES_CPU_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: limits.cpu
+            - name: RES_MEM_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: requests.memory
+            - name: RES_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: limits.memory
+            - name: SCRIPT
+              value: "set -eo pipefail\napt update && apt install jq curl -y\ncurl http://169.254.169.254/latest/meta-data/placement/availability-zone-id/
+                > /node/zone\nNODE_ZONE=$(cat /node/zone)\necho \"export NODE_ZONE=${NODE_ZONE}\"
+                > /node/zoneid\nNODE_ZONE=$NODE_ZONE episilia_log_indexer \n"
+          command: ["/bin/bash", "-c"]
+          args:
+            - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
 
           resources:
             {{- toYaml .Values.global.indexer.resources | nindent 12 }}
@@ -58,3 +99,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
