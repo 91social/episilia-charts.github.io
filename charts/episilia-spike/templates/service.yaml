@@ -14,8 +14,8 @@ spec:
   ports:
     - name: service
       protocol: TCP
-      port: 80
-      targetPort: 8080
+      port: 9090
+      targetPort: 9090
     - name: grpc
       protocol: TCP
       port: 50051

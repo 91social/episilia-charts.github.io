@@ -7,6 +7,8 @@ data:
   client.env: {{ .Values.global.client.env | quote }}
   client.id: {{ .Values.global.client.id | quote }}
   client.license.key: {{ .Values.global.client.license.key | quote }}
+  #client.release.version: release.1
+  datastore.s3logs: s3logs
   datastore.stores.cache.enabled: "false"
   datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
   datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
@@ -28,8 +30,24 @@ data:
   datastore.stores.final.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
   datastore.stores.final.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
   datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
+  datastore.stores.s3logs.enabled: {{ .Values.global.datastore.s3logs.enabled| quote }}
+  datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
+  datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
+  datastore.stores.s3logs.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
+  datastore.stores.s3logs.s3.region: {{ .Values.global.datastore.s3.region | quote }}
+  datastore.stores.s3logs.s3.bucket: {{ .Values.global.datastore.s3.bucket | quote }}
+  datastore.stores.s3logs.s3.folder: {{ .Values.global.datastore.s3.folder | quote }}
+  datastore.stores.s3logs.s3.sign.payload: {{ .Values.global.datastore.s3.sign.payload | quote }}
+  datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
+  datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
+  datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
+  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3.assumeRole | quote }}
   indexer.ops.alert.enable: {{ .Values.global.indexer.ops.alert.enable | quote }}
   indexer.ops.tail.enable: {{ .Values.global.indexer.ops.tail.enable | quote }}
+  indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
+  indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
+  indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}
+  indexer.ops.s3.reader.enable: {{ .Values.global.indexer.ops.s3.reader.enable | quote }}
   indexer.schema.appid.fixed: {{ .Values.global.indexer.schema.appid.fixed | quote }}
   indexer.schema.appid.keys: {{ .Values.global.indexer.schema.appid.keys | quote }}
   indexer.schema.tenantid.fixed: {{ .Values.global.indexer.schema.tenantid.fixed | quote }}
@@ -38,6 +56,11 @@ data:
   indexer.schema.message.key: {{ .Values.global.indexer.schema.message.key | quote }}
   indexer.schema.timestamp.formats: {{ .Values.global.indexer.schema.timestamp.formats | quote }}
   indexer.schema.timestamp.key: {{ .Values.global.indexer.schema.timestamp.key | quote }}
+  indexer.tail.enable: {{.Values.global.indexer.tail.enable | quote }}
+  indexer.alert.enable: {{.Values.global.indexer.alert.enable | quote }}
+  indexer.logs.source: {{.Values.global.indexer.logs.source | quote }}
+  indexer.alert.rules.file.url: {{.Values.global.indexer.alert.rules.file.url | quote }}
+  indexer.alert.prometheus.gateway: {{.Values.global.indexer.alert.prometheus.gateway | quote }}
   kafka.group.spike: {{ .Values.global.kafka.group.spike | quote }}
   kafka.group.search: {{ .Values.global.kafka.group.search | quote }}
   kafka.indexer.group: {{ .Values.global.kafka.indexer.group | quote }}
@@ -52,7 +75,7 @@ data:
   kafka.indexer.broker.sasl.username: {{ .Values.global.kafka.indexer.broker.sasl.username | quote }}
   kafka.indexer.broker.sasl.password: {{ .Values.global.kafka.indexer.broker.sasl.password | quote }}
   kafka.indexer.broker.rack.aware: {{ .Values.global.kafka.indexer.broker.rack.aware | quote }}
-  kafka.indexer.broker.rack.client: {{ .Values.global.kafka.indexer.broker.rack.client | quote }}  
+  #kafka.indexer.broker.rack.client: {{ .Values.global.kafka.indexer.broker.rack.client | quote }}  
   kafka.internal.broker.list: {{ .Values.global.kafka.internal.broker.list | quote }}
   kafka.topic.alert.response.out: {{ .Values.global.kafka.topic.alert.response.out | quote }}
   kafka.topic.tail.request.in: {{ .Values.global.kafka.topic.tail.request.in | quote }}
@@ -60,6 +83,7 @@ data:
   kafka.topic.index.live: {{ .Values.global.kafka.topic.index.live | quote }}
   kafka.topic.index.optimized: {{ .Values.global.kafka.topic.index.optimized | quote }}
   kafka.topic.optimize.request: {{ .Values.global.kafka.topic.optimize.request | quote }}
+  kafka.topic.s3logs.files: {{ .Values.global.kafka.topic.s3logs.files | quote }}
   search.api.timeout.seconds: {{ .Values.global.search.api.timeout.seconds | quote }}
   search.live.from.hours: {{ .Values.global.search.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.search.live.to.hours | quote }}
@@ -78,8 +102,8 @@ data:
   search.host: {{ .Values.searchhost | quote }}
   pulse.host: {{ .Values.pulsehost | quote }}
   pulse.port: {{ .Values.pulseport | quote }}
-  search.labels.exclude: "time"
-  gateway.api.http.port: "9002"
+  #search.labels.exclude: "time"
+  gateway.api.http.port: "9005"
   gateway.search.timeout.seconds: "120"
   gateway.search.url: "episilia-search:4040"
   ops.log.debug: "on"
@@ -94,3 +118,8 @@ data:
   pulse.port: "50051"
   search.labels.exclude: "@timestamp,log"
   search.ops.index.cache.resetonstart: "true"
+  search.ops.index.cache.disk.max.gb: "1"
+  grpc.server.port: "50051"
+  login.mode: {{ .Values.global.login.mode | quote }}
+  metadata.backfill.days: "15"
+  metadata.backfill.forceupdate: "false"
