@@ -46,11 +46,14 @@ ingress:
 
 resources:
   limits:
-    memory: 500Mi
-    cpu: 500m
+    memory: 1000Mi
+    cpu: 800m
   requests:
     memory: 100Mi
     cpu: 300m
+
+persistence:
+  type: pvc
 
 autoscaling:
   enabled: false
@@ -109,11 +112,11 @@ global:
     tenant:
         id: episilia
   login:
-    mode: local
+    mode: "local"
   
-  JVM_MAX_SIZE: 1536m
-  JVM_NEWGEN_MIN_SIZE: 800m
-  JVM_NEWGEN_MAX_SIZE: 900m
+  JVM_MAX_SIZE: "1536m"
+  JVM_NEWGEN_MIN_SIZE: "800m"
+  JVM_NEWGEN_MAX_SIZE: "900m"
 
   kafka:
     group:
