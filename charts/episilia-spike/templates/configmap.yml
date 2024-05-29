@@ -109,6 +109,7 @@ data:
   ops.log.debug: "on"
   search.api.grpc.port: "4040"
   search.api.response.max.mb: "100"
+  search.api.request.max.days: {{.Values.global.ondemand.api.request.max.days | quote }}
   ops.license.url: "episilia-spike:50051"
   client.tenant.id: {{ .Values.global.client.tenant.id | quote }}
   spike.api.grpc.port: "50051"
