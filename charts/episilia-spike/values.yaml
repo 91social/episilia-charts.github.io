@@ -384,12 +384,11 @@ global:
       # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
       from:
         hours: "2"                           # hours from when the required labels should be loaded
+        yyyymmddhh: "2023102100"             # the date from when the required labels should be loaded (YYYYMMDDHH)
       to:
         hours: "0"                            # hours till when the required labels should be loaded
-      from:
-        yyyymmddhh: "2023102100"    # the date from when the required labels should be loaded (YYYYMMDDHH)
-      to:
-        yyyymmddhh: "2023102100"    # the date till when the required labels should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"              # the date till when the required labels should be loaded (YYYYMMDDHH)
+
 
     labels:
       display.max.count: "400"

@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "episilia-log-indexer.name" . }}
+      serviceAccountName: {{ include "episilia-log-indexer.serviceAccountName" . }}
       volumes:
       - name: node-info
         emptyDir: {}
