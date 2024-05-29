@@ -103,7 +103,7 @@ global:
   alert:
     rules:
       file:
-        url:                   #alert config url need to be update here
+        url: "s3://bucket/folder/file"                  #alert config url need to be update here
   client:
     id: episilia-helm   
     env: test-helm
@@ -112,7 +112,7 @@ global:
     tenant:
         id: episilia
   login:
-    mode: "local"
+    mode: local
   
   JVM_MAX_SIZE: "1536m"
   JVM_NEWGEN_MIN_SIZE: "800m"
@@ -233,7 +233,7 @@ global:
       enable: "false"
       rules:
         file:
-          url: "s3 path after s3.bucket and s3.folder"
+          url: "s3://bucket/folder/file"
       prometheus:
         gateway: localhost:5070  
     
@@ -375,7 +375,10 @@ global:
       requests:
         cpu: 500m                            # cpu request on episilia-search-ondemand
         memory: 600Mi                     # memory request on episilia-search-ondemand
-
+    api:
+      request:
+        max:
+          days: "30"                    # days for querying ondemand search
     prewarm:
       enabled: "true"
       # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
