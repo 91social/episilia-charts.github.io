@@ -56,17 +56,17 @@ spec:
             - name: search.mode
               value: "ondemand"
             - name: search.ondemand.prewarm.enabled
-              value: {{ .Values.global.ondemand.prewarm.enabled }}
+              value: "{{ .Values.global.ondemand.prewarm.enabled }}"
             - name: search.ondemand.prewarm.from.hours
-              value: {{ .Values.global.ondemand.prewarm.from.hours }}
+              value: "{{ .Values.global.ondemand.prewarm.from.hours }}"
             - name: search.ondemand.prewarm.to.hours
-              value: {{ .Values.global.ondemand.prewarm.to.hours }}
+              value: "{{ .Values.global.ondemand.prewarm.to.hours }}"
             - name: search.ondemand.prewarm.from.yyyymmddhh
-              value: {{ .Values.global.ondemand.prewarm.from.yyyymmddhh}}
+              value: "{{ .Values.global.ondemand.prewarm.from.yyyymmddhh}}"
             - name: search.ondemand.prewarm.to.yyyymmddhh
-              value: {{ .Values.global.ondemand.prewarm.to.yyyymmddhh}}
+              value: "{{ .Values.global.ondemand.prewarm.to.yyyymmddhh}}"
             - name: ops.work.dir
-              value: {{.Values.global.persistence.mountPath}}
+              value: "{{.Values.global.persistence.mountPath}}"
             - name: search.api.request.max.days
               valueFrom: 
                 configMapKeyRef:  
