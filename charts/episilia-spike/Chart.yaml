@@ -24,16 +24,20 @@ dependencies:
   version: *version
   repository: "file://../episilia-log-indexer-opt"
   condition: episilia-log-indexer-opt.enabled
+- name: episilia-log-indexer-s3
+  version: *version
+  repository: "file://../episilia-log-indexer-s3"
+  condition: episilia-log-indexer-s3.enabled  
 - name: episilia-spike-ui
   version: *version
   repository: "file://../episilia-spike-ui"
   condition: episilia-spike-ui.enabled
-- name: episilia-logwatcher
-  version: *version
-  repository: "file://../episilia-logwatcher"
-  tags:
-    - alert
-    - tail
+# - name: episilia-logwatcher
+#   version: *version
+#   repository: "file://../episilia-logwatcher"
+#   tags:
+#     - alert
+#     - tail
 - name: episilia-tail
   version: *version
   repository: "file://../episilia-tail"
@@ -44,18 +48,18 @@ dependencies:
 #   repository: "file://../episilia-tail-fixed"
 #   tags:
 #     - tail-fixed
-- name: episilia-tail-fixed
-  version: *version
-  repository: "file://../episilia-tail-fixed"
-  condition: episilia-tail-fixed.enabled
+# - name: episilia-tail-fixed
+#   version: *version
+#   repository: "file://../episilia-tail-fixed"
+#   condition: episilia-tail-fixed.enabled
 - name: redpanda
   version: 0.1.10
   repository: "file://../redpanda"
   condition: redpanda.enabled
-- name: grafana
-  version: 6.13.9
-  repository: "file://../grafana"
-  condition: grafana.enabled
+# - name: grafana
+#   version: 6.13.9
+#   repository: "file://../grafana"
+#   condition: grafana.enabled
 # - name: episilia-ingester
 #   version: *version
 #   repository: "file://../episilia-ingester" 

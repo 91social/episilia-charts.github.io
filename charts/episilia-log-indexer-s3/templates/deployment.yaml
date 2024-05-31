@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "episilia-log-indexer-s3.name" . }}
+  labels:
+    {{- include "episilia-log-indexer-s3.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.global.indexers3.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "episilia-log-indexer-s3.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "episilia-log-indexer-s3.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "episilia-log-indexer-s3.serviceAccountName" . }}
+      volumes:
+      - name: node-info
+        emptyDir: {}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - episilia-log-indexer-s3
+            topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.global.indexer.image.repository }}:{{ .Values.global.indexer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - mountPath: /node
+              name: node-info
+          ports:
+            - name: http
+              containerPort: 9090
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: episilia-config
+          env:
+            - name: RES_CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: requests.cpu
+            - name: RES_CPU_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: limits.cpu
+            - name: RES_MEM_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: requests.memory
+            - name: RES_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: limits.memory
+            - name: SCRIPT
+              value: "set -eo pipefail\napt update && apt install jq curl -y\ncurl http://169.254.169.254/latest/meta-data/placement/availability-zone-id/
+                > /node/zone\nNODE_ZONE=$(cat /node/zone)\necho \"export NODE_ZONE=${NODE_ZONE}\"
+                > /node/zoneid\nNODE_ZONE=$NODE_ZONE episilia_log_indexer \n"
+            - name: indexer.logs.source
+              value: "s3"
+            - name: kafka.topic.s3log.files
+              valueFrom: 
+                configMapKeyRef:  
+                  name: episilia-config
+                  key: kafka.topic.s3log.files
+          command: ["/bin/bash", "-c"]
+          args:
+            - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
+
+          resources:
+            {{- toYaml .Values.global.indexers3.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+

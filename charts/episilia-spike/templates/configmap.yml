@@ -64,7 +64,7 @@ data:
   kafka.group.spike: {{ .Values.global.kafka.group.spike | quote }}
   kafka.group.search: {{ .Values.global.kafka.group.search | quote }}
   kafka.indexer.group: {{ .Values.global.kafka.indexer.group | quote }}
-  kafka.group.logwatcher: {{ .Values.global.kafka.group.logwatcher | quote }}
+  kafka.group.logwatcher: {{ .Values.global.kafka.group.logwatcher.consumer | quote }}
   kafka.group.logwatcher.alert: {{ .Values.global.kafka.group.logwatcher.alert | quote }}
   kafka.group.logwatcher.tail: {{ .Values.global.kafka.group.logwatcher.tail | quote }}
   kafka.indexer.logs.topics: {{ .Values.global.kafka.indexer.logs.topics | quote }}
