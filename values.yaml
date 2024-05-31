@@ -88,16 +88,17 @@ episilia-search-ondemand:
 episilia-log-indexer-opt:
   enabled: false
 
+episilia-log-indexer-s3:
+  enabled: false
+
 episilia-spike-ui:
   enabled: false
 
-grafana:
-  enabled: false
 
 tags:
   alert: &alert true
   tail: &tail true
-  tail-fixed: &tail-fixed false
+
 
 global:
   alert:
@@ -256,7 +257,20 @@ global:
       s3:
         reader:
           enable: "false"
-      
+
+  # Indexing s3 logs
+
+  indexers3:
+    replicaCount: "1"        # kubernetes pod replicas of episilia-log-indexer-s3
+    resources:
+      limits:
+        cpu: 800m            # cpu limit on episilia-log-indexer-s3
+        memory: 1024Mi       # memory limit on episilia-log-indexer-s3
+      requests:
+        cpu: 400m            # cpu request on episilia-log-indexer-s3
+        memory: 300Mi        # memory request on episilia-log-indexer-s3
+
+
   #optimizer server configuration
       
   optimizer:
@@ -269,28 +283,7 @@ global:
         cpu: 500m              # cpu request on episilia-optimizer        
         memory: 300Mi 
    
-  #logwatcher server configuration
-  logwatcher:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-logwatcher  
-    resources:
-      limits:
-        cpu: 500m              # cpu limit on episilia-logwatcher
-        memory: 600Mi         # memory limit on episilia-logwatcher
-      requests:
-        cpu: 300m              # cpu request on episilia-logwatcher        
-        memory: 300Mi          # memory request on episilia-logwatcher    
-    ops:
-      tail.enable  : *tail # to enable tail server
-      alert.enable : *alert # to enable alert server
-    live:
-      block.maxrecord.count: 10000
-      block.maxwait.ms: 3
-
-    rules:
-      file:
-        url:            #s3 path of alert rules file
-    prometheus:
-      gateway: localhost:5070  # push-gateway url 
+  
   
 # tail server configurations
   tail:
@@ -306,19 +299,7 @@ global:
         cpu: 300m              # cpu request on episilia-tail        
         memory: 300Mi          # memory request on episilia-tail    
 
-# tail-fixed server configurations
-  tail-fixed:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-tail-fixed
-    image:
-      repository: episilia/tail    # docker image of episilia-tail
-      tag: *release
-    resources:
-      limits:
-        cpu: 500m              # cpu limit on episilia-tail-fixed
-        memory: 600Mi         # memory limit on episilia-tail-fixed
-      requests:
-        cpu: 300m              # cpu request on episilia-tail-fixed        
-        memory: 300Mi          # memory request on episilia-tail-fixed    
+
 
 # spike ui server configurations
   spike-ui:
@@ -441,12 +422,7 @@ global:
     resMem: "200M"
     retention: "10800000"
 
-# Grafana
-  grafana:
-    service: 
-      type: "LoadBalancer"  
-    annotations:
-      service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+
         
  # Persistance Volume   
   persistence:
