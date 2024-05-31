@@ -83,11 +83,11 @@ spec:
                 > /node/zoneid\nNODE_ZONE=$NODE_ZONE episilia_log_indexer \n"
             - name: indexer.logs.source
               value: "s3"
-            - name: kafka.topic.s3log.files
+            - name: kafka.topic.s3logs.files
               valueFrom: 
                 configMapKeyRef:  
                   name: episilia-config
-                  key: kafka.topic.s3log.files
+                  key: kafka.topic.s3logs.files
           command: ["/bin/bash", "-c"]
           args:
             - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
