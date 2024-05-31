@@ -42,7 +42,7 @@ spec:
               name: episilia-config
           env:
           - name: ops.server.mode
-            value: indexer
+            value: optimizer
           resources:
             {{- toYaml .Values.global.optimizer.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
