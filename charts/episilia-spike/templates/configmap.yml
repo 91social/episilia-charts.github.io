@@ -3,11 +3,9 @@ kind: ConfigMap
 metadata:
   name: episilia-config
 data:
-  alert.rules.file.url: {{ .Values.global.alert.rules.file.url | quote }}
   client.env: {{ .Values.global.client.env | quote }}
   client.id: {{ .Values.global.client.id | quote }}
   client.license.key: {{ .Values.global.client.license.key | quote }}
-  #client.release.version: release.1
   datastore.s3logs: s3logs
   datastore.stores.cache.enabled: "false"
   datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
@@ -31,23 +29,20 @@ data:
   datastore.stores.final.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
   datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
   datastore.stores.s3logs.enabled: {{ .Values.global.datastore.s3logs.enabled| quote }}
-  datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
-  datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
-  datastore.stores.s3logs.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
-  datastore.stores.s3logs.s3.region: {{ .Values.global.datastore.s3.region | quote }}
-  datastore.stores.s3logs.s3.bucket: {{ .Values.global.datastore.s3.bucket | quote }}
-  datastore.stores.s3logs.s3.folder: {{ .Values.global.datastore.s3.folder | quote }}
-  datastore.stores.s3logs.s3.sign.payload: {{ .Values.global.datastore.s3.sign.payload | quote }}
-  datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
-  datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
-  datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
-  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3.assumeRole | quote }}
-  indexer.ops.alert.enable: {{ .Values.global.indexer.ops.alert.enable | quote }}
-  indexer.ops.tail.enable: {{ .Values.global.indexer.ops.tail.enable | quote }}
+  datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
+  datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
+  datastore.stores.s3logs.s3.endpoint.url: {{ .Values.global.datastore.s3logs.s3.endpoint.url | quote }}
+  datastore.stores.s3logs.s3.region: {{ .Values.global.datastore.s3logs.s3.region | quote }}
+  datastore.stores.s3logs.s3.bucket: {{ .Values.global.datastore.s3logs.s3.bucket | quote }}
+  datastore.stores.s3logs.s3.folder: {{ .Values.global.datastore.s3logs.s3.folder | quote }}
+  datastore.stores.s3logs.s3.sign.payload: {{ .Values.global.datastore.s3logs.s3.sign.payload | quote }}
+  datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
+  datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
+  datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
+  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
   indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
   indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
-  indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}
-  indexer.ops.s3.reader.enable: {{ .Values.global.indexer.ops.s3.reader.enable | quote }}
+  indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}  
   indexer.schema.appid.fixed: {{ .Values.global.indexer.schema.appid.fixed | quote }}
   indexer.schema.appid.keys: {{ .Values.global.indexer.schema.appid.keys | quote }}
   indexer.schema.tenantid.fixed: {{ .Values.global.indexer.schema.tenantid.fixed | quote }}
@@ -58,15 +53,13 @@ data:
   indexer.schema.timestamp.key: {{ .Values.global.indexer.schema.timestamp.key | quote }}
   indexer.tail.enable: {{.Values.global.indexer.tail.enable | quote }}
   indexer.alert.enable: {{.Values.global.indexer.alert.enable | quote }}
+  indexer.tail.maxwait.ms: {{.Values.global.indexer.tail.maxwait.ms | quote }}
   indexer.logs.source: {{.Values.global.indexer.logs.source | quote }}
   indexer.alert.rules.file.url: {{.Values.global.indexer.alert.rules.file.url | quote }}
   indexer.alert.prometheus.gateway: {{.Values.global.indexer.alert.prometheus.gateway | quote }}
   kafka.group.spike: {{ .Values.global.kafka.group.spike | quote }}
   kafka.group.search: {{ .Values.global.kafka.group.search | quote }}
   kafka.indexer.group: {{ .Values.global.kafka.indexer.group | quote }}
-  kafka.group.logwatcher: {{ .Values.global.kafka.group.logwatcher.consumer | quote }}
-  kafka.group.logwatcher.alert: {{ .Values.global.kafka.group.logwatcher.alert | quote }}
-  kafka.group.logwatcher.tail: {{ .Values.global.kafka.group.logwatcher.tail | quote }}
   kafka.indexer.logs.topics: {{ .Values.global.kafka.indexer.logs.topics | quote }}
   kafka.indexer.broker.list: {{ .Values.global.kafka.indexer.broker.list | quote }}
   kafka.indexer.broker.security.mode: {{ .Values.global.kafka.indexer.broker.security.mode | quote }}
@@ -84,9 +77,9 @@ data:
   kafka.topic.index.optimized: {{ .Values.global.kafka.topic.index.optimized | quote }}
   kafka.topic.optimize.request: {{ .Values.global.kafka.topic.optimize.request | quote }}
   kafka.topic.s3logs.files: {{ .Values.global.kafka.topic.s3logs.files | quote }}
-  search.api.timeout.seconds: {{ .Values.global.search.api.timeout.seconds | quote }}
-  search.live.from.hours: {{ .Values.global.search.live.from.hours | quote }}
-  search.live.to.hours: {{ .Values.global.search.live.to.hours | quote }}
+  search.api.timeout.seconds: {{ .Values.global.livesearch.api.timeout.seconds | quote }}
+  search.live.from.hours: {{ .Values.global.livesearch.live.from.hours | quote }}
+  search.live.to.hours: {{ .Values.global.livesearch.live.to.hours | quote }}
   search.fixed.from.yyyymmddhh: {{.Values.global.fixedSearch.fixed.from.yyyymmddhh | quote }}
   search.fixed.to.yyyymmddhh: {{.Values.global.fixedSearch.fixed.to.yyyymmddhh | quote }}
   #gateway.api.http.port: {{ .Values.httpport | quote }}
@@ -109,9 +102,8 @@ data:
   ops.log.debug: "on"
   search.api.grpc.port: "4040"
   search.api.response.max.mb: "100"
-  search.api.request.max.days: {{.Values.global.ondemand.api.request.max.days | quote }}
+  search.api.request.max.days: {{.Values.global.ondemandsearch.api.request.max.days | quote }}
   ops.license.url: "episilia-spike:50051"
-  client.tenant.id: {{ .Values.global.client.tenant.id | quote }}
   spike.api.grpc.port: "50051"
   ops.work.dir: "/data"
   search.host: "episilia-search:4040"

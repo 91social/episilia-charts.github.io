@@ -6,7 +6,7 @@ metadata:
     {{- include "episilia-search-ondemand.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.global.ondemand.replicaCount }}
+  replicas: {{ .Values.global.ondemandsearch.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
@@ -41,7 +41,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.search.image.repository }}:{{ .Values.global.search.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.livesearch.image.repository }}:{{ .Values.global.livesearch.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -56,15 +56,15 @@ spec:
             - name: search.mode
               value: "ondemand"
             - name: search.ondemand.prewarm.enabled
-              value: "{{ .Values.global.ondemand.prewarm.enabled }}"
+              value: "{{ .Values.global.ondemandsearch.prewarm.enabled }}"
             - name: search.ondemand.prewarm.from.hours
-              value: "{{ .Values.global.ondemand.prewarm.from.hours }}"
+              value: "{{ .Values.global.ondemandsearch.prewarm.from.hours }}"
             - name: search.ondemand.prewarm.to.hours
-              value: "{{ .Values.global.ondemand.prewarm.to.hours }}"
+              value: "{{ .Values.global.ondemandsearch.prewarm.to.hours }}"
             - name: search.ondemand.prewarm.from.yyyymmddhh
-              value: "{{ .Values.global.ondemand.prewarm.from.yyyymmddhh}}"
+              value: "{{ .Values.global.ondemandsearch.prewarm.from.yyyymmddhh}}"
             - name: search.ondemand.prewarm.to.yyyymmddhh
-              value: "{{ .Values.global.ondemand.prewarm.to.yyyymmddhh}}"
+              value: "{{ .Values.global.ondemandsearch.prewarm.to.yyyymmddhh}}"
             - name: ops.work.dir
               value: "{{.Values.global.persistence.mountPath}}"
             - name: search.api.request.max.days
@@ -76,7 +76,7 @@ spec:
           - name: {{ template "episilia-search-ondemand.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"
           resources:
-            {{- toYaml .Values.global.ondemand.resources | nindent 12 }}
+            {{- toYaml .Values.global.ondemandsearch.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}          
       nodeSelector:
         {{- toYaml . | nindent 8 }}

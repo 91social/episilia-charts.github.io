@@ -2,7 +2,7 @@ apiVersion: v2
 name: episilia-spike
 description: A Helm chart for Kubernetes
 
-chatVersion : &version "0.2.0"
+chatVersion : &version "3.0.0"
 dependencies: 
 - name: episilia-log-indexer
   version: *version
@@ -38,11 +38,10 @@ dependencies:
 #   tags:
 #     - alert
 #     - tail
-- name: episilia-tail
+- name: episilia-gateway
   version: *version
-  repository: "file://../episilia-tail"
-  tags:
-    - tail
+  repository: "file://../episilia-gateway"
+  condition: episilia-gateway.enabled
 # - name: episilia-tail-fixed
 #   version: *version
 #   repository: "file://../episilia-tail-fixed"
@@ -84,4 +83,4 @@ version: *version
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: 2.1.0
+appVersion: 3.0.0

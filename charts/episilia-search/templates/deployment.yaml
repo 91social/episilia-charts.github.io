@@ -6,7 +6,7 @@ metadata:
     {{- include "episilia-search.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.global.search.replicaCount }}
+  replicas: {{ .Values.global.livesearch.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
@@ -38,7 +38,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.search.image.repository }}:{{ .Values.global.search.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.livesearch.image.repository }}:{{ .Values.global.livesearch.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -58,7 +58,7 @@ spec:
             
 
           resources:
-            {{- toYaml .Values.global.search.resources | nindent 12 }}
+            {{- toYaml .Values.global.livesearch.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
