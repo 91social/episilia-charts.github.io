@@ -38,7 +38,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.search.image.repository }}:{{ .Values.global.search.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.livesearch.image.repository }}:{{ .Values.global.livesearch.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "episilia-spike-ui.fullname" . }}
+  name: {{ include "episilia-spike-ui.name" . }}
   labels:
     {{- include "episilia-spike-ui.labels" . | nindent 4 }}
 spec:

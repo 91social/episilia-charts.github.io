@@ -60,11 +60,11 @@ spec:
             - name: datasources.defualt.url
               value: jdbc:h2:/data
             - name: JVM_MAX_SIZE
-              value: "{{.Values.global.JVM_MAX_SIZE}}"
+              value: "{{.Values.global.spike.JVM_MAX_SIZE}}"
             - name: JVM_NEWGEN_MIN_SIZE
-              value: "{{.Values.global.JVM_NEWGEN_MIN_SIZE}}"
+              value: "{{.Values.global.spike.JVM_NEWGEN_MIN_SIZE}}"
             - name: JVM_NEWGEN_MAX_SIZE 
-              value: "{{.Values.global.JVM_NEWGEN_MAX_SIZE}}"
+              value: "{{.Values.global.spike.JVM_NEWGEN_MAX_SIZE}}"
           volumeMounts:
           - name: {{ template "episilia-spike.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"

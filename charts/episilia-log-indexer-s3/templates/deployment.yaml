@@ -44,7 +44,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.indexer.image.repository }}:{{ .Values.global.indexer.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.indexers3.image.repository }}:{{ .Values.global.indexers3.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - mountPath: /node
@@ -81,6 +81,8 @@ spec:
               value: "set -eo pipefail\napt update && apt install jq curl -y\ncurl http://169.254.169.254/latest/meta-data/placement/availability-zone-id/
                 > /node/zone\nNODE_ZONE=$(cat /node/zone)\necho \"export NODE_ZONE=${NODE_ZONE}\"
                 > /node/zoneid\nNODE_ZONE=$NODE_ZONE episilia_log_indexer \n"
+            - name: indexer.ops.s3.reader.enable
+              vlue: "true"
             - name: indexer.logs.source
               value: "s3"
             - name: kafka.topic.s3logs.files

@@ -1,11 +1,11 @@
-# Default values for episilia-log-indexer.
+# Default values for episilia-gateway.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: episilia/log-indexer
+  repository: episilia/tail
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "3.0.0"
@@ -38,8 +38,10 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 9090
+  enabled: true
+  type: ClusterIP 
+  port: 9005
+
 
 ingress:
   enabled: false
@@ -48,27 +50,23 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
-      paths:
-      - path: /
-        backend:
-          serviceName: chart-example.local
-          servicePort: 80
+      paths: []
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    limits:
-      cpu: 600m
-      memory: 1024Mi
-    requests:
-      cpu: 500m
-      memory: 200Mi
+    #limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    #requests:
+    #  cpu: 100m
+    #  memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -83,6 +81,9 @@ tolerations: []
 
 affinity: {}
 
-indexer:
-  config: 
-    ops.server.mode: indexer
+gateway:
+  config:
+    # provide episilia-search service IP address and port
+    gateway.search.url: "episilia-search:4040"
+    gateway.api.http.port: "9005"
+    ops.server.mode: "tail"

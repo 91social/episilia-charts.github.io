@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: episilia/dev-spike-ui
+  repository: episilia/spike-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "28112314"
+  tag: "3.0.0"
 
 imagePullSecrets:
   - name: regcred
