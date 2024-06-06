@@ -85,11 +85,11 @@ spec:
               vlue: "true"
             - name: indexer.logs.source
               value: "s3"
-            - name: kafka.topic.s3logs.files
+            - name: kafka.topic.s3log.files
               valueFrom: 
                 configMapKeyRef:  
                   name: episilia-config
-                  key: kafka.topic.s3logs.files
+                  key: kafka.topic.s3log.files
           command: ["/bin/bash", "-c"]
           args:
             - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
