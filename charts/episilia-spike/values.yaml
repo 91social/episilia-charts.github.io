@@ -123,7 +123,7 @@ global:
         optimized: optfiles                    # Topic for internal optimize.topic:  publish file names post optimization
       optimize:
         request: stagefolder                   # optimize.request.topic send folders to optimize
-      s3logs:
+      s3log:
         files: s3logs                          # Topic from where s3 logs are loaded.
       
       tail:
