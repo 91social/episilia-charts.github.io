@@ -65,6 +65,10 @@ spec:
               value: "{{.Values.global.spike.JVM_NEWGEN_MIN_SIZE}}"
             - name: JVM_NEWGEN_MAX_SIZE 
               value: "{{.Values.global.spike.JVM_NEWGEN_MAX_SIZE}}"
+            - name: metadata.backfill.forceupdate
+              value: "{{.Values.global.spike.metadata.backfill.forceupdate}}"
+            - name: metadata.backfill.days
+              value: "{{.Values.global.spike.metadata.backfill.days}}"
           volumeMounts:
           - name: {{ template "episilia-spike.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"

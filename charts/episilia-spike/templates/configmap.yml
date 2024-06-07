@@ -115,6 +115,6 @@ data:
   search.ops.index.cache.disk.max.gb: "1"
   grpc.server.port: "50051"
   login.mode: {{ .Values.global.login.mode | quote }}
-  metadata.backfill.days: "15"
-  metadata.backfill.forceupdate: "false"
+  metadata.backfill.days: {{.Values.global.spike.metadata.backfill.days | quote }}
+  metadata.backfill.forceupdate: {{.Values.global.spike.metadata.backfill.forceupdate | quote }}
   indexer.ops.s3.reader.enable: "true"
