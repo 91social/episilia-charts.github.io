@@ -39,7 +39,7 @@ data:
   datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
   datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
   datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
-  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
+  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.sourcefolder | quote }}
   indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
   indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
   indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}  
@@ -77,6 +77,8 @@ data:
   kafka.topic.index.optimized: {{ .Values.global.kafka.topic.index.optimized | quote }}
   kafka.topic.optimize.request: {{ .Values.global.kafka.topic.optimize.request | quote }}
   kafka.topic.s3log.files: {{ .Values.global.kafka.topic.s3log.files | quote }}
+  kafka.topic.cpanel.in: {{ .Values.global.kafka.topic.cpanel.in | quote }}
+  kafka.topic.cpanel.out: {{ .Values.global.kafka.topic.cpanel.out | quote }}
   search.api.timeout.seconds: {{ .Values.global.livesearch.api.timeout.seconds | quote }}
   search.live.from.hours: {{ .Values.global.livesearch.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.livesearch.live.to.hours | quote }}
@@ -88,8 +90,7 @@ data:
   ops.log.debug: {{ .Values.debug | quote }}
   search.api.grpc.port: {{ .Values.grpcport | quote }}
   search.api.response.max.mb: {{ .Values.maxmb | quote }}
-  ops.license.url: {{ .Values.licenseurl | quote }}
-  client.tenant.id: {{ .Values.tenantid | quote }}
+  ops.license.url: {{ .Values.licenseurl | quote }} 
   spike.api.grpc.port: {{ .Values.spikeport | quote }}
   #ops.work.dir: {{ .Values.workdir | quote }}
   search.host: {{ .Values.searchhost | quote }}
@@ -116,3 +117,4 @@ data:
   login.mode: {{ .Values.global.login.mode | quote }}
   metadata.backfill.days: "15"
   metadata.backfill.forceupdate: "false"
+  indexer.ops.s3.reader.enable: "true"

@@ -123,8 +123,11 @@ global:
         optimized: optfiles                    # Topic for internal optimize.topic:  publish file names post optimization
       optimize:
         request: stagefolder                   # optimize.request.topic send folders to optimize
-      s3logs:
+      s3log:
         files: s3logs                          # Topic from where s3 logs are loaded.
+      cpanel:
+        in: cpaneld                            # Internal topic cpanel.data.topic
+        out: cpaneld                           # Internal topic cpanel.data.topic
       
       tail:
         request:
@@ -393,7 +396,7 @@ global:
 
 
 # spike ui server configurations
-  spike-ui:
+  spikeui:
     replicaCount: "1"           # kubernetes pod replicas of episilia-spike-ui
     image:
       repository: episilia/spike-ui    # docker image of episilia-spike-ui
