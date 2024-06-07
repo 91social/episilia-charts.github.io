@@ -34,7 +34,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.global.spike-ui.image.repository }}:{{ .Values.global.spike-ui.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.global.spikeui.image.repository }}:{{ .Values.global.spikeui.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -55,7 +55,7 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.global.spike-ui.resources | nindent 12 }}
+            {{- toYaml .Values.global.spikeui.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}

@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "episilia-spike-ui.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.global.spike-ui.service.type }}
+  type: {{ .Values.global.spikeui.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
