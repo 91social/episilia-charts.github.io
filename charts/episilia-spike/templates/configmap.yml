@@ -108,6 +108,7 @@ data:
   spike.api.grpc.port: "50051"
   ops.work.dir: "/data"
   search.host: "episilia-search:4040"
+  spike.url: "http://episilia-spike:9090/"
   pulse.host: "dev-api-pulse.episilia.net"
   pulse.port: "50051"
   search.labels.exclude: "@timestamp,log"
