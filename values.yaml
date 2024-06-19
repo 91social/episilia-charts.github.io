@@ -102,15 +102,17 @@ episilia-gateway:
 episilia-spike-ui:
   enabled: false
 
+minio:
+  enabled: false
+
+
 # Each consumer will have unique client name and env provided, the same is to be used here.
 global:
   client:
     id: episilia-helm   
     env: test-helm
     license:
-      key: episilia
-  login:
-    mode: local                               # local, google, okta
+      key: episilia  
   
   kafka:
     group:
@@ -121,6 +123,7 @@ global:
       index:
         live: stagefiles                       # Topic for internal publish indexed files - stage.topic
         optimized: optfiles                    # Topic for internal optimize.topic:  publish file names post optimization
+        labels: indexlabels                    # Topic to publish labels from indexer
       optimize:
         request: stagefolder                   # optimize.request.topic send folders to optimize
       s3log:
@@ -166,6 +169,21 @@ global:
       backfill:
         forceupdate: "false"
         days: "0"  
+    s3logs:
+      publish:
+        seconds: "2"
+        partitionwise: "false"
+    login:
+      mode: local                               # local, google, okta
+      local:
+        password:
+          encryptionkey: "i am groot"
+      google:
+        clientid: "google-client"
+        token: "google-token"
+      okta:
+        clientid: "okta-client"
+        token: "okta-token"
 
 #You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
 
@@ -186,6 +204,7 @@ global:
         prefix: s3://
       useArn: false
       assumeRole: ""                           # ARN role
+      https: "false"
 
     s3logs:
       enabled: true                            # to load logs from s3 bucket
@@ -206,6 +225,9 @@ global:
         useArn: false
         assumeRole: ""                           # ARN role
         sourcefolder: sourcefolder
+        pathstyle:
+          access: "true"
+        https: "false"
 
 # Config for indexer and optimizer
 

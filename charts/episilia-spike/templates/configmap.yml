@@ -8,6 +8,21 @@ data:
   client.license.key: {{ .Values.global.client.license.key | quote }}
   datastore.s3logs: s3logs
   datastore.stores.cache.enabled: "false"
+  {{- if .Values.minio.enabled }}
+  datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
+  datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
+  datastore.stores.stage.s3.endpoint.url: {{ .Values.global.datastore.s3logs.s3.endpoint.url | quote }}
+  datastore.stores.stage.s3.region: {{ .Values.global.datastore.s3logs.s3.region | quote }}
+  datastore.stores.stage.s3.bucket: {{ .Values.global.datastore.s3logs.s3.bucket | quote }}
+  datastore.stores.stage.s3.folder: {{ .Values.global.datastore.s3logs.s3.folder | quote }}
+  datastore.stores.stage.s3.sign.payload: {{ .Values.global.datastore.s3logs.s3.sign.payload | quote }}
+  datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
+  datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
+  datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
+  datastore.stores.stage.s3.https: {{ .Values.global.datastore.s3logs.s3.https | quote }}
+  datastore.stores.stage.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
+  datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.s3logs.s3.url.prefix | quote }}
+  {{- else }}
   datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
   datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
   datastore.stores.stage.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
@@ -18,6 +33,10 @@ data:
   datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
   datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
   datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
+  datastore.stores.stage.s3.https: {{ .Values.global.datastore.s3.https | quote }}
+  datastore.stores.stage.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
+  datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.s3.url.prefix | quote }}
+  {{- end }}  
   datastore.stores.final.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
   datastore.stores.final.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
   datastore.stores.final.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
@@ -40,6 +59,9 @@ data:
   datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
   datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
   datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.sourcefolder | quote }}
+  datastore.stores.s3logs.s3.https: {{ .Values.global.datastore.s3logs.s3.https | quote }}
+  datastore.stores.s3logs.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
+  datastore.stores.s3logs.s3.url.prefix: {{ .Values.global.datastore.s3logs.s3.url.prefix | quote }}
   indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
   indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
   indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}  
@@ -75,6 +97,7 @@ data:
   kafka.topic.tail.response.out: {{ .Values.global.kafka.topic.tail.response.out | quote }}
   kafka.topic.index.live: {{ .Values.global.kafka.topic.index.live | quote }}
   kafka.topic.index.optimized: {{ .Values.global.kafka.topic.index.optimized | quote }}
+  kafka.topic.index.labels:  {{ .Values.global.kafka.topic.index.labels | quote }}
   kafka.topic.optimize.request: {{ .Values.global.kafka.topic.optimize.request | quote }}
   kafka.topic.s3log.files: {{ .Values.global.kafka.topic.s3log.files | quote }}
   kafka.topic.cpanel.in: {{ .Values.global.kafka.topic.cpanel.in | quote }}
@@ -114,8 +137,21 @@ data:
   search.labels.exclude: "@timestamp,log"
   search.ops.index.cache.resetonstart: "true"
   search.ops.index.cache.disk.max.gb: "1"
-  grpc.server.port: "50051"
-  login.mode: {{ .Values.global.login.mode | quote }}
-  metadata.backfill.days: {{.Values.global.spike.metadata.backfill.days | quote }}
-  metadata.backfill.forceupdate: {{.Values.global.spike.metadata.backfill.forceupdate | quote }}
+  spike.grpc.server.port: "50051"
+  spike.sql.source.paths: /sql.json
+  spike.s3logs.publish.enable: "true"
+  spike.s3logs.publish.seconds: {{ .Values.global.spike.s3logs.publish.seconds | quote }}
+  spike.s3logs.publish.partitionwise: {{ .Values.global.spike.s3logs.publish.partitionwise | quote }}
+  spike.login.mode: {{ .Values.global.spike.login.mode | quote }}
+  spike.metadata.backfill.days: {{.Values.global.spike.metadata.backfill.days | quote }}
+  spike.metadata.backfill.forceupdate: {{.Values.global.spike.metadata.backfill.forceupdate | quote }}
+  spike.login.local.password.encryptionkey: {{ .Values.global.spike.login.local.password.encryptionkey | quote }}
+  spike.login.google.clientid: {{ .Values.global.spike.login.google.clientid | quote }}
+  spike.login.google.token: {{ .Values.global.spike.login.google.token | quote }}
+  spike.login.okta.clientid: {{ .Values.global.spike.login.okta.clientid | quote }}
+  spike.login.okta.token: {{ .Values.global.spike.login.okta.token | quote }}
   indexer.ops.s3.reader.enable: "true"
+  cpanel.api.access.key: token
+  cpanel.api.access.token: 98f4b6223f5908c16ed54962010500908d98f8c6
+  cpanel.api.console.server: https://episilia-console-dev-pjyzk.ondigitalocean.app
+  cpanel.gateway.server: episilia-gateway:9002 
