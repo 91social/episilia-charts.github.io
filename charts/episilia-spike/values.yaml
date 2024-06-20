@@ -204,7 +204,6 @@ global:
         prefix: s3://
       useArn: false
       assumeRole: ""                                    # ARN role
-      https: "false"
 
     s3logs:
       enabled: true                                     # to load logs from s3 bucket
