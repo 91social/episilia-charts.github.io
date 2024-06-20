@@ -33,9 +33,6 @@ data:
   datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
   datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
   datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
-  datastore.stores.stage.s3.https: {{ .Values.global.datastore.s3.https | quote }}
-  datastore.stores.stage.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
-  datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.s3.url.prefix | quote }}
   {{- end }}  
   datastore.stores.final.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
   datastore.stores.final.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
