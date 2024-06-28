@@ -52,13 +52,15 @@ spec:
               value: search
             - name: search.mode
               value: "fixed"
-            - name: gateway.api.http.port
-              value: "9006"
             - name: kafka.metadata.broker.list
               valueFrom:
                 configMapKeyRef:
                   name: episilia-config
                   key: kafka.internal.broker.list
+            - name: datastore.stores.final.s3.bucket
+              value: "{{.Values.global.fixedSearch.bucket}}"
+            - name: datastore.stores.final.s3.folder
+              value: "{{.Values.global.fixedSearch.folder}}"
             - name: search.fixed.from.yyyymmddhh
               value: "{{.Values.global.fixedSearch.fixed.from.yyyymmddhh}}"
             - name: search.fixed.to.yyyymmddhh 
@@ -66,7 +68,23 @@ spec:
             - name: ops.work.dir
               value: "{{.Values.global.persistence.mountPath}}"
             # - name: gateway.search.url
-            #   value: episilia-search-fixed:4040   
+            #   value: episilia-search-fixed:4040  
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3   
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"

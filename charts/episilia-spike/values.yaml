@@ -34,7 +34,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort 
+  type: ClusterIP 
 
 ingress:
   enabled: false
@@ -50,8 +50,8 @@ ingress:
 
 resources:
   limits:
-    memory: 1000Mi
-    cpu: 800m
+    memory: 2Gi
+    cpu: "1"
   requests:
     memory: 100Mi
     cpu: 300m
@@ -85,7 +85,7 @@ episilia-log-indexer-s3:
   enabled: false
 
 episilia-log-indexer-opt:
-  enabled: false
+  enabled: true
 
 episilia-search:
   enabled: true
@@ -100,7 +100,7 @@ episilia-gateway:
   enabled: true  
 
 episilia-spike-ui:
-  enabled: false
+  enabled: true
 
 minio:
   enabled: false                               # To enable stage files in minio  
@@ -116,9 +116,17 @@ global:
   
   kafka:
     group:
-      search: episilia-search-group            # Kafka consumer-group for search
-      spike: episilia-spike-group              # Kafka consumer-group for spike
-    
+      search: episilia-search-group                  # Kafka consumer-group for search
+      spike: episilia-spike-group                    # Kafka consumer-group for spike
+      cpanel: episilia-cpanel-group                  # Kafka consumer-group for cpanel
+      gateway:
+        tail: episilia-gw-tail-group                 # Kafka consumer-group for gateway tail 
+      logwatcher:
+        alert: episilia-lw-alert-group               # Kafka consumer-group for logwatcher alert 
+        tail: episilia-lw-tail-group                 # Kafka consumer-group for logwatcher tail 
+      s3log:
+        files: episilia-s3files-group                # Kafka consumer-group for s3logs
+      
     topic:
       index:
         live: stagefiles                       # Topic for internal publish indexed files - stage.topic
@@ -129,7 +137,6 @@ global:
       s3log:
         files: s3logs                          # Topic from where s3 logs are loaded.
       cpanel:
-        in: cpaneld                            # Internal topic cpanel.data.topic
         out: cpaneld                           # Internal topic cpanel.data.topic
       
       tail:
@@ -184,6 +191,23 @@ global:
       okta:
         clientid: "okta-client"
         token: "okta-token"
+    pulse:
+      access:
+        key: "token"
+        token: "random"
+      host: "localhost"
+      url: "http://localhost:8080/"
+
+  ops:
+    log:
+      metrics:
+        publish:
+          interval:
+            seconds: "300"
+      state:
+        publish:
+          interval:
+            seconds: "10"
 
 #You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
 
@@ -204,6 +228,7 @@ global:
         prefix: s3://
       useArn: false
       assumeRole: ""                                    # ARN role
+      https: "true"
 
     s3logs:
       enabled: true                                     # to load logs from s3 bucket
@@ -240,8 +265,8 @@ global:
       service:
     resources:
       limits:
-        cpu: 800m                                      # cpu limit on episilia-log-indexer 
-        memory: 1024Mi                                 # memory limit on episilia-log-indexer
+        cpu: "1"                                      # cpu limit on episilia-log-indexer 
+        memory: 2Gi                                 # memory limit on episilia-log-indexer
       requests:
         cpu: 400m                                      # cpu request on episilia-log-indexer
         memory: 300Mi                                  # memory request on episilia-log-indexer
@@ -270,7 +295,7 @@ global:
       enable: "false"                                  # to enable alert server
       rules:
         file:
-          url: "s3://bucket/folder/file"                #alert config url need to be update here
+          url: "s3://bucket/folder/file"                # alert config url need to be update here
       prometheus:
         gateway: localhost:5070                         # push-gateway url 
 
@@ -286,6 +311,16 @@ global:
             size:
               max: 
                 mb: "100"                               # applicable for log messages
+      datablock:
+        writer:
+          count: "3"                                    # datablocks zipped and written to disk, in sequence files
+      json:
+        processor:
+          count: "2"                                    # number of json parsers
+    optimize:
+      block:
+        maxbytes:
+          mb: "10"
 
 
   # Indexing s3 logs
@@ -296,8 +331,8 @@ global:
     replicaCount: "1"                                   # kubernetes pod replicas of episilia-log-indexer-s3
     resources:
       limits:
-        cpu: 800m                                       # cpu limit on episilia-log-indexer-s3
-        memory: 1024Mi                                  # memory limit on episilia-log-indexer-s3
+        cpu: "1"                                       # cpu limit on episilia-log-indexer-s3
+        memory: 2Gi                                  # memory limit on episilia-log-indexer-s3
       requests:
         cpu: 400m                                       # cpu request on episilia-log-indexer-s3
         memory: 300Mi                                   # memory request on episilia-log-indexer-s3
@@ -308,8 +343,8 @@ global:
     replicaCount: "1"                                   # kubernetes pod replicas of episilia-optimizer  
     resources:
       limits:
-        cpu: 800m                                       # cpu limit on episilia-optimizer
-        memory: 1024Mi                                  # memory limit on episilia-optimizer
+        cpu: "1"                                       # cpu limit on episilia-optimizer
+        memory: 2Gi                                  # memory limit on episilia-optimizer
       requests:
         cpu: 500m                                       # cpu request on episilia-optimizer        
         memory: 300Mi 
@@ -325,7 +360,7 @@ global:
     resources:
       limits:
         cpu: "1"                                       # cpu limit on episilia-search
-        memory: 2048Mi                                 # memory limit on episilia-search
+        memory: 2Gi                                 # memory limit on episilia-search
       requests:
         cpu: 500m                                      # cpu request on episilia-search
         memory: 600Mi                                  # memory request on episilia-search
@@ -333,15 +368,26 @@ global:
     api:
       timeout:
         seconds: 60                                    # timeout for search while querying
+      request:
+        max:
+          days: "30"                                   # days for querying search
     
     live:
       from:
         hours: 48                                      # hours from when the required index blocks should be loaded
       to:
         hours: 0                                       # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+
+    ops:
+      index:
+        cache:
+          resetonstart: "true"
+    
     labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log"                        # Lables excluded from grafana dropdown GUI. 
+      display:
+        max:
+          count: "1000"                                # labels count displayed in spikeui/grafana
+      exclude: "@timestamp,log"                        # Lables excluded from spikeui/grafana dropdown GUI. 
 
     
   #config for search-ondemand engine
@@ -350,29 +396,24 @@ global:
     resources:
       limits:
         cpu: "1"                                       # cpu limit on episilia-search-ondemand
-        memory: 2048Mi                                 # memory limit on episilia-search-ondemand
+        memory: 2Gi                                    # memory limit on episilia-search-ondemand
       requests:
         cpu: 500m                                      # cpu request on episilia-search-ondemand
-        memory: 600Mi                                  # memory request on episilia-search-ondemand
-    api:
-      request:
-        max:
-          days: "30"                                   # days for querying ondemand search
+        memory: 600Mi                                  # memory request on episilia-search-ondemand                                
     prewarm:
-      enabled: "true"
+      enabled: "false"
       # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
       from:
         hours: "2"                                    # hours from when the required labels should be loaded
-        yyyymmddhh: "2023102100"                      # the date from when the required labels should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"                      # the date from when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
       to:
         hours: "0"                                    # hours till when the required labels should be loaded
-        yyyymmddhh: "2023102100"                      # the date till when the required labels should be loaded (YYYYMMDDHH)
-
-
-    labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log"                      # Lables excluded from grafana dropdown GUI. 
-
+        yyyymmddhh: "2023102100"                      # the date till when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
+    ops:
+      index:
+        cache:
+          s3list:
+            seconds: "600"                           
 
   #config for historic search engine
   fixedSearch:
@@ -382,7 +423,7 @@ global:
     resources:
       limits:
         cpu: "1"                                     # cpu limit on historic episilia-search
-        memory: 1024Mi                               # memory limit on historic episilia-search
+        memory: 2Gi                                  # memory limit on historic episilia-search
       requests:
         cpu: 500m                                    # cpu request on historic episilia-search
         memory: 600Mi                                # memory request on historic episilia-search
@@ -396,16 +437,11 @@ global:
       timeout:
         seconds: 60                                  # timeout for search while querying
 
-    labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log"                      # Lables excluded from grafana dropdown GUI. 
-
-
 # tail server configurations
   gateway:
     replicaCount: "1"                                # kubernetes pod replicas of episilia-gateway
     image:
-      repository: episilia/tail                      # docker image of episilia-gateway
+      repository: episilia/gateway                      # docker image of episilia-gateway
       tag: *release
     resources:
       limits:
@@ -444,8 +480,8 @@ global:
     enabled: *redpanda
     resources:
       limits:
-        cpu: 500m                                # cpu limit on redpanda
-        memory: 1250Mi                           # memory limit on redpanda
+        cpu: 1000m                                # cpu limit on redpanda
+        memory: 2048Mi                           # memory limit on redpanda
       requests:
         cpu: 300m                                # cpu request on redpanda
         memory: 600Mi                            # memory request on redpanda
@@ -467,7 +503,8 @@ global:
     accessModes:
     - ReadWriteOnce                             # access modes
     size: "10Gi"                                # size of PVC which will be mounted to episilia-search for live search
-    historicSize: "5Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    historicSize: "5Gi"                         # size of PVC which will be mounted to episilia-search for historic search
+    ondemandSize: "10Gi"                        # size of PVC which will be mounted to episilia-search for ondemand search
     # annotations: {}
     finalizers:
      - kubernetes.io/pvc-protection
