@@ -6,8 +6,7 @@ data:
   client.env: {{ .Values.global.client.env | quote }}
   client.id: {{ .Values.global.client.id | quote }}
   client.license.key: {{ .Values.global.client.license.key | quote }}
-  datastore.s3logs: s3logs
-  datastore.stores.cache.enabled: "false"
+  datastore.s3logs: s3logs 
   {{- if .Values.minio.enabled }}
   datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
   datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
@@ -44,6 +43,8 @@ data:
   datastore.stores.final.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
   datastore.stores.final.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
   datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
+  datastore.stores.final.s3.https: {{ .Values.global.datastore.s3.https | quote }}
+  datastore.stores.final.s3.url.prefix: {{ .Values.global.datastore.s3.url.prefix | quote }}
   datastore.stores.s3logs.enabled: {{ .Values.global.datastore.s3logs.enabled| quote }}
   datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
   datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
@@ -62,6 +63,9 @@ data:
   indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
   indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
   indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}  
+  indexer.ops.datablock.writer.count: {{ .Values.global.indexer.ops.datablock.writer.count | quote }}
+  indexer.ops.json.processor.count: {{ .Values.global.indexer.ops.json.processor.count | quote }}
+  indexer.optimize.block.maxbytes.mb: {{ .Values.global.indexer.optimize.block.maxbytes.mb | quote }}
   indexer.schema.appid.fixed: {{ .Values.global.indexer.schema.appid.fixed | quote }}
   indexer.schema.appid.keys: {{ .Values.global.indexer.schema.appid.keys | quote }}
   indexer.schema.tenantid.fixed: {{ .Values.global.indexer.schema.tenantid.fixed | quote }}
@@ -78,6 +82,11 @@ data:
   indexer.alert.prometheus.gateway: {{.Values.global.indexer.alert.prometheus.gateway | quote }}
   kafka.group.spike: {{ .Values.global.kafka.group.spike | quote }}
   kafka.group.search: {{ .Values.global.kafka.group.search | quote }}
+  kafka.group.cpanel: {{ .Values.global.kafka.group.cpanel | quote }}
+  kafka.group.gateway.tail: {{ .Values.global.kafka.group.gateway.tail | quote }}
+  kafka.group.logwatcher.alert: {{ .Values.global.kafka.group.logwatcher.alert | quote }}
+  kafka.group.logwatcher.tail: {{ .Values.global.kafka.group.logwatcher.tail | quote }}
+  kafka.group.s3log.files: {{ .Values.global.kafka.group.s3log.files | quote }}
   kafka.indexer.group: {{ .Values.global.kafka.indexer.group | quote }}
   kafka.indexer.logs.topics: {{ .Values.global.kafka.indexer.logs.topics | quote }}
   kafka.indexer.broker.list: {{ .Values.global.kafka.indexer.broker.list | quote }}
@@ -100,43 +109,20 @@ data:
   kafka.topic.cpanel.in: {{ .Values.global.kafka.topic.cpanel.in | quote }}
   kafka.topic.cpanel.out: {{ .Values.global.kafka.topic.cpanel.out | quote }}
   search.api.timeout.seconds: {{ .Values.global.livesearch.api.timeout.seconds | quote }}
+  search.api.request.max.days: {{.Values.global.livesearch.api.request.max.days | quote }}
+  search.labels.exclude: {{.Values.global.livesearch.labels.exclude | quote }}
+  search.labels.display.max.count: {{.Values.global.livesearch.labels.display.max.count | quote }}
   search.live.from.hours: {{ .Values.global.livesearch.live.from.hours | quote }}
   search.live.to.hours: {{ .Values.global.livesearch.live.to.hours | quote }}
   search.fixed.from.yyyymmddhh: {{.Values.global.fixedSearch.fixed.from.yyyymmddhh | quote }}
   search.fixed.to.yyyymmddhh: {{.Values.global.fixedSearch.fixed.to.yyyymmddhh | quote }}
-  #gateway.api.http.port: {{ .Values.httpport | quote }}
-  #gateway.search.timeout.seconds: {{ .Values.timeout | quote }}
-  #gateway.search.url: {{ .Values.gatewayurl | quote }}
-  ops.log.debug: {{ .Values.debug | quote }}
-  search.api.grpc.port: {{ .Values.grpcport | quote }}
-  search.api.response.max.mb: {{ .Values.maxmb | quote }}
-  ops.license.url: {{ .Values.licenseurl | quote }} 
-  spike.api.grpc.port: {{ .Values.spikeport | quote }}
-  #ops.work.dir: {{ .Values.workdir | quote }}
-  search.host: {{ .Values.searchhost | quote }}
-  pulse.host: {{ .Values.pulsehost | quote }}
-  pulse.port: {{ .Values.pulseport | quote }}
-  #search.labels.exclude: "time"
-  gateway.api.http.port: "9005"
-  gateway.search.timeout.seconds: "120"
-  gateway.search.url: "episilia-search:4040"
-  ops.log.debug: "on"
-  search.api.grpc.port: "4040"
-  search.api.response.max.mb: "100"
-  search.api.request.max.days: {{.Values.global.ondemandsearch.api.request.max.days | quote }}
-  ops.license.url: "episilia-spike:50051"
-  spike.api.grpc.port: "50051"
-  ops.work.dir: "/data"
-  search.host: "episilia-search:4040"
-  spike.url: "http://episilia-spike:9090/"
-  pulse.host: "dev-api-pulse.episilia.net"
-  pulse.port: "50051"
-  search.labels.exclude: "@timestamp,log"
-  search.ops.index.cache.resetonstart: "true"
-  search.ops.index.cache.disk.max.gb: "1"
-  spike.grpc.server.port: "50051"
-  spike.sql.source.paths: /sql.json
-  spike.s3logs.publish.enable: "true"
+  search.ondemand.prewarm.enabled: {{.Values.global.ondemandsearch.prewarm.enabled | quote }}
+  search.ondemand.prewarm.from.yyyymmddhh: {{.Values.global.ondemandsearch.prewarm.from.yyyymmddhh | quote }}
+  search.ondemand.prewarm.to.yyyymmddhh: {{.Values.global.ondemandsearch.prewarm.to.yyyymmddhh | quote }}
+  search.ondemand.prewarm.from.hours: {{.Values.global.ondemandsearch.prewarm.from.hours | quote }}
+  search.ondemand.prewarm.to.hours: {{.Values.global.ondemandsearch.prewarm.to.hours | quote }}
+  search.ops.index.cache.s3list.seconds: {{.Values.global.ondemandsearch.ops.index.cache.s3list.seconds | quote }}
+  search.ops.index.cache.resetonstart: {{.Values.global.livesearch.ops.index.cache.resetonstart | quote }}
   spike.s3logs.publish.seconds: {{ .Values.global.spike.s3logs.publish.seconds | quote }}
   spike.s3logs.publish.partitionwise: {{ .Values.global.spike.s3logs.publish.partitionwise | quote }}
   spike.login.mode: {{ .Values.global.spike.login.mode | quote }}
@@ -147,8 +133,51 @@ data:
   spike.login.google.token: {{ .Values.global.spike.login.google.token | quote }}
   spike.login.okta.clientid: {{ .Values.global.spike.login.okta.clientid | quote }}
   spike.login.okta.token: {{ .Values.global.spike.login.okta.token | quote }}
-  indexer.ops.s3.reader.enable: "true"
-  cpanel.api.access.key: token
-  cpanel.api.access.token: 98f4b6223f5908c16ed54962010500908d98f8c6
-  cpanel.api.console.server: https://episilia-console-dev-pjyzk.ondigitalocean.app
-  cpanel.gateway.server: episilia-gateway:9002 
+  spike.pulse.access.key: {{ .Values.global.spike.pulse.access.key | quote }} 
+  spike.pulse.access.token: {{ .Values.global.spike.pulse.access.token | quote }}
+  spike.pulse.host: {{ .Values.global.spike.pulse.host | quote }}
+  spike.pulse.url: {{ .Values.global.spike.pulse.url | quote }}
+  ops.log.metrics.publish.interval.seconds: {{ .Values.global.ops.log.metrics.publish.interval.seconds | quote }}
+  ops.log.state.publish.interval.seconds: {{ .Values.global.ops.log.state.publish.interval.seconds | quote }}
+  # gateway.api.http.port: {{ .Values.httpport | quote }}
+  # gateway.search.url: {{ .Values.gatewayurl | quote }}  
+  # search.api.grpc.port: {{ .Values.grpcport | quote }}
+  # search.api.response.max.mb: {{ .Values.maxmb | quote }}
+  # search.host: {{ .Values.searchhost | quote }}
+  # ops.log.debug: {{ .Values.debug | quote }}
+  # ops.license.url: {{ .Values.licenseurl | quote }}   
+  # ops.work.dir: {{ .Values.workdir | quote }}
+  # pulse.host: {{ .Values.pulsehost | quote }}
+  # pulse.port: {{ .Values.pulseport | quote }}
+  # search.labels.exclude: "time"
+  # gateway.search.url: "episilia-search:4040"
+  gateway.api.http.port: "9005" 
+  ops.log.debug: "on"
+  search.api.grpc.port: "4040"
+  search.api.response.max.mb: "100"  
+  ops.work.dir: "/data"
+  search.host: "episilia-search:4040"
+  spike.url: "http://episilia-spike:9090/"    
+  search.ops.index.cache.disk.max.gb: "1"
+  search.ops.api.throttle.enable: "true"
+  search.ops.data.cache.disk.max.gb: "100"
+  search.ops.index.cache.memory.max.mb: "64"
+  search.ops.index.warmer.thread.count: "5"
+  spike.grpc.server.port: "50051"
+  spike.s3logs.publish.enable: "true"  
+  indexer.ops.s3.reader.enable: "true"  
+  indexer.live.block.maxbytes.mb: :10"
+  indexer.live.block.maxrecord.count: "10000"
+  indexer.live.block.maxwait.ms: "30000"
+  indexer.live.file.maxblocks.count: "100"
+  indexer.live.file.maxbytes.mb: "100"
+  indexer.live.file.maxwait.ms: "120000"
+  indexer.ops.index.creator.count: "1"
+  indexer.ops.s3.reader.count: "1"
+  indexer.ops.s3.writer.count: "1"
+  indexer.ops.use.simdjson.parser: "true"
+  indexer.optimize.processor.count: "1"
+  indexer.optimize.s3.check.mins: "10"
+  indexer.schema.label.maxlength: "100"
+  ops.log.keys.donotlog: "password,accesskey,secretkey"
+  spike.pulse.port: "50051"

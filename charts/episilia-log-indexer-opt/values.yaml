@@ -11,7 +11,7 @@ image:
   tag: "3.0.0"
 
 imagePullSecrets:
-  - name: regard
+  - name: regcred
 nameOverride: ""
 fullnameOverride: ""
 

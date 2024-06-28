@@ -55,23 +55,23 @@ spec:
               value: search
             - name: search.mode
               value: "ondemand"
-            - name: search.ondemand.prewarm.enabled
-              value: "{{ .Values.global.ondemandsearch.prewarm.enabled }}"
-            - name: search.ondemand.prewarm.from.hours
-              value: "{{ .Values.global.ondemandsearch.prewarm.from.hours }}"
-            - name: search.ondemand.prewarm.to.hours
-              value: "{{ .Values.global.ondemandsearch.prewarm.to.hours }}"
-            - name: search.ondemand.prewarm.from.yyyymmddhh
-              value: "{{ .Values.global.ondemandsearch.prewarm.from.yyyymmddhh}}"
-            - name: search.ondemand.prewarm.to.yyyymmddhh
-              value: "{{ .Values.global.ondemandsearch.prewarm.to.yyyymmddhh}}"
-            - name: ops.work.dir
-              value: "{{.Values.global.persistence.mountPath}}"
-            - name: search.api.request.max.days
-              valueFrom: 
-                configMapKeyRef:  
-                  name: episilia-config
-                  key: search.api.request.max.days
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
           volumeMounts:
           - name: {{ template "episilia-search-ondemand.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"

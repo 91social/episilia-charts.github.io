@@ -83,8 +83,23 @@ spec:
                 > /node/zoneid\nNODE_ZONE=$NODE_ZONE episilia_log_indexer \n"
           command: ["/bin/bash", "-c"]
           args:
-            - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
-
+            - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'          
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 9090
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 9090
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.global.indexer.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

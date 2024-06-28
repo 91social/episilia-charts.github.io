@@ -55,7 +55,22 @@ spec:
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"
-            
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 4040
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3  
 
           resources:
             {{- toYaml .Values.global.livesearch.resources | nindent 12 }}

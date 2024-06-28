@@ -43,14 +43,24 @@ spec:
           envFrom:
           - configMapRef:
               name: episilia-config
+
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: "/health"
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: "/health"
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            
           resources:
             {{- toYaml .Values.global.spikeui.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}

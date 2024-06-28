@@ -55,6 +55,23 @@ spec:
                 configMapKeyRef:
                   name: episilia-config
                   key: ops.work.dir
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 9005
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 9005
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
           resources:
             {{- toYaml .Values.global.gateway.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
