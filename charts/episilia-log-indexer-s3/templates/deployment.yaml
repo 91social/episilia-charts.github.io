@@ -93,22 +93,6 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - 'echo "$$SCRIPT" > /tmp/script && bash /tmp/script'
-          livenessProbe:
-            httpGet:
-              path: "/health"
-              port: 9090
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: "/health"
-              port: 9090
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
             
           resources:
             {{- toYaml .Values.global.indexers3.resources | nindent 12 }}

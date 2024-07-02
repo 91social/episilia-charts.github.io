@@ -166,7 +166,7 @@ data:
   spike.grpc.server.port: "50051"
   spike.s3logs.publish.enable: "true"  
   indexer.ops.s3.reader.enable: "true"  
-  indexer.live.block.maxbytes.mb: :10"
+  indexer.live.block.maxbytes.mb: "10"
   indexer.live.block.maxrecord.count: "10000"
   indexer.live.block.maxwait.ms: "30000"
   indexer.live.file.maxblocks.count: "100"

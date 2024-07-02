@@ -55,22 +55,6 @@ spec:
               value: search
             - name: search.mode
               value: "ondemand"
-          livenessProbe:
-            httpGet:
-              path: "/health"
-              port: 4040
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: "/health"
-              port: 4040
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
 
           volumeMounts:
           - name: {{ template "episilia-search-ondemand.fullname" . }}
