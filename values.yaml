@@ -34,7 +34,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: NodePort 
+  type: ClusterIP 
 
 ingress:
   enabled: false
@@ -50,8 +50,8 @@ ingress:
 
 resources:
   limits:
-    memory: 1000Mi
-    cpu: 800m
+    memory: 2Gi
+    cpu: "1"
   requests:
     memory: 100Mi
     cpu: 300m
@@ -85,7 +85,7 @@ episilia-log-indexer-s3:
   enabled: false
 
 episilia-log-indexer-opt:
-  enabled: false
+  enabled: true
 
 episilia-search:
   enabled: true
@@ -100,10 +100,10 @@ episilia-gateway:
   enabled: true  
 
 episilia-spike-ui:
-  enabled: false
+  enabled: true
 
 minio:
-  enabled: false
+  enabled: false                               # To enable stage files in minio  
 
 
 # Each consumer will have unique client name and env provided, the same is to be used here.
@@ -116,9 +116,17 @@ global:
   
   kafka:
     group:
-      search: episilia-search-group            # Kafka consumer-group for search
-      spike: episilia-spike-group              # Kafka consumer-group for spike
-    
+      search: episilia-search-group                  # Kafka consumer-group for search
+      spike: episilia-spike-group                    # Kafka consumer-group for spike
+      cpanel: episilia-cpanel-group                  # Kafka consumer-group for cpanel
+      gateway:
+        tail: episilia-gw-tail-group                 # Kafka consumer-group for gateway tail 
+      logwatcher:
+        alert: episilia-lw-alert-group               # Kafka consumer-group for logwatcher alert 
+        tail: episilia-lw-tail-group                 # Kafka consumer-group for logwatcher tail 
+      s3log:
+        files: episilia-s3files-group                # Kafka consumer-group for s3logs
+      
     topic:
       index:
         live: stagefiles                       # Topic for internal publish indexed files - stage.topic
@@ -129,7 +137,6 @@ global:
       s3log:
         files: s3logs                          # Topic from where s3 logs are loaded.
       cpanel:
-        in: cpaneld                            # Internal topic cpanel.data.topic
         out: cpaneld                           # Internal topic cpanel.data.topic
       
       tail:
@@ -174,7 +181,7 @@ global:
         seconds: "2"
         partitionwise: "false"
     login:
-      mode: local                               # local, google, okta
+      mode: local                                      # local, google, okta
       local:
         password:
           encryptionkey: "i am groot"
@@ -184,46 +191,63 @@ global:
       okta:
         clientid: "okta-client"
         token: "okta-token"
+    pulse:
+      access:
+        key: "token"
+        token: "random"
+      host: "localhost"
+      url: "http://localhost:8080/"
+
+  ops:
+    log:
+      metrics:
+        publish:
+          interval:
+            seconds: "300"
+      state:
+        publish:
+          interval:
+            seconds: "10"
 
 #You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
 
   datastore:
     s3:
-      accesskey: ""                         # filestorage access key (eg: AWS S3 access key)
-      secretkey: ""                         # filestorage secret key (eg: AWS S3 secret key)   
-      region: ""                            # filestorage region (eg: AWS S3 region)
+      accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
+      secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
+      region: ""                                       # filestorage region (eg: AWS S3 region)
       endpoint:
-        url:                                # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+        url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
       sign:
         payload: true
-      bucket: episilia-bucket               # filestorage bucket (eg: AWS S3 bucket)
-      folder: episilia-folder               # filestorage folder URL (eg: AWS S3 folder)
+      bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
+      folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
       work:
         folder: work-folder
       url:
         prefix: s3://
       useArn: false
-      assumeRole: ""                           # ARN role
-      https: "false"
+      assumeRole: ""                                    # ARN role
+      https: "true"
 
     s3logs:
-      enabled: true                            # to load logs from s3 bucket
+      enabled: true                                     # to load logs from s3 bucket
       s3:
-        accesskey: ""                         # filestorage access key (eg: AWS S3 access key)
-        secretkey: ""                         # filestorage secret key (eg: AWS S3 secret key)   
-        region: ""                            # filestorage region (eg: AWS S3 region)
+        accesskey: ""                                   # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                   # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                      # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url:                                          # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
-        bucket: episilia-bucket               # filestorage bucket (eg: AWS S3 bucket)
-        folder: episilia-folder               # filestorage folder URL (eg: AWS S3 folder)
+        bucket: episilia-bucket                         # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                         # filestorage folder URL (eg: AWS S3 folder)
         work:
           folder: work-folder
         url:
           prefix: s3://
         useArn: false
-        assumeRole: ""                           # ARN role
+        assumeRole: ""                                   # ARN role
         sourcefolder: sourcefolder
         pathstyle:
           access: "true"
@@ -233,19 +257,19 @@ global:
 
   indexer:
     image:
-      repository: episilia/log-indexer     # docker image of episilia-log-indexer
+      repository: episilia/log-indexer                 # docker image of episilia-log-indexer
       tag: *release
-    replicaCount: "1"                      # kubernetes pod replicas of episilia-log-indexer
+    replicaCount: "1"                                  # kubernetes pod replicas of episilia-log-indexer
     annotations:
       deploy:
       service:
     resources:
       limits:
-        cpu: 800m                           # cpu limit on episilia-log-indexer 
-        memory: 1024Mi                      # memory limit on episilia-log-indexer
+        cpu: "1"                                      # cpu limit on episilia-log-indexer 
+        memory: 2Gi                                 # memory limit on episilia-log-indexer
       requests:
-        cpu: 400m                           # cpu request on episilia-log-indexer
-        memory: 300Mi                       # memory request on episilia-log-indexer
+        cpu: 400m                                      # cpu request on episilia-log-indexer
+        memory: 300Mi                                  # memory request on episilia-log-indexer
 
     schema:
       appid:
@@ -271,7 +295,7 @@ global:
       enable: "false"                                  # to enable alert server
       rules:
         file:
-          url: "s3://bucket/folder/file"                #alert config url need to be update here
+          url: "s3://bucket/folder/file"                # alert config url need to be update here
       prometheus:
         gateway: localhost:5070                         # push-gateway url 
 
@@ -287,134 +311,145 @@ global:
             size:
               max: 
                 mb: "100"                               # applicable for log messages
+      datablock:
+        writer:
+          count: "1"                                    # datablocks zipped and written to disk, in sequence files
+      json:
+        processor:
+          count: "1"                                    # number of json parsers
+    optimize:
+      block:
+        maxbytes:
+          mb: "10"
 
 
   # Indexing s3 logs
   indexers3:
     image:
-      repository: episilia/log-indexer     # docker image of episilia-log-indexer
+      repository: episilia/log-indexer                  # docker image of episilia-log-indexer
       tag: *release
-    replicaCount: "1"                      # kubernetes pod replicas of episilia-log-indexer-s3
+    replicaCount: "1"                                   # kubernetes pod replicas of episilia-log-indexer-s3
     resources:
       limits:
-        cpu: 800m                          # cpu limit on episilia-log-indexer-s3
-        memory: 1024Mi                     # memory limit on episilia-log-indexer-s3
+        cpu: "1"                                       # cpu limit on episilia-log-indexer-s3
+        memory: 2Gi                                  # memory limit on episilia-log-indexer-s3
       requests:
-        cpu: 400m                          # cpu request on episilia-log-indexer-s3
-        memory: 300Mi                      # memory request on episilia-log-indexer-s3
+        cpu: 400m                                       # cpu request on episilia-log-indexer-s3
+        memory: 300Mi                                   # memory request on episilia-log-indexer-s3
 
 
   #optimizer server configuration    
   optimizer:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-optimizer  
+    replicaCount: "1"                                   # kubernetes pod replicas of episilia-optimizer  
     resources:
       limits:
-        cpu: 800m              # cpu limit on episilia-optimizer
-        memory: 1024Mi         # memory limit on episilia-optimizer
+        cpu: "1"                                       # cpu limit on episilia-optimizer
+        memory: 2Gi                                  # memory limit on episilia-optimizer
       requests:
-        cpu: 500m              # cpu request on episilia-optimizer        
+        cpu: 500m                                       # cpu request on episilia-optimizer        
         memory: 300Mi 
    
   
   #config for search engine
   livesearch:
     image:
-      repository: episilia/search   # docker image of episilia-search
+      repository: episilia/search                       # docker image of episilia-search
       tag: *release
     
-    replicaCount: "1"                        # kubernetes pod replicas of episilia-search 
+    replicaCount: "1"                                   # kubernetes pod replicas of episilia-search 
     resources:
       limits:
-        cpu: "1"                             # cpu limit on episilia-search
-        memory: 2048Mi                       # memory limit on episilia-search
+        cpu: "1"                                       # cpu limit on episilia-search
+        memory: 2Gi                                 # memory limit on episilia-search
       requests:
-        cpu: 500m                            # cpu request on episilia-search
-        memory: 600Mi                     # memory request on episilia-search
+        cpu: 500m                                      # cpu request on episilia-search
+        memory: 600Mi                                  # memory request on episilia-search
     
     api:
       timeout:
-        seconds: 60                         # timeout for search while querying
+        seconds: 60                                    # timeout for search while querying
+      request:
+        max:
+          days: "30"                                   # days for querying search
     
     live:
       from:
-        hours: 48                           # hours from when the required index blocks should be loaded
+        hours: 48                                      # hours from when the required index blocks should be loaded
       to:
-        hours: 0                            # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+        hours: 0                                       # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+
+    ops:
+      index:
+        cache:
+          resetonstart: "true"
+    
     labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
+      display:
+        max:
+          count: "1000"                                # labels count displayed in spikeui/grafana
+      exclude: "@timestamp,log"                        # Lables excluded from spikeui/grafana dropdown GUI. 
 
     
   #config for search-ondemand engine
   ondemandsearch:
-    replicaCount: "1"                        # kubernetes pod replicas of episilia-search-ondemand
+    replicaCount: "1"                                  # kubernetes pod replicas of episilia-search-ondemand
     resources:
       limits:
-        cpu: "1"                             # cpu limit on episilia-search-ondemand
-        memory: 2048Mi                       # memory limit on episilia-search-ondemand
+        cpu: "1"                                       # cpu limit on episilia-search-ondemand
+        memory: 2Gi                                    # memory limit on episilia-search-ondemand
       requests:
-        cpu: 500m                            # cpu request on episilia-search-ondemand
-        memory: 600Mi                     # memory request on episilia-search-ondemand
-    api:
-      request:
-        max:
-          days: "30"                    # days for querying ondemand search
+        cpu: 500m                                      # cpu request on episilia-search-ondemand
+        memory: 600Mi                                  # memory request on episilia-search-ondemand                                
     prewarm:
-      enabled: "true"
+      enabled: "false"
       # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
       from:
-        hours: "2"                           # hours from when the required labels should be loaded
-        yyyymmddhh: "2023102100"             # the date from when the required labels should be loaded (YYYYMMDDHH)
+        hours: "2"                                    # hours from when the required labels should be loaded
+        yyyymmddhh: "2023102100"                      # the date from when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
       to:
-        hours: "0"                            # hours till when the required labels should be loaded
-        yyyymmddhh: "2023102100"              # the date till when the required labels should be loaded (YYYYMMDDHH)
-
-
-    labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log"               # Lables excluded from grafana dropdown GUI. 
-
+        hours: "0"                                    # hours till when the required labels should be loaded
+        yyyymmddhh: "2023102100"                      # the date till when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
+    ops:
+      index:
+        cache:
+          s3list:
+            seconds: "600"                           
 
   #config for historic search engine
   fixedSearch:
-    bucket: ""             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
-    folder: ""             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
-    replicaCount: "1"      # kubernetes pod replicas of historic episilia-search 
+    bucket: ""                                       # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: ""                                       # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    replicaCount: "1"                                # kubernetes pod replicas of historic episilia-search 
     resources:
       limits:
-        cpu: "1"          # cpu limit on historic episilia-search
-        memory: 1024Mi    # memory limit on historic episilia-search
+        cpu: "1"                                     # cpu limit on historic episilia-search
+        memory: 2Gi                                  # memory limit on historic episilia-search
       requests:
-        cpu: 500m         # cpu request on historic episilia-search
-        memory: 600Mi     # memory request on historic episilia-search
+        cpu: 500m                                    # cpu request on historic episilia-search
+        memory: 600Mi                                # memory request on historic episilia-search
     fixed:
       from:
-        yyyymmddhh: "2023102100"    # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"                     # the date from when the required index blocks should be loaded (YYYYMMDDHH)
       to:
-        yyyymmddhh: "2023102202"    # the date till when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102202"                     # the date till when the required index blocks should be loaded (YYYYMMDDHH)
 
     api:
       timeout:
-        seconds: 60       # timeout for search while querying
-
-    labels:
-      display.max.count: "400"
-      exclude: "@timestamp,log" # Lables excluded from grafana dropdown GUI. 
-
+        seconds: 60                                  # timeout for search while querying
 
 # tail server configurations
   gateway:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-gateway
+    replicaCount: "1"                                # kubernetes pod replicas of episilia-gateway
     image:
-      repository: episilia/tail    # docker image of episilia-gateway
+      repository: episilia/gateway                      # docker image of episilia-gateway
       tag: *release
     resources:
       limits:
-        cpu: 500m              # cpu limit on episilia-gateway
-        memory: 600Mi         # memory limit on episilia-gateway
+        cpu: 500m                                    # cpu limit on episilia-gateway
+        memory: 600Mi                                # memory limit on episilia-gateway
       requests:
-        cpu: 300m              # cpu request on episilia-gateway        
-        memory: 300Mi          # memory request on episilia-gateway    
+        cpu: 300m                                    # cpu request on episilia-gateway        
+        memory: 300Mi                                # memory request on episilia-gateway    
     service: 
       type: "ClusterIP"  
     annotations:
@@ -423,17 +458,17 @@ global:
 
 # spike ui server configurations
   spikeui:
-    replicaCount: "1"           # kubernetes pod replicas of episilia-spike-ui
+    replicaCount: "1"                               # kubernetes pod replicas of episilia-spike-ui
     image:
-      repository: episilia/spike-ui    # docker image of episilia-spike-ui
+      repository: episilia/spike-ui                 # docker image of episilia-spike-ui
       tag: *release
     resources:
       limits:
-        cpu: 500m              # cpu limit on episilia-spike -ui
-        memory: 800Mi         # memory limit on episilia-spike -ui
+        cpu: 500m                                  # cpu limit on episilia-spike -ui
+        memory: 800Mi                              # memory limit on episilia-spike -ui
       requests:
-        cpu: 300m              # cpu request on episilia-spike -ui        
-        memory: 500Mi          # memory request on episilia-spike-ui
+        cpu: 300m                                  # cpu request on episilia-spike -ui        
+        memory: 500Mi                              # memory request on episilia-spike-ui
     service: 
       type: "LoadBalancer"  
     annotations:
@@ -441,15 +476,15 @@ global:
 
  
 # Redpanda
-  redpanda:                   # kubernetes pod replicas of episilia-gateway
+  redpanda:                                       # kubernetes pod replicas of episilia-gateway
     enabled: *redpanda
     resources:
       limits:
-        cpu: 500m                             # cpu limit on redpanda
-        memory: 1250Mi                         # memory limit on redpanda
+        cpu: 1000m                                # cpu limit on redpanda
+        memory: 2048Mi                           # memory limit on redpanda
       requests:
-        cpu: 300m                             # cpu request on redpanda
-        memory: 600Mi                         # memory request on redpanda
+        cpu: 300m                                # cpu request on redpanda
+        memory: 600Mi                            # memory request on redpanda
     ports:
       admin: "9644"
       kafka: "9092"
@@ -462,13 +497,15 @@ global:
         
  # Persistance Volume   
   persistence:
-    enabled: "false"                             # to enable PVC 
+    enabled: "false"                            # to enable PVC 
     mountPath: "/data"                          # mount path of PVC 
     storageClassName: gp2                       # storage class name (differs on the cloud services that are used)
     accessModes:
     - ReadWriteOnce                             # access modes
     size: "10Gi"                                # size of PVC which will be mounted to episilia-search for live search
-    historicSize: "5Gi"                        # size of PVC which will be mounted to episilia-search for historic search
+    historicSize: "5Gi"                         # size of PVC which will be mounted to episilia-search for historic search
+    ondemandSize: "10Gi"                        # size of PVC which will be mounted to episilia-search for ondemand search
+    spikeSize: "10Gi"                           # size of PVC which will be mounted to episilia-spike for spike 
     # annotations: {}
     finalizers:
      - kubernetes.io/pvc-protection

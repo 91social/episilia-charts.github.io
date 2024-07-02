@@ -20,7 +20,7 @@ spec:
     {{- end }}
   resources:
     requests:
-      storage: {{ .Values.global.persistence.size | quote }}
+      storage: {{ .Values.global.persistence.spikeSize | quote }}
   {{- if .Values.global.persistence.storageClassName }}
   storageClassName: {{ .Values.global.persistence.storageClassName }}
   {{- end -}}

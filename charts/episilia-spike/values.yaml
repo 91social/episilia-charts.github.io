@@ -313,10 +313,10 @@ global:
                 mb: "100"                               # applicable for log messages
       datablock:
         writer:
-          count: "3"                                    # datablocks zipped and written to disk, in sequence files
+          count: "1"                                    # datablocks zipped and written to disk, in sequence files
       json:
         processor:
-          count: "2"                                    # number of json parsers
+          count: "1"                                    # number of json parsers
     optimize:
       block:
         maxbytes:
@@ -505,6 +505,7 @@ global:
     size: "10Gi"                                # size of PVC which will be mounted to episilia-search for live search
     historicSize: "5Gi"                         # size of PVC which will be mounted to episilia-search for historic search
     ondemandSize: "10Gi"                        # size of PVC which will be mounted to episilia-search for ondemand search
+    spikeSize: "10Gi"                           # size of PVC which will be mounted to episilia-spike for spike 
     # annotations: {}
     finalizers:
      - kubernetes.io/pvc-protection

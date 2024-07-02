@@ -69,22 +69,7 @@ spec:
               value: "{{.Values.global.persistence.mountPath}}"
             # - name: gateway.search.url
             #   value: episilia-search-fixed:4040  
-          livenessProbe:
-            httpGet:
-              path: "/health"
-              port: 4040
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: "/health"
-              port: 4040
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3   
+ 
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
             mountPath: "{{.Values.global.persistence.mountPath}}"
