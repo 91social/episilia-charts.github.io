@@ -274,16 +274,16 @@ global:
     schema:
       appid:
         fixed: "defaultApp"                            # If appid is a fixed string
-        keys: "app_id"                                 # label(s) for app identifier
+        keys: "app_id"                                 # label(s) for app identifier, ex: "kubernetes_container_name"
       tenantid:        
         fixed: "defaultTenant"                         # If tenantid is a fixed string  
-        keys: "tenant_id"                              # label(s) for tenant identifier        
+        keys: "tenant_id"                              # label(s) for tenant identifier, ex: "kubernetes_namespace_name"        
       message:
         key: "log"                                     # actual log message key
       timestamp:
         key: "time"                                    # timestamp key
         formats: "%Y-%m-%dT%H:%M:%S"                   # to specify timestamp format (ex: %Y-%m-%dT%H:%M:%S )
-      exclude: "time"                                  # labels to be excluded from the list
+      exclude: "timestamp"                             # labels to be excluded from the list
 
     logs:
       source: kafka                                    # source: kafka  # s3 or kafka
