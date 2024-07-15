@@ -1,5 +1,4 @@
-#{{- if and .Values.global.persistence.enabled (not .Values.global.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
-{{- if (eq .Values.persistence.type "pvc")}}
+{{- if and .Values.global.persistence.enabled (not .Values.global.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -22,7 +21,7 @@ spec:
     {{- end }}
   resources:
     requests:
-      storage: {{ .Values.global.persistence.size | quote }}
+      storage: {{ .Values.global.persistence.Size | quote }}
   {{- if .Values.global.persistence.storageClassName }}
   storageClassName: {{ .Values.global.persistence.storageClassName }}
   {{- end -}}
