@@ -52,6 +52,8 @@ spec:
               value: search
             - name: search.mode
               value: "fixed"
+            - name: ops.work.dir
+              value: "/data/search-fixed"
             - name: kafka.metadata.broker.list
               valueFrom:
                 configMapKeyRef:

@@ -55,6 +55,8 @@ spec:
               value: search
             - name: search.mode
               value: "ondemand"
+            - name: ops.work.dir
+              value: "/data/search-ondemand"
 
           volumeMounts:
           - name: {{ template "episilia-search-ondemand.fullname" . }}
