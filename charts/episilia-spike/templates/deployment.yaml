@@ -58,7 +58,7 @@ spec:
                   name: episilia-config
                   key: kafka.internal.broker.list
             - name: datasources.default.url
-              value: jdbc:h2:/spikedata
+              value: jdbc:h2:/data/spikedb
             - name: JVM_MAX_SIZE
               value: "{{.Values.global.spike.JVM_MAX_SIZE}}"
             - name: JVM_NEWGEN_MIN_SIZE
