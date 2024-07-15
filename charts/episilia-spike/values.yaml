@@ -497,6 +497,7 @@ global:
         
  # Persistance Volume   
   persistence:  
+    enabled: "false"
     mountPath: "/data"                          # mount path of PVC 
     storageClassName: gp2                       # storage class name (differs on the cloud services that are used)
     accessModes:

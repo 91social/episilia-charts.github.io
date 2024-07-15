@@ -1,5 +1,5 @@
-#{{- if and .Values.global.persistence.enabled (not .Values.global.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
-{{- if (eq .Values.persistence.type "pvc")}}
+{{- if and .Values.global.persistence.enabled (not .Values.global.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
+#{{- if (eq .Values.persistence.type "pvc")}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
