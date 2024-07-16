@@ -71,7 +71,7 @@ spec:
               value: "{{.Values.global.spike.metadata.backfill.days}}"
           volumeMounts:
           - name: {{ template "episilia-spike.fullname" . }}
-            mountPath: "{{.Values.global.persistence.mountPath}}"
+            mountPath: "/data"
           livenessProbe:
             httpGet:
               path: "/health"
