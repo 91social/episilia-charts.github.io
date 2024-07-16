@@ -58,9 +58,15 @@ spec:
               valueFrom:
                 fieldRef: {fieldPath: metadata.name}
             - name: kafka.topic.index.live
-              value: "{{.Values.global.kafka.topic.index.live}}"
+              valueFrom:
+                configMapKeyRef:
+                  name: episilia-config
+                  key: kafka.topic.index.live
             - name: kafka.topic.index.optimized
-              value: "{{.Values.global.kafka.topic.index.optimized}}"
+              valueFrom:
+                configMapKeyRef:
+                  name: episilia-config
+                  key: kafka.topic.index.optimized
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
             mountPath: "/data"
