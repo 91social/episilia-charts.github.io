@@ -55,12 +55,19 @@ spec:
               value: search
             - name: search.mode
               value: "ondemand"
+            - name: kafka.group.search
+              valueFrom:
+                fieldRef: {fieldPath: metadata.name}
+            - name: kafka.topic.index.live
+              value: "{{.Values.global.ondemandsearch.topic.index.live}}"
+            - name: kafka.topic.index.optimized
+              value: "{{.Values.global.ondemandsearch.topic.index.optimized}}"
             - name: ops.work.dir
               value: "/data/search-ondemand"
 
           volumeMounts:
           - name: {{ template "episilia-search-ondemand.fullname" . }}
-            mountPath: "{{.Values.global.persistence.mountPath}}"
+            mountPath: "/data"
           resources:
             {{- toYaml .Values.global.ondemandsearch.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}          

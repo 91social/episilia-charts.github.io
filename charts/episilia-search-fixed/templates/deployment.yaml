@@ -54,6 +54,13 @@ spec:
               value: "fixed"
             - name: ops.work.dir
               value: "/data/search-fixed"
+            - name: kafka.group.search
+              valueFrom:
+                fieldRef: {fieldPath: metadata.name}
+            - name: kafka.topic.index.live
+              value: "{{.Values.global.fixedSearch.topic.index.live}}"
+            - name: kafka.topic.index.optimized
+              value: "{{.Values.global.fixedSearch.topic.index.optimized}}"
             - name: kafka.metadata.broker.list
               valueFrom:
                 configMapKeyRef:
@@ -74,7 +81,7 @@ spec:
  
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
-            mountPath: "{{.Values.global.persistence.mountPath}}"
+            mountPath: "/data"
           resources:
             {{- toYaml .Values.global.fixedSearch.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

@@ -54,10 +54,16 @@ spec:
               value: "live"
             - name: ops.work.dir
               value: "/data/search-live"
+            - name: kafka.group.search
+              valueFrom:
+                fieldRef: {fieldPath: metadata.name}
+            - name: kafka.topic.index.live
+              value: "{{.Values.global.kafka.topic.index.live}}"
+            - name: kafka.topic.index.optimized
+              value: "{{.Values.global.kafka.topic.index.optimized}}"
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
-            mountPath: "{{.Values.global.persistence.mountPath}}"
-
+            mountPath: "/data"
           resources:
             {{- toYaml .Values.global.livesearch.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
