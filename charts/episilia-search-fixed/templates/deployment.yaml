@@ -74,11 +74,8 @@ spec:
               value: "{{.Values.global.fixedSearch.fixed.from.yyyymmddhh}}"
             - name: search.fixed.to.yyyymmddhh 
               value: "{{.Values.global.fixedSearch.fixed.to.yyyymmddhh}}"
-            - name: ops.work.dir
-              value: "{{.Values.global.persistence.mountPath}}"
             # - name: gateway.search.url
-            #   value: episilia-search-fixed:4040  
- 
+            #   value: episilia-search-fixed:4040   
           volumeMounts:
           - name: {{ template "episilia-search.fullname" . }}
             mountPath: "/data"
