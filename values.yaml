@@ -87,13 +87,13 @@ episilia-log-indexer-s3:
 episilia-log-indexer-opt:
   enabled: true
 
-episilia-search:
+episilia-search:                            
   enabled: true
 
-episilia-search-fixed:
+episilia-search-fixed:                                 # If enabled, additional topics to be created (refer fixedSearch config)
   enabled: false
 
-episilia-search-ondemand:
+episilia-search-ondemand:                              # If enabled, additional topics to be created (refer ondemandsearch config)
   enabled: false
 
 episilia-gateway:
@@ -103,7 +103,7 @@ episilia-spike-ui:
   enabled: true
 
 minio:
-  enabled: false                               # To enable stage files in minio  
+  enabled: false                                       # To enable stage files in minio  
 
 
 # Each consumer will have unique client name and env provided, the same is to be used here.
@@ -388,6 +388,7 @@ global:
         max:
           count: "1000"                                # labels count displayed in spikeui/grafana
       exclude: "@timestamp,log"                        # Lables excluded from spikeui/grafana dropdown GUI. 
+    
 
     
   #config for search-ondemand engine
@@ -414,42 +415,52 @@ global:
         cache:
           s3list:
             seconds: "600"                           
+    topic:
+      index:
+        live: "stagefile-ondemand"                            # Topic for internal publish indexed files for ondemand
+        optimized: "optfile-ondemand"                         # Topic to publish file names post optimization for ondemand
+
 
   #config for historic search engine
   fixedSearch:
-    bucket: ""                                       # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
-    folder: ""                                       # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
-    replicaCount: "1"                                # kubernetes pod replicas of historic episilia-search 
+    bucket: ""                                             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: ""                                             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    replicaCount: "1"                                      # kubernetes pod replicas of historic episilia-search 
     resources:
       limits:
-        cpu: "1"                                     # cpu limit on historic episilia-search
-        memory: 2Gi                                  # memory limit on historic episilia-search
+        cpu: "1"                                           # cpu limit on historic episilia-search
+        memory: 2Gi                                        # memory limit on historic episilia-search
       requests:
-        cpu: 500m                                    # cpu request on historic episilia-search
-        memory: 600Mi                                # memory request on historic episilia-search
+        cpu: 500m                                           # cpu request on historic episilia-search
+        memory: 600Mi                                       # memory request on historic episilia-search
     fixed:
       from:
-        yyyymmddhh: "2023102100"                     # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"                             # the date from when the required index blocks should be loaded (YYYYMMDDHH)
       to:
-        yyyymmddhh: "2023102202"                     # the date till when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102202"                             # the date till when the required index blocks should be loaded (YYYYMMDDHH)
 
     api:
       timeout:
-        seconds: 60                                  # timeout for search while querying
+        seconds: 60                                          # timeout for search while querying
+    topic:
+      index:
+        live: "stagefile-fixed"                              # Topic for internal publish indexed files for fixed search
+        optimized: "optfile-fixed"                           # Topic to publish file names post optimization for fixed search
+
 
 # tail server configurations
   gateway:
-    replicaCount: "1"                                # kubernetes pod replicas of episilia-gateway
+    replicaCount: "1"                                   # kubernetes pod replicas of episilia-gateway
     image:
       repository: episilia/gateway                      # docker image of episilia-gateway
       tag: *release
     resources:
       limits:
-        cpu: 500m                                    # cpu limit on episilia-gateway
-        memory: 600Mi                                # memory limit on episilia-gateway
+        cpu: 500m                                       # cpu limit on episilia-gateway
+        memory: 600Mi                                   # memory limit on episilia-gateway
       requests:
-        cpu: 300m                                    # cpu request on episilia-gateway        
-        memory: 300Mi                                # memory request on episilia-gateway    
+        cpu: 300m                                       # cpu request on episilia-gateway        
+        memory: 300Mi                                    # memory request on episilia-gateway    
     service: 
       type: "ClusterIP"  
     annotations:
@@ -497,7 +508,6 @@ global:
         
  # Persistance Volume   
   persistence:  
-    mountPath: "/data"                          # mount path of PVC 
     storageClassName: gp2                       # storage class name (differs on the cloud services that are used)
     accessModes:
     - ReadWriteOnce                             # access modes
