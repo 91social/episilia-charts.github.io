@@ -180,6 +180,9 @@ global:
       publish:
         seconds: "2"
         partitionwise: "false"
+    alert:
+      publish:
+        enable: "false"    
     login:
       mode: local                                      # local, google, okta
       local:

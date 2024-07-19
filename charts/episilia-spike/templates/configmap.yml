@@ -125,6 +125,7 @@ data:
   search.ops.index.cache.resetonstart: {{.Values.global.livesearch.ops.index.cache.resetonstart | quote }}
   spike.s3logs.publish.seconds: {{ .Values.global.spike.s3logs.publish.seconds | quote }}
   spike.s3logs.publish.partitionwise: {{ .Values.global.spike.s3logs.publish.partitionwise | quote }}
+  spike.alert.publish.enable: {{ .Values.global.spike.alert.publish.enable | quote }}
   spike.login.mode: {{ .Values.global.spike.login.mode | quote }}
   spike.metadata.backfill.days: {{.Values.global.spike.metadata.backfill.days | quote }}
   spike.metadata.backfill.forceupdate: {{.Values.global.spike.metadata.backfill.forceupdate | quote }}
