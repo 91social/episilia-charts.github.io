@@ -511,6 +511,7 @@ global:
         
  # Persistance Volume   
   persistence:  
+    enabled: "true"
     storageClassName: gp2                       # storage class name (differs on the cloud services that are used)
     accessModes:
     - ReadWriteOnce                             # access modes
