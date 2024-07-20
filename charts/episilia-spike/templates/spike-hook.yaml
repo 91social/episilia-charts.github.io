@@ -1,0 +1,14 @@
+# templates/spike-hook.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spike-pre-install
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "0"
+spec:
+  containers:
+  - name: wait
+    image: busybox
+    command: ['sh', '-c', 'echo The spike chart is deployed; sleep 10']

@@ -1,0 +1,14 @@
+# templates/gateway-hook.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gateway-post-install
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "100"
+spec:
+  containers:
+  - name: wait
+    image: busybox
+    command: ['sh', '-c', 'echo The gateway chart is deployed; sleep 10']
