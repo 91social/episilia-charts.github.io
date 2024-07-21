@@ -59,7 +59,8 @@ spec:
             - name: EXTERNAL_CONNECTIVITY_SUBDOMAIN
             - name: HOST_PORT
           resources:
-            limits:
+            {{- toYaml .Values.global.redpanda.resources | nindent 12 }}
+            #limits:
               cpu: "100m"
               memory: "100Mi"
           volumeMounts:
