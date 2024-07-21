@@ -61,8 +61,8 @@ spec:
           resources:
             {{- toYaml .Values.global.redpanda.resources | nindent 12 }}
             #limits:
-              cpu: "100m"
-              memory: "100Mi"
+              #cpu: "100m"
+              #memory: "100Mi"
           volumeMounts:
             - name: config-dir
               mountPath: /etc/redpanda
