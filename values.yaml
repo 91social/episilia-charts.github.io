@@ -229,6 +229,7 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                    # ARN role
+        rolearn: ""
         pathstyle:
           access: "false"
         https: "true"
@@ -250,6 +251,7 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                    # ARN role
+        rolearn: ""
         pathstyle:
           access: "false"
         https: "true"
@@ -272,6 +274,7 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                   # ARN role
+        rolearn: ""                                      
         sourcefolder: sourcefolder
         pathstyle:
           access: "true"
