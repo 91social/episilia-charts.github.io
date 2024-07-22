@@ -102,9 +102,6 @@ episilia-gateway:
 episilia-spike-ui:
   enabled: true
 
-minio:
-  enabled: false                                       # To enable stage files in minio  
-
 
 # Each consumer will have unique client name and env provided, the same is to be used here.
 global:
@@ -232,6 +229,8 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                    # ARN role
+        pathstyle:
+          access: "false"
         https: "true"
     
     final:
@@ -251,6 +250,8 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                    # ARN role
+        pathstyle:
+          access: "false"
         https: "true"
 
     s3logs:
