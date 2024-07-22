@@ -3,9 +3,9 @@ entries:
   episilia-gateway:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.330511832Z"
+    created: "2024-07-22T07:08:41.300751476Z"
     description: Tail server for episilia
-    digest: f7dc677cb2af3f44053c3cd525006c68980b7706e53c749c6a82ef65d19f6bc0
+    digest: fe77f80510eb65784806d5e5b65809918336fdcf3aec5e5d455121ba76a6f0ea
     name: episilia-gateway
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   episilia-log-indexer:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.331022194Z"
+    created: "2024-07-22T07:08:41.301099626Z"
     description: Indexing logs
-    digest: 69d55e60201ad8c6dd93728ed799bbf6b789056e4951ce2955bbb1374efda36f
+    digest: e427f3927664f7449dfffeba8878eeb27d3a80700840ca8abb2a47e0d84e03e3
     name: episilia-log-indexer
     type: application
     urls:
@@ -25,9 +25,9 @@ entries:
   episilia-log-indexer-opt:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.331351438Z"
+    created: "2024-07-22T07:08:41.301441835Z"
     description: Optimizing the indexed logs
-    digest: 7eb30bf3f4b6fcfd400d1a55fbdc92c445616ef3e8f5b41e47a0ab0bfe905bcc
+    digest: 3fa689044ae7b765a5d916389d8b0b747b33357f9ee59ddcaa44e0186cbb1bca
     name: episilia-log-indexer-opt
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
   episilia-log-indexer-s3:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.331704326Z"
+    created: "2024-07-22T07:08:41.301798231Z"
     description: Indexing s3 logs
-    digest: a6e73704606078a35e629b11a6c42bfa616c6e1dcad1672b2263104378468462
+    digest: fffe2d23809d9ec117ac9c135e6582116cd3d914a1d28427d69fb7b651eaa3d2
     name: episilia-log-indexer-s3
     type: application
     urls:
@@ -47,9 +47,9 @@ entries:
   episilia-search:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.332041535Z"
+    created: "2024-07-22T07:08:41.302140911Z"
     description: Search Engine for episilia
-    digest: 28067879b2252b26784c9745790ee2148eeb7659dd27c36d5586cecb5d214205
+    digest: bd599e2f23ba7b9da3fe891a85f0700adf9edbc8e956e321630262cc9f417932
     name: episilia-search
     type: application
     urls:
@@ -58,9 +58,9 @@ entries:
   episilia-search-fixed:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.332357625Z"
+    created: "2024-07-22T07:08:41.302462602Z"
     description: Historic Search Engine for episilia
-    digest: f6155f605e2d0bf6682cc19f9a447616b0546d0fde21d2fc508f476a028a01b8
+    digest: 0883e276d1505dc3cb233fa77c9fb164edcabeb9ff4945751a77e0a0b8ff5f79
     name: episilia-search-fixed
     type: application
     urls:
@@ -69,9 +69,9 @@ entries:
   episilia-search-ondemand:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.33269807Z"
+    created: "2024-07-22T07:08:41.303346453Z"
     description: Search Ondemand Engine for episilia
-    digest: 8f3f20829ef1d2fd8510b4ff4e5be1daac77888eca32e90e564a1b9eb7b06c25
+    digest: 395f081ff79fa5ffa72928ab209ae037d345cde2052a1790f7f6550bcbf77848
     name: episilia-search-ondemand
     type: application
     urls:
@@ -80,7 +80,7 @@ entries:
   episilia-spike:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.337643236Z"
+    created: "2024-07-22T07:08:41.307441201Z"
     dependencies:
     - condition: episilia-log-indexer.enabled
       name: episilia-log-indexer
@@ -119,7 +119,7 @@ entries:
       repository: file://../redpanda
       version: 0.1.10
     description: A Helm chart for Kubernetes
-    digest: 8ff4204ab83a7bc159a335b59f68d8d8f92158215985e771ece61da3be67d5db
+    digest: b895d7b260c7e35210b0793ebc4d547c0ec97b8cd6679225cc5bd98f32ebdf54
     name: episilia-spike
     type: application
     urls:
@@ -128,9 +128,9 @@ entries:
   episilia-spike-ui:
   - apiVersion: v2
     appVersion: 3.0.0
-    created: "2024-07-22T06:58:15.338013357Z"
+    created: "2024-07-22T07:08:41.307794721Z"
     description: A Helm chart for Kubernetes
-    digest: 80ad08627e6c2fdec64f86ca8024e8b4a9ab32d42aa54db16b0e60b437fa53c4
+    digest: aa5c12fd3af252ef6ea65e8ca13b1e06fed4890a807bdbe3790002556a3a4bec
     name: episilia-spike-ui
     type: application
     urls:
@@ -139,12 +139,12 @@ entries:
   redpanda:
   - apiVersion: v2
     appVersion: 21.11.14
-    created: "2024-07-22T06:58:15.338373048Z"
+    created: "2024-07-22T07:08:41.308140146Z"
     description: A Helm chart for Kubernetes
-    digest: 602a213a0ae0e07b1be38a6610b8f4fb36cfcd614dd1c2cafaafd01320caea07
+    digest: f69d60493869565a7fd9056471375144ad302e908ace557b1e70c5782a502d70
     name: redpanda
     type: application
     urls:
     - https://episilia.github.io/episilia-deploy/redpanda-0.1.10.tgz
     version: 0.1.10
-generated: "2024-07-22T06:58:15.330052355Z"
+generated: "2024-07-22T07:08:41.300237576Z"
