@@ -7,44 +7,30 @@ data:
   client.id: {{ .Values.global.client.id | quote }}
   client.license.key: {{ .Values.global.client.license.key | quote }}
   datastore.s3logs: s3logs 
-  {{- if .Values.minio.enabled }}
-  datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
-  datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
-  datastore.stores.stage.s3.endpoint.url: {{ .Values.global.datastore.s3logs.s3.endpoint.url | quote }}
-  datastore.stores.stage.s3.region: {{ .Values.global.datastore.s3logs.s3.region | quote }}
-  datastore.stores.stage.s3.bucket: {{ .Values.global.datastore.s3logs.s3.bucket | quote }}
-  datastore.stores.stage.s3.folder: {{ .Values.global.datastore.s3logs.s3.folder | quote }}
-  datastore.stores.stage.s3.sign.payload: {{ .Values.global.datastore.s3logs.s3.sign.payload | quote }}
-  datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
-  datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
-  datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
-  datastore.stores.stage.s3.https: {{ .Values.global.datastore.s3logs.s3.https | quote }}
-  datastore.stores.stage.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
-  datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.s3logs.s3.url.prefix | quote }}
-  {{- else }}
-  datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
-  datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
-  datastore.stores.stage.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
-  datastore.stores.stage.s3.region: {{ .Values.global.datastore.s3.region | quote }}
-  datastore.stores.stage.s3.bucket: {{ .Values.global.datastore.s3.bucket | quote }}
-  datastore.stores.stage.s3.folder: {{ .Values.global.datastore.s3.folder | quote }}
-  datastore.stores.stage.s3.sign.payload: {{ .Values.global.datastore.s3.sign.payload | quote }}
-  datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
-  datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
-  datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
-  {{- end }}  
-  datastore.stores.final.s3.accesskey: {{ .Values.global.datastore.s3.accesskey | quote }}
-  datastore.stores.final.s3.secretkey: {{ .Values.global.datastore.s3.secretkey | quote }}
-  datastore.stores.final.s3.endpoint.url: {{ .Values.global.datastore.s3.endpoint.url | quote }}
-  datastore.stores.final.s3.region: {{ .Values.global.datastore.s3.region | quote }}
-  datastore.stores.final.s3.bucket: {{ .Values.global.datastore.s3.bucket | quote }}
-  datastore.stores.final.s3.folder: {{ .Values.global.datastore.s3.folder | quote }}
-  datastore.stores.final.s3.sign.payload: {{ .Values.global.datastore.s3.sign.payload | quote }}
-  datastore.stores.final.s3.work.folder: {{ .Values.global.datastore.s3.work.folder | quote }}
-  datastore.stores.final.s3.useArn: {{ .Values.global.datastore.s3.useArn | quote }}
-  datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.s3.assumeRole | quote }}
-  datastore.stores.final.s3.https: {{ .Values.global.datastore.s3.https | quote }}
-  datastore.stores.final.s3.url.prefix: {{ .Values.global.datastore.s3.url.prefix | quote }}
+  datastore.stores.stage.s3.accesskey: {{ .Values.global.datastore.stage.s3.accesskey | quote }}
+  datastore.stores.stage.s3.secretkey: {{ .Values.global.datastore.stage.s3.secretkey | quote }}
+  datastore.stores.stage.s3.endpoint.url: {{ .Values.global.datastore.stage.s3.endpoint.url | quote }}
+  datastore.stores.stage.s3.region: {{ .Values.global.datastore.stage.s3.region | quote }}
+  datastore.stores.stage.s3.bucket: {{ .Values.global.datastore.stage.s3.bucket | quote }}
+  datastore.stores.stage.s3.folder: {{ .Values.global.datastore.stage.s3.folder | quote }}
+  datastore.stores.stage.s3.sign.payload: {{ .Values.global.datastore.stage.s3.sign.payload | quote }}
+  datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.stage.s3.work.folder | quote }}
+  datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.stage.s3.useArn | quote }}
+  datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.stage.s3.assumeRole | quote }}
+  datastore.stores.stage.s3.https: {{ .Values.global.datastore.stage.s3.https | quote }}
+  datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.stage.s3.url.prefix | quote }}
+  datastore.stores.final.s3.accesskey: {{ .Values.global.datastore.final.s3.accesskey | quote }}
+  datastore.stores.final.s3.secretkey: {{ .Values.global.datastore.final.s3.secretkey | quote }}
+  datastore.stores.final.s3.endpoint.url: {{ .Values.global.datastore.final.s3.endpoint.url | quote }}
+  datastore.stores.final.s3.region: {{ .Values.global.datastore.final.s3.region | quote }}
+  datastore.stores.final.s3.bucket: {{ .Values.global.datastore.final.s3.bucket | quote }}
+  datastore.stores.final.s3.folder: {{ .Values.global.datastore.final.s3.folder | quote }}
+  datastore.stores.final.s3.sign.payload: {{ .Values.global.datastore.final.s3.sign.payload | quote }}
+  datastore.stores.final.s3.work.folder: {{ .Values.global.datastore.final.s3.work.folder | quote }}
+  datastore.stores.final.s3.useArn: {{ .Values.global.datastore.final.s3.useArn | quote }}
+  datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.final.s3.assumeRole | quote }}
+  datastore.stores.final.s3.https: {{ .Values.global.datastore.final.s3.https | quote }}
+  datastore.stores.final.s3.url.prefix: {{ .Values.global.datastore.final.s3.url.prefix | quote }}
   datastore.stores.s3logs.enabled: {{ .Values.global.datastore.s3logs.enabled| quote }}
   datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
   datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}

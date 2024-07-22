@@ -215,23 +215,43 @@ global:
 #You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
 
   datastore:
-    s3:
-      accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
-      secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
-      region: ""                                       # filestorage region (eg: AWS S3 region)
-      endpoint:
-        url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
-      sign:
-        payload: true
-      bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
-      folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
-      work:
-        folder: work-folder
-      url:
-        prefix: s3://
-      useArn: false
-      assumeRole: ""                                    # ARN role
-      https: "true"
+    stage:
+      s3:
+        accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                       # filestorage region (eg: AWS S3 region)
+        endpoint:
+          url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+        sign:
+          payload: true
+        bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
+        work:
+          folder: work-folder
+        url:
+          prefix: s3://
+        useArn: false
+        assumeRole: ""                                    # ARN role
+        https: "true"
+    
+    final:
+      s3:
+        accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                       # filestorage region (eg: AWS S3 region)
+        endpoint:
+          url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+        sign:
+          payload: true
+        bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
+        work:
+          folder: work-folder
+        url:
+          prefix: s3://
+        useArn: false
+        assumeRole: ""                                    # ARN role
+        https: "true"
 
     s3logs:
       enabled: true                                     # to load logs from s3 bucket
