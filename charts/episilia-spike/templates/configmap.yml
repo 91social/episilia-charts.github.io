@@ -17,7 +17,7 @@ data:
   datastore.stores.stage.s3.work.folder: {{ .Values.global.datastore.stage.s3.work.folder | quote }}
   datastore.stores.stage.s3.useArn: {{ .Values.global.datastore.stage.s3.useArn | quote }}
   datastore.stores.stage.s3.assumeRole: {{ .Values.global.datastore.stage.s3.assumeRole | quote }}
-  datastore.stores.stage.s3.rolearn: {{ .Values.global.datastore.stage.s3.rolearn | quote }}
+  datastore.stores.stage.s3.roleArn: {{ .Values.global.datastore.stage.s3.roleArn | quote }}
   datastore.stores.stage.s3.pathstyle.access: {{ .Values.global.datastore.stage.s3.pathstyle.access | quote }}
   datastore.stores.stage.s3.https: {{ .Values.global.datastore.stage.s3.https | quote }}
   datastore.stores.stage.s3.url.prefix: {{ .Values.global.datastore.stage.s3.url.prefix | quote }}
@@ -31,7 +31,7 @@ data:
   datastore.stores.final.s3.work.folder: {{ .Values.global.datastore.final.s3.work.folder | quote }}
   datastore.stores.final.s3.useArn: {{ .Values.global.datastore.final.s3.useArn | quote }}
   datastore.stores.final.s3.assumeRole: {{ .Values.global.datastore.final.s3.assumeRole | quote }}
-  datastore.stores.final.s3.rolearn: {{ .Values.global.datastore.final.s3.rolearn | quote }}
+  datastore.stores.final.s3.roleArn: {{ .Values.global.datastore.final.s3.roleArn | quote }}
   datastore.stores.final.s3.https: {{ .Values.global.datastore.final.s3.https | quote }}
   datastore.stores.final.s3.pathstyle.access: {{ .Values.global.datastore.final.s3.pathstyle.access | quote }}
   datastore.stores.final.s3.url.prefix: {{ .Values.global.datastore.final.s3.url.prefix | quote }}
@@ -46,7 +46,7 @@ data:
   datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
   datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
   datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
-  datastore.stores.s3logs.s3.rolearn: {{ .Values.global.datastore.s3logs.s3.rolearn | quote }}
+  datastore.stores.s3logs.s3.roleArn: {{ .Values.global.datastore.s3logs.s3.roleArn | quote }}
   datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.sourcefolder | quote }}
   datastore.stores.s3logs.s3.https: {{ .Values.global.datastore.s3logs.s3.https | quote }}
   datastore.stores.s3logs.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
