@@ -256,7 +256,7 @@ global:
           access: "false"
         https: "true"
 
-    s3logs:
+    sourcebucket:
       enabled: true                                                                                # to load logs from s3 bucket
       s3:
         accesskey: ""                                                                               # filestorage access key (eg: AWS S3 access key)

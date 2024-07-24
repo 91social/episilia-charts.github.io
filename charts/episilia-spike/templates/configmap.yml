@@ -35,22 +35,22 @@ data:
   datastore.stores.final.s3.https: {{ .Values.global.datastore.final.s3.https | quote }}
   datastore.stores.final.s3.pathstyle.access: {{ .Values.global.datastore.final.s3.pathstyle.access | quote }}
   datastore.stores.final.s3.url.prefix: {{ .Values.global.datastore.final.s3.url.prefix | quote }}
-  datastore.stores.s3logs.enabled: {{ .Values.global.datastore.s3logs.enabled| quote }}
-  datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.s3logs.s3.accesskey | quote }}
-  datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.s3logs.s3.secretkey | quote }}
-  datastore.stores.s3logs.s3.endpoint.url: {{ .Values.global.datastore.s3logs.s3.endpoint.url | quote }}
-  datastore.stores.s3logs.s3.region: {{ .Values.global.datastore.s3logs.s3.region | quote }}
-  datastore.stores.s3logs.s3.bucket: {{ .Values.global.datastore.s3logs.s3.bucket | quote }}
-  datastore.stores.s3logs.s3.folder: {{ .Values.global.datastore.s3logs.s3.folder | quote }}
-  datastore.stores.s3logs.s3.sign.payload: {{ .Values.global.datastore.s3logs.s3.sign.payload | quote }}
-  datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.s3logs.s3.work.folder | quote }}
-  datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.s3logs.s3.useArn | quote }}
-  datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.s3logs.s3.assumeRole | quote }}
-  datastore.stores.s3logs.s3.roleArn: {{ .Values.global.datastore.s3logs.s3.roleArn | quote }}
-  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.s3logs.s3.sourcefolder | quote }}
-  datastore.stores.s3logs.s3.https: {{ .Values.global.datastore.s3logs.s3.https | quote }}
-  datastore.stores.s3logs.s3.pathstyle.access: {{ .Values.global.datastore.s3logs.s3.pathstyle.access | quote }}
-  datastore.stores.s3logs.s3.url.prefix: {{ .Values.global.datastore.s3logs.s3.url.prefix | quote }}
+  datastore.stores.s3logs.enabled: {{ .Values.global.datastore.sourcebucket.enabled| quote }}
+  datastore.stores.s3logs.s3.accesskey: {{ .Values.global.datastore.sourcebucket.s3.accesskey | quote }}
+  datastore.stores.s3logs.s3.secretkey: {{ .Values.global.datastore.sourcebucket.s3.secretkey | quote }}
+  datastore.stores.s3logs.s3.endpoint.url: {{ .Values.global.datastore.sourcebucket.s3.endpoint.url | quote }}
+  datastore.stores.s3logs.s3.region: {{ .Values.global.datastore.sourcebucket.s3.region | quote }}
+  datastore.stores.s3logs.s3.bucket: {{ .Values.global.datastore.sourcebucket.s3.bucket | quote }}
+  datastore.stores.s3logs.s3.folder: {{ .Values.global.datastore.sourcebucket.s3.folder | quote }}
+  datastore.stores.s3logs.s3.sign.payload: {{ .Values.global.datastore.sourcebucket.s3.sign.payload | quote }}
+  datastore.stores.s3logs.s3.work.folder: {{ .Values.global.datastore.sourcebucket.s3.work.folder | quote }}
+  datastore.stores.s3logs.s3.useArn: {{ .Values.global.datastore.sourcebucket.s3.useArn | quote }}
+  datastore.stores.s3logs.s3.assumeRole: {{ .Values.global.datastore.sourcebucket.s3.assumeRole | quote }}
+  datastore.stores.s3logs.s3.roleArn: {{ .Values.global.datastore.sourcebucket.s3.roleArn | quote }}
+  datastore.stores.s3logs.s3.sourcefolder: {{ .Values.global.datastore.sourcebucket.s3.sourcefolder | quote }}
+  datastore.stores.s3logs.s3.https: {{ .Values.global.datastore.sourcebucket.s3.https | quote }}
+  datastore.stores.s3logs.s3.pathstyle.access: {{ .Values.global.datastore.sourcebucket.s3.pathstyle.access | quote }}
+  datastore.stores.s3logs.s3.url.prefix: {{ .Values.global.datastore.sourcebucket.s3.url.prefix | quote }}
   indexer.ops.pause.consume.file.max.count: {{ .Values.global.indexer.ops.pause.consume.file.max.count | quote }}
   indexer.ops.pause.consume.record.max.count: {{ .Values.global.indexer.ops.pause.consume.record.max.count | quote }}
   indexer.ops.pause.consume.record.size.max.mb: {{ .Values.global.indexer.ops.pause.consume.record.size.max.mb | quote }}  
