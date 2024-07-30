@@ -4,6 +4,8 @@ metadata:
   name: {{ include "episilia-spike.name" . }}
   labels:
     {{- include "episilia-spike.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook-weight: "0"  # Lower weight means higher priority
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -14,8 +16,7 @@ spec:
   template:
     metadata:
       {{- with .Values.podAnnotations }}
-      annotations:
-        helm.sh/hook-weight: "0"  # Lower weight means higher priority
+      annotations:        
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
