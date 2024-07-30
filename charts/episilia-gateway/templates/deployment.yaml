@@ -3,7 +3,10 @@ kind: Deployment
 metadata:
   name: {{ include "episilia-gateway.name" . }}
   labels:
-    {{- include "episilia-gateway.labels" . | nindent 4 }}  
+    {{- include "episilia-gateway.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1" 
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.global.gateway.replicaCount }}
