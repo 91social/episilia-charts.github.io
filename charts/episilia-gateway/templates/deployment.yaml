@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "episilia-gateway.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": post-install
     "helm.sh/hook-weight": "1"  # Lower weight means higher priority
 spec:
 {{- if not .Values.autoscaling.enabled }}
