@@ -6,7 +6,7 @@ metadata:
     {{- include "episilia-spike.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-weight": "-10"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

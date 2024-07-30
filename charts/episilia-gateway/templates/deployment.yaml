@@ -6,7 +6,7 @@ metadata:
     {{- include "episilia-gateway.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "1" 
+    "helm.sh/hook-weight": "10" 
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.global.gateway.replicaCount }}
