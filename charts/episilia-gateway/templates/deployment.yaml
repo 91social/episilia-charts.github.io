@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "episilia-gateway.name" . }}
   labels:
-    {{- include "episilia-gateway.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook": post-install
-    "helm.sh/hook-weight": "10" 
+    {{- include "episilia-gateway.labels" . | nindent 4 }}  
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.global.gateway.replicaCount }}
@@ -30,6 +27,10 @@ spec:
       serviceAccountName: {{ include "episilia-gateway.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-for-spike
+          image: busybox
+          command: ['sh', '-c', 'sleep 120']  # Hardcoded sleep duration (120 seconds)
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
