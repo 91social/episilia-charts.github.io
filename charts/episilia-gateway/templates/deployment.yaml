@@ -30,7 +30,10 @@ spec:
       initContainers:
         - name: wait-for-spike
           image: busybox
-          command: ['sh', '-c', 'sleep 120']  # Hardcoded sleep duration (120 seconds)
+          command: ['sh', '-c', 'sleep $(SLEEP_DURATION)']
+          env:
+            - name: SLEEP_DURATION
+              value: "120"  # Default sleep duration
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
