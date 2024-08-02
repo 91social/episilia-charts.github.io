@@ -218,7 +218,7 @@ global:
         secretkey: ""                                                                          # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                             # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                 # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                 # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                # filestorage bucket (eg: AWS S3 bucket)
@@ -240,7 +240,7 @@ global:
         secretkey: ""                                                                            # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                               # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                   # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                   # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                   # filestorage bucket (eg: AWS S3 bucket)
@@ -263,7 +263,7 @@ global:
         secretkey: ""                                                                               # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                                  # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                      # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                    # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                     # filestorage bucket (eg: AWS S3 bucket)
