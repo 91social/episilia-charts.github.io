@@ -110,7 +110,8 @@ global:
     env: test-helm
     license:
       key: episilia  
-    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"
+    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"                         # arn
+
   kafka:
     group:
       search: episilia-search-group                                                # Kafka consumer-group for search

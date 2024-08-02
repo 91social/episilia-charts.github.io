@@ -110,7 +110,8 @@ global:
     env: test-helm
     license:
       key: episilia  
-    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"
+    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"                         # arn
+
   kafka:
     group:
       search: episilia-search-group                                                # Kafka consumer-group for search
@@ -218,7 +219,7 @@ global:
         secretkey: ""                                                                          # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                             # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                 # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                 # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                # filestorage bucket (eg: AWS S3 bucket)
@@ -240,7 +241,7 @@ global:
         secretkey: ""                                                                            # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                               # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                   # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                   # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                   # filestorage bucket (eg: AWS S3 bucket)
@@ -263,7 +264,7 @@ global:
         secretkey: ""                                                                               # filestorage secret key (eg: AWS S3 secret key)   
         region: ""                                                                                  # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                                                                      # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url: ""                                                                                    # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
         bucket: episilia-bucket                                                                     # filestorage bucket (eg: AWS S3 bucket)
