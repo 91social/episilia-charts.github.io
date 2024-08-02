@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "episilia-search.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "episilia-search.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "episilia-search.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "episilia-gateway.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "episilia-gateway.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "episilia-gateway.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
