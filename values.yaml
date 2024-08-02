@@ -90,10 +90,10 @@ episilia-log-indexer-opt:
 episilia-search:                            
   enabled: true
 
-episilia-search-fixed:                                 # If enabled, additional topics to be created (refer fixedSearch config)
+episilia-search-fixed:                                             # If enabled, additional topics to be created (refer fixedSearch config)
   enabled: false
 
-episilia-search-ondemand:                              # If enabled, additional topics to be created (refer ondemandsearch config)
+episilia-search-ondemand:                                          # If enabled, additional topics to be created (refer ondemandsearch config)
   enabled: false
 
 episilia-gateway:
@@ -110,60 +110,60 @@ global:
     env: test-helm
     license:
       key: episilia  
-  
+    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"
   kafka:
     group:
-      search: episilia-search-group                  # Kafka consumer-group for search
-      spike: episilia-spike-group                    # Kafka consumer-group for spike
-      cpanel: episilia-cpanel-group                  # Kafka consumer-group for cpanel
+      search: episilia-search-group                                                # Kafka consumer-group for search
+      spike: episilia-spike-group                                                  # Kafka consumer-group for spike
+      cpanel: episilia-cpanel-group                                                # Kafka consumer-group for cpanel
       gateway:
-        tail: episilia-gw-tail-group                 # Kafka consumer-group for gateway tail 
+        tail: episilia-gw-tail-group                                               # Kafka consumer-group for gateway tail 
       logwatcher:
-        alert: episilia-lw-alert-group               # Kafka consumer-group for logwatcher alert 
-        tail: episilia-lw-tail-group                 # Kafka consumer-group for logwatcher tail 
+        alert: episilia-lw-alert-group                                             # Kafka consumer-group for logwatcher alert 
+        tail: episilia-lw-tail-group                                               # Kafka consumer-group for logwatcher tail 
       s3log:
-        files: episilia-s3files-group                # Kafka consumer-group for s3logs
+        files: episilia-s3files-group                                              # Kafka consumer-group for s3logs
       
     topic:
       index:
-        live: stagefiles                       # Topic for internal publish indexed files - stage.topic
-        optimized: optfiles                    # Topic for internal optimize.topic:  publish file names post optimization
-        labels: indexlabels                    # Topic to publish labels from indexer
+        live: stagefiles                                                          # Topic for internal publish indexed files - stage.topic
+        optimized: optfiles                                                       # Topic for internal optimize.topic:  publish file names post optimization
+        labels: indexlabels                                                       # Topic to publish labels from indexer
       optimize:
-        request: stagefolder                   # optimize.request.topic send folders to optimize
+        request: stagefolder                                                      # optimize.request.topic send folders to optimize
       s3log:
-        files: s3logs                          # Topic from where s3 logs are loaded.
+        files: s3logs                                                             # Topic from where s3 logs are loaded.
       cpanel:
-        out: cpaneld                           # Internal topic cpanel.data.topic
+        out: cpaneld                                                              # Internal topic cpanel.data.topic
       
       tail:
         request:
-          in: tail_in                          # incoming requests for tail requests
+          in: tail_in                                                             # incoming requests for tail requests
         response:
-          out: tail_out                        # publish results for tail
+          out: tail_out                                                            # publish results for tail
       alert:
         response:
-          out: alert_out                       # publish alerts for spike
+          out: alert_out                                                            # publish alerts for spike
     indexer:
       broker:
-        list: redpanda:9092                    # The kafka broker for logs. If this is not set, it will use the default broker
-        security:
-          mode: none                           # values are [none|login|oauth|kerberos]
-          protocol: SASL_SSL                   # plaintext, ssl, sasl_plaintext, sasl_ssl
+        list: redpanda:9092                                                          # The kafka broker for logs. If this is not set, it will use the default broker
+        security:                           
+          mode: none                                                                 # values are [none|login|oauth|kerberos]
+          protocol: SASL_SSL                                                         # plaintext, ssl, sasl_plaintext, sasl_ssl
         sasl:
-          mechanism: SCRAM-SHA-512             #PLAIN, SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
+          mechanism: SCRAM-SHA-512                                                   #PLAIN, SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER, GSSAPI
           username: episilia
           password: episilia123
         rack:
-          aware: "false"                       # for rack awareness make it true
+          aware: "false"                                                              # for rack awareness make it true
 
       logs:
-        topics: logs                          # Topic from where logs are loaded.
-      group: episilia-indexer-group           # Kafka consumer-group for indexer
+        topics: logs                                                                  # Topic from where logs are loaded.
+      group: episilia-indexer-group                                                   # Kafka consumer-group for indexer
       
     internal:
       broker:
-        list: redpanda:9092                   # The kafka broker for internal communication
+        list: redpanda:9092                                                            # The kafka broker for internal communication
   
   spike:
     JVM_MAX_SIZE: "1536m"
@@ -181,7 +181,7 @@ global:
       publish:
         enable: "false"    
     login:
-      mode: local                                      # local, google, okta
+      mode: local                                                                         # local, google, okta
       local:
         password:
           encryptionkey: "i am groot"
@@ -214,67 +214,67 @@ global:
   datastore:
     stage:
       s3:
-        accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
-        secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
-        region: ""                                       # filestorage region (eg: AWS S3 region)
+        accesskey: ""                                                                          # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                                                          # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                                                             # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url:                                                                                 # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
-        bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
-        folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
+        bucket: episilia-bucket                                                                # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                                                                # filestorage folder URL (eg: AWS S3 folder)
         work:
           folder: work-folder
         url:
           prefix: s3://
         useArn: false
-        assumeRole: ""                                    # ARN role
-        rolearn: ""
+        assumeRole: ""                                                                          # ARN role
+        roleArn: ""
         pathstyle:
           access: "false"
         https: "true"
     
     final:
       s3:
-        accesskey: ""                                    # filestorage access key (eg: AWS S3 access key)
-        secretkey: ""                                    # filestorage secret key (eg: AWS S3 secret key)   
-        region: ""                                       # filestorage region (eg: AWS S3 region)
+        accesskey: ""                                                                            # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                                                            # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                                                               # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                           # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url:                                                                                   # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
-        bucket: episilia-bucket                          # filestorage bucket (eg: AWS S3 bucket)
-        folder: episilia-folder                          # filestorage folder URL (eg: AWS S3 folder)
+        bucket: episilia-bucket                                                                   # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                                                                   # filestorage folder URL (eg: AWS S3 folder)
         work:
           folder: work-folder
         url:
           prefix: s3://
         useArn: false
-        assumeRole: ""                                    # ARN role
-        rolearn: ""
+        assumeRole: ""                                                                             # ARN role
+        roleArn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"
         pathstyle:
           access: "false"
         https: "true"
 
-    s3logs:
-      enabled: true                                     # to load logs from s3 bucket
+    sourcebucket:
+      enabled: true                                                                                # to load logs from s3 bucket
       s3:
-        accesskey: ""                                   # filestorage access key (eg: AWS S3 access key)
-        secretkey: ""                                   # filestorage secret key (eg: AWS S3 secret key)   
-        region: ""                                      # filestorage region (eg: AWS S3 region)
+        accesskey: ""                                                                               # filestorage access key (eg: AWS S3 access key)
+        secretkey: ""                                                                               # filestorage secret key (eg: AWS S3 secret key)   
+        region: ""                                                                                  # filestorage region (eg: AWS S3 region)
         endpoint:
-          url:                                          # filestorage endpoint URL (eg: AWS S3 endpoint URL)
+          url:                                                                                      # filestorage endpoint URL (eg: AWS S3 endpoint URL)
         sign:
           payload: true
-        bucket: episilia-bucket                         # filestorage bucket (eg: AWS S3 bucket)
-        folder: episilia-folder                         # filestorage folder URL (eg: AWS S3 folder)
+        bucket: episilia-bucket                                                                     # filestorage bucket (eg: AWS S3 bucket)
+        folder: episilia-folder                                                                     # filestorage folder URL (eg: AWS S3 folder)
         work:
           folder: work-folder
         url:
           prefix: s3://
         useArn: false
-        assumeRole: ""                                   # ARN role
-        rolearn: ""                                      
+        assumeRole: ""                                                                              # ARN role
+        roleArn: ""                                      
         sourcefolder: sourcefolder
         pathstyle:
           access: "true"
@@ -284,66 +284,66 @@ global:
 
   indexer:
     image:
-      repository: episilia/log-indexer                 # docker image of episilia-log-indexer
+      repository: episilia/log-indexer                                                                # docker image of episilia-log-indexer
       tag: *release
-    replicaCount: "1"                                  # kubernetes pod replicas of episilia-log-indexer
+    replicaCount: "1"                                                                                 # kubernetes pod replicas of episilia-log-indexer
     annotations:
       deploy:
       service:
     resources:
       limits:
-        cpu: "1"                                      # cpu limit on episilia-log-indexer 
-        memory: 2Gi                                 # memory limit on episilia-log-indexer
+        cpu: "1"                                                                                      # cpu limit on episilia-log-indexer 
+        memory: 2Gi                                                                                   # memory limit on episilia-log-indexer
       requests:
-        cpu: 400m                                      # cpu request on episilia-log-indexer
-        memory: 300Mi                                  # memory request on episilia-log-indexer
+        cpu: 400m                                                                                     # cpu request on episilia-log-indexer
+        memory: 300Mi                                                                                 # memory request on episilia-log-indexer
 
     schema:
       appid:
-        fixed: "defaultApp"                            # If appid is a fixed string
-        keys: "app_id"                                 # label(s) for app identifier, ex: "kubernetes_container_name"
+        fixed: "defaultApp"                                                                          # If appid is a fixed string
+        keys: "app_id"                                                                              # label(s)     for app identifier, ex: "kubernetes_container_name"
       tenantid:        
-        fixed: "defaultTenant"                         # If tenantid is a fixed string  
-        keys: "tenant_id"                              # label(s) for tenant identifier, ex: "kubernetes_namespace_name"        
+        fixed: "defaultTenant"                                                                      # If tenantid is a fixed string  
+        keys: "tenant_id"                                                                           # label(s) for tenant identifier, ex: "kubernetes_namespace_name"        
       message:
-        key: "log"                                     # actual log message key
+        key: "log"                                                                                  # actual log message key
       timestamp:
-        key: "time"                                    # timestamp key
-        formats: "%Y-%m-%dT%H:%M:%S"                   # to specify timestamp format (ex: %Y-%m-%dT%H:%M:%S )
-      exclude: "timestamp"                             # labels to be excluded from the list
+        key: "time"                                                                                 # timestamp key
+        formats: "%Y-%m-%dT%H:%M:%S"                                                                # to specify timestamp format (ex: %Y-%m-%dT%H:%M:%S )
+      exclude: "timestamp"                                                                          # labels to be excluded from the list
 
     logs:
-      source: kafka                                    # source: kafka  # s3 or kafka
+      source: kafka                                                                                 # source: kafka  # s3 or kafka
     tail:
-      enable: "true"                                   # to enable tail server
+      enable: "true"                                                                                # to enable tail server
       maxwait:
-        ms: "5000"                                     # time to get tail logs
+        ms: "5000"                                                                                  # time to get tail logs
     alert:
-      enable: "false"                                  # to enable alert server
+      enable: "false"                                                                                # to enable alert server
       rules:
         file:
-          url: "s3://bucket/folder/file"                # alert config url need to be update here
+          url: "s3://bucket/folder/file"                                                           # alert config url need to be update here
       prometheus:
-        gateway: localhost:5070                         # push-gateway url 
+        gateway: localhost:5070                                                                    # push-gateway url 
 
     ops:
       pause: 
-        consume:                                         #pauses injest at the below thresholds
+        consume:                                                                                   #pauses injest at the below thresholds
           file:
            max:
-             count: "100"                                # applicable for file messages
+             count: "100"                                                                          # applicable for file messages
           record:
             max:
-              count: "500000"                           # applicable for log messages
+              count: "500000"                                                                      # applicable for log messages
             size:
               max: 
-                mb: "100"                               # applicable for log messages
+                mb: "100"                                                                          # applicable for log messages
       datablock:
         writer:
-          count: "1"                                    # datablocks zipped and written to disk, in sequence files
+          count: "1"                                                                               # datablocks zipped and written to disk, in sequence files
       json:
         processor:
-          count: "1"                                    # number of json parsers
+          count: "1"                                                                               # number of json parsers
     optimize:
       block:
         maxbytes:
@@ -353,57 +353,57 @@ global:
   # Indexing s3 logs
   indexers3:
     image:
-      repository: episilia/log-indexer                  # docker image of episilia-log-indexer
+      repository: episilia/log-indexer                                                                                     # docker image of episilia-log-indexer
       tag: *release
-    replicaCount: "1"                                   # kubernetes pod replicas of episilia-log-indexer-s3
+    replicaCount: "1"                                                                                                      # kubernetes pod replicas of episilia-log-indexer-s3
     resources:
       limits:
-        cpu: "1"                                       # cpu limit on episilia-log-indexer-s3
-        memory: 2Gi                                  # memory limit on episilia-log-indexer-s3
+        cpu: "1"                                                                                                           # cpu limit on episilia-log-indexer-s3
+        memory: 2Gi                                                                                                        # memory limit on episilia-log-indexer-s3
       requests:
-        cpu: 400m                                       # cpu request on episilia-log-indexer-s3
-        memory: 300Mi                                   # memory request on episilia-log-indexer-s3
+        cpu: 400m                                                                                                          # cpu request on episilia-log-indexer-s3
+        memory: 300Mi                                                                                                      # memory request on episilia-log-indexer-s3
 
 
   #optimizer server configuration    
   optimizer:
-    replicaCount: "1"                                   # kubernetes pod replicas of episilia-optimizer  
+    replicaCount: "1"                                                                                                       # kubernetes pod replicas of episilia-optimizer  
     resources:
       limits:
-        cpu: "1"                                       # cpu limit on episilia-optimizer
-        memory: 2Gi                                  # memory limit on episilia-optimizer
+        cpu: "1"                                                                                                            # cpu limit on episilia-optimizer
+        memory: 2Gi                                                                                                         # memory limit on episilia-optimizer
       requests:
-        cpu: 500m                                       # cpu request on episilia-optimizer        
+        cpu: 500m                                                                                                           # cpu request on episilia-optimizer        
         memory: 300Mi 
    
   
   #config for search engine
   livesearch:
     image:
-      repository: episilia/search                       # docker image of episilia-search
+      repository: episilia/search                                                                                           # docker image of episilia-search
       tag: *release
     
-    replicaCount: "1"                                   # kubernetes pod replicas of episilia-search 
+    replicaCount: "1"                                                                                                      # kubernetes pod replicas of episilia-search 
     resources:
       limits:
-        cpu: "1"                                       # cpu limit on episilia-search
-        memory: 2Gi                                 # memory limit on episilia-search
+        cpu: "1"                                                                                                           # cpu limit on episilia-search
+        memory: 2Gi                                                                                                        # memory limit on episilia-search
       requests:
-        cpu: 500m                                      # cpu request on episilia-search
-        memory: 600Mi                                  # memory request on episilia-search
+        cpu: 500m                                                                                                          # cpu request on episilia-search
+        memory: 600Mi                                                                                                      # memory request on episilia-search
     
     api:
       timeout:
-        seconds: 60                                    # timeout for search while querying
+        seconds: 60                                                                                                         # timeout for search while querying
       request:
         max:
-          days: "30"                                   # days for querying search
+          days: "30"                                                                                                        # days for querying search
     
     live:
       from:
-        hours: 48                                      # hours from when the required index blocks should be loaded
+        hours: 48                                                                                                           # hours from when the required index blocks should be loaded
       to:
-        hours: 0                                       # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
+        hours: 0                                                                                                           # hours till when the required index blocks should be loaded, Note: value to be "0" to get instant logs
 
     ops:
       index:
@@ -413,30 +413,30 @@ global:
     labels:
       display:
         max:
-          count: "1000"                                # labels count displayed in spikeui/grafana
-      exclude: "@timestamp,log"                        # Lables excluded from spikeui/grafana dropdown GUI. 
+          count: "1000"                                                                                                     # labels count displayed in spikeui/grafana
+      exclude: "@timestamp,log"                                                                                             # Lables excluded from spikeui/grafana dropdown GUI. 
     
 
     
   #config for search-ondemand engine
   ondemandsearch:
-    replicaCount: "1"                                  # kubernetes pod replicas of episilia-search-ondemand
+    replicaCount: "1"                                                                                                     # kubernetes pod replicas of episilia-search-ondemand
     resources:
       limits:
-        cpu: "1"                                       # cpu limit on episilia-search-ondemand
-        memory: 2Gi                                    # memory limit on episilia-search-ondemand
+        cpu: "1"                                                                                                          # cpu limit on episilia-search-ondemand
+        memory: 2Gi                                                                                                       # memory limit on episilia-search-ondemand
       requests:
-        cpu: 500m                                      # cpu request on episilia-search-ondemand
-        memory: 600Mi                                  # memory request on episilia-search-ondemand                                
+        cpu: 500m                                                                                                         # cpu request on episilia-search-ondemand
+        memory: 600Mi                                                                                                     # memory request on episilia-search-ondemand                                
     prewarm:
       enabled: "false"
       # set either yyyymmddhh pair or hours pair. If both are set the hours pair will be considered
       from:
-        hours: "2"                                    # hours from when the required labels should be loaded
-        yyyymmddhh: "2023102100"                      # the date from when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
+        hours: "2"                                                                                                         # hours from when the required labels should be loaded
+        yyyymmddhh: "2023102100"                                                                                           # the date from when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
       to:
-        hours: "0"                                    # hours till when the required labels should be loaded
-        yyyymmddhh: "2023102100"                      # the date till when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
+        hours: "0"                                                                                                         # hours till when the required labels should be loaded
+        yyyymmddhh: "2023102100"                                                                                           # the date till when the required labels should be loaded (YYYYMMDDHH) or mske it "0" to load from hours
     ops:
       index:
         cache:
@@ -444,25 +444,25 @@ global:
             seconds: "600"                           
     topic:
       index:
-        live: "stagefile-ondemand"                            # Topic for internal publish indexed files for ondemand
-        optimized: "optfile-ondemand"                         # Topic to publish file names post optimization for ondemand
+        live: "stagefile-ondemand"                                                                                         # Topic for internal publish indexed files for ondemand
+        optimized: "optfile-ondemand"                                                                                      # Topic to publish file names post optimization for ondemand
 
 
   #config for historic search engine
   fixedSearch:
-    bucket: ""                                             # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
-    folder: ""                                             # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
-    replicaCount: "1"                                      # kubernetes pod replicas of historic episilia-search 
+    bucket: ""                                                                                                              # s3 bucket for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.bucket value as default
+    folder: ""                                                                                                              # s3 folder for historic search to run parallelly, Note: if the value is empty it takes datastore.s3.folder value as default
+    replicaCount: "1"                                                                                                      # kubernetes pod replicas of historic episilia-search 
     resources:
       limits:
-        cpu: "1"                                           # cpu limit on historic episilia-search
-        memory: 2Gi                                        # memory limit on historic episilia-search
+        cpu: "1"                                                                                                             # cpu limit on historic episilia-search
+        memory: 2Gi                                                                                                          # memory limit on historic episilia-search
       requests:
-        cpu: 500m                                           # cpu request on historic episilia-search
-        memory: 600Mi                                       # memory request on historic episilia-search
+        cpu: 500m                                                                                                            # cpu request on historic episilia-search
+        memory: 600Mi                                                                                                        # memory request on historic episilia-search
     fixed:
       from:
-        yyyymmddhh: "2023102100"                             # the date from when the required index blocks should be loaded (YYYYMMDDHH)
+        yyyymmddhh: "2023102100"                                                                                              # the date from when the required index blocks should be loaded (YYYYMMDDHH)
       to:
         yyyymmddhh: "2023102202"                             # the date till when the required index blocks should be loaded (YYYYMMDDHH)
 
