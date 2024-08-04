@@ -110,7 +110,7 @@ global:
     env: test-helm
     license:
       key: episilia  
-    arn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"                         # arn
+    arn: ""                                                                        # arn
 
   kafka:
     group:
@@ -135,7 +135,7 @@ global:
       s3log:
         files: s3logs                                                             # Topic from where s3 logs are loaded.
       cpanel:
-        out: cpaneld                                                              # Internal topic cpanel.data.topic
+        out: cpanel-out                                                              # Internal topic cpanel.data.topic
       
       tail:
         request:
