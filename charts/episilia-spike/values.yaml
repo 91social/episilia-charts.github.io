@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-imageTag: &release "3.0.0"
+imageTag: &release "3.0.1"
 replicaCount: 1
 
 image:

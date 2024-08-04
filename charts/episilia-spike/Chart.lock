@@ -1,30 +1,30 @@
 dependencies:
 - name: episilia-log-indexer
   repository: file://../episilia-log-indexer
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-search
   repository: file://../episilia-search
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-search-fixed
   repository: file://../episilia-search-fixed
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-search-ondemand
   repository: file://../episilia-search-ondemand
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-log-indexer-opt
   repository: file://../episilia-log-indexer-opt
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-log-indexer-s3
   repository: file://../episilia-log-indexer-s3
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-spike-ui
   repository: file://../episilia-spike-ui
-  version: 3.0.0
+  version: 3.0.1
 - name: episilia-gateway
   repository: file://../episilia-gateway
-  version: 3.0.0
+  version: 3.0.1
 - name: redpanda
   repository: file://../redpanda
   version: 0.1.10
-digest: sha256:c655672c82f11fdee117a8106aa32b86c98f9e4084ae233e42aa18eac189bcd1
-generated: "2024-08-04T15:58:33.128829332+05:30"
+digest: sha256:36a39a13b9e9ed22546eb23090b7dfadd8fc6b1e5f23aa67b08d74a6b7fe8b34
+generated: "2024-08-04T16:26:17.558188764+05:30"
