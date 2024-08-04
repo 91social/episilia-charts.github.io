@@ -28,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-      - name: {{ template "episilia-spike.fullname" . }}
+      - name: {{ template "episilia-spike.name" . }}
       {{- if .Values.global.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "episilia-spike.name" . }}
@@ -70,7 +70,7 @@ spec:
             - name: metadata.backfill.days
               value: "{{.Values.global.spike.metadata.backfill.days}}"
           volumeMounts:
-          - name: {{ template "episilia-spike.fullname" . }}
+          - name: {{ template "episilia-spike.name" . }}
             mountPath: "/data"
           livenessProbe:
             httpGet:

@@ -28,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-      - name: {{ template "episilia-search.fullname" . }}
+      - name: {{ template "episilia-search.name" . }}
       {{- if .Values.global.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "episilia-search.name" . }}
@@ -68,7 +68,7 @@ spec:
                   name: episilia-config
                   key: kafka.topic.index.optimized
           volumeMounts:
-          - name: {{ template "episilia-search.fullname" . }}
+          - name: {{ template "episilia-search.name" . }}
             mountPath: "/data"
           resources:
             {{- toYaml .Values.global.livesearch.resources | nindent 12 }}
