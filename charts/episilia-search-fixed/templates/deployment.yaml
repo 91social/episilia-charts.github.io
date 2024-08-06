@@ -31,7 +31,7 @@ spec:
       - name: {{ template "episilia-search-fixed.name" . }}
       {{- if .Values.global.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ template "episilia-search.name" . }}
+          claimName: {{ template "episilia-search-fixed.name" . }}
       {{- end }}
 
       containers:
@@ -97,7 +97,7 @@ spec:
             # - name: gateway.search.url
             #   value: episilia-search-fixed:4040   
           volumeMounts:
-          - name: {{ template "episilia-search.name" . }}
+          - name: {{ template "episilia-search-fixed.name" . }}
             mountPath: "/data"
           resources:
             {{- toYaml .Values.global.fixedSearch.resources | nindent 12 }}
