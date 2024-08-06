@@ -42,28 +42,7 @@ spec:
               name: episilia-config
           env:
           - name: ops.server.mode
-            value: optimizer
-          - name: RES_CPU_REQUEST
-              valueFrom:
-                resourceFieldRef:
-                  divisor: 1m
-                  resource: requests.cpu
-            - name: RES_CPU_LIMIT
-              valueFrom:
-                resourceFieldRef:
-                  divisor: 1m
-                  resource: limits.cpu
-            - name: RES_MEM_REQUEST
-              valueFrom:
-                resourceFieldRef:
-                  divisor: 1Mi
-                  resource: requests.memory
-            - name: RES_MEM_LIMIT
-              valueFrom:
-                resourceFieldRef:
-                  divisor: 1Mi
-                  resource: limits.memory
-
+            value: optimizer          
           resources:
             {{- toYaml .Values.global.optimizer.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
