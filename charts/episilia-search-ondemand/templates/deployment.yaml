@@ -64,6 +64,26 @@ spec:
               value: "{{.Values.global.ondemandsearch.topic.index.optimized}}"
             - name: ops.work.dir
               value: "/data/search-ondemand"
+            - name: RES_CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: requests.cpu
+            - name: RES_CPU_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: limits.cpu
+            - name: RES_MEM_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: requests.memory
+            - name: RES_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: limits.memory
 
           volumeMounts:
           - name: {{ template "episilia-search-ondemand.name" . }}

@@ -69,6 +69,26 @@ spec:
               value: "{{.Values.global.spike.metadata.backfill.forceupdate}}"
             - name: metadata.backfill.days
               value: "{{.Values.global.spike.metadata.backfill.days}}"
+            - name: RES_CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: requests.cpu
+            - name: RES_CPU_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: limits.cpu
+            - name: RES_MEM_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: requests.memory
+            - name: RES_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: limits.memory
           volumeMounts:
           - name: {{ template "episilia-spike.name" . }}
             mountPath: "/data"
