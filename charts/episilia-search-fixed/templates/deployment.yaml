@@ -74,6 +74,26 @@ spec:
               value: "{{.Values.global.fixedSearch.fixed.from.yyyymmddhh}}"
             - name: search.fixed.to.yyyymmddhh 
               value: "{{.Values.global.fixedSearch.fixed.to.yyyymmddhh}}"
+            - name: RES_CPU_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: requests.cpu
+            - name: RES_CPU_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1m
+                  resource: limits.cpu
+            - name: RES_MEM_REQUEST
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: requests.memory
+            - name: RES_MEM_LIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 1Mi
+                  resource: limits.memory
             # - name: gateway.search.url
             #   value: episilia-search-fixed:4040   
           volumeMounts:
