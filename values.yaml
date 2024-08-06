@@ -109,11 +109,13 @@ global:
     id: episilia-helm   
     env: test-helm
     license:
-      key: episilia  
+      key: episilia 
+    release:
+      version: *release
     arn: ""                                                                        # arn
 
   kafka:
-    group:
+    group: 
       search: episilia-search-group                                                # Kafka consumer-group for search
       spike: episilia-spike-group                                                  # Kafka consumer-group for spike
       cpanel: episilia-cpanel-group                                                # Kafka consumer-group for cpanel
@@ -201,6 +203,7 @@ global:
 
   ops:
     log:
+      debug: "off"
       metrics:
         publish:
           interval:
@@ -209,6 +212,10 @@ global:
         publish:
           interval:
             seconds: "10"
+    monitor:
+      memory:
+        max:
+          mb: "1024"                                                                            # max memory for searching queries
 
 #You can include these configurations in the relevant sections of your values.yaml file to match your specific needs. Make sure to maintain the indentation and structure according to your Helm chart requirements.
 
