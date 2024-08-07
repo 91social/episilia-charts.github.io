@@ -97,8 +97,7 @@ data:
   kafka.topic.index.optimized: {{ .Values.global.kafka.topic.index.optimized | quote }}
   kafka.topic.index.labels:  {{ .Values.global.kafka.topic.index.labels | quote }}
   kafka.topic.optimize.request: {{ .Values.global.kafka.topic.optimize.request | quote }}
-  kafka.topic.s3log.files: {{ .Values.global.kafka.topic.s3log.files | quote }}
-  kafka.topic.cpanel.in: {{ .Values.global.kafka.topic.cpanel.in | quote }}
+  kafka.topic.s3log.files: {{ .Values.global.kafka.topic.s3log.files | quote }} 
   kafka.topic.cpanel.out: {{ .Values.global.kafka.topic.cpanel.out | quote }}
   search.api.timeout.seconds: {{ .Values.global.livesearch.api.timeout.seconds | quote }}
   search.api.request.max.days: {{.Values.global.livesearch.api.request.max.days | quote }}
