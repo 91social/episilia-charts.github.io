@@ -129,24 +129,24 @@ global:
       
     topic:
       index:
-        live: stagefiles                                                          # Topic for internal publish indexed files - stage.topic
-        optimized: optfiles                                                       # Topic for internal optimize.topic:  publish file names post optimization
-        labels: indexlabels                                                       # Topic to publish labels from indexer
+        live: episilia-stagefiles                                                          # Topic for internal publish indexed files - stage.topic
+        optimized: episilia-optfiles                                                       # Topic for internal optimize.topic:  publish file names post optimization
+        labels: episilia-indexlabels                                                       # Topic to publish labels from indexer
       optimize:
-        request: stagefolder                                                      # optimize.request.topic send folders to optimize
+        request: episilia-stagefolder                                                      # optimize.request.topic send folders to optimize
       s3log:
-        files: s3logs                                                             # Topic from where s3 logs are loaded.
+        files: episilia-s3logs                                                             # Topic from where s3 logs are loaded.
       cpanel:
-        out: cpanel-out                                                              # Internal topic cpanel.data.topic
+        out: episilia-cpanel-out                                                              # Internal topic cpanel.data.topic
       
       tail:
         request:
-          in: tail_in                                                             # incoming requests for tail requests
+          in: episilia-tail-in                                                             # incoming requests for tail requests
         response:
-          out: tail_out                                                            # publish results for tail
+          out: episilia-tail-out                                                            # publish results for tail
       alert:
         response:
-          out: alert_out                                                            # publish alerts for spike
+          out: episilia-alert-out                                                            # publish alerts for spike
     indexer:
       broker:
         list: redpanda:9092                                                          # The kafka broker for logs. If this is not set, it will use the default broker
@@ -198,8 +198,8 @@ global:
       access:
         key: "token"
         token: "random"
-      host: "localhost"
-      url: "http://localhost:8080/"
+      host: "api-pulse.episilia.net"
+      url: "https://api-pulse.episilia.net:50051/"
 
   ops:
     log:
@@ -259,7 +259,7 @@ global:
           prefix: s3://
         useArn: false
         assumeRole: ""                                                                             # ARN role
-        roleArn: "arn:aws:iam::<redacted>:role/role-for-helm-chart"
+        roleArn: ""
         pathstyle:
           access: "false"
         https: "true"
@@ -452,8 +452,8 @@ global:
             seconds: "600"                           
     topic:
       index:
-        live: "stagefile-ondemand"                                                                                         # Topic for internal publish indexed files for ondemand
-        optimized: "optfile-ondemand"                                                                                      # Topic to publish file names post optimization for ondemand
+        live: "episilia-stagefile-ondemand"                                                                                         # Topic for internal publish indexed files for ondemand
+        optimized: "episilia-optfile-ondemand"                                                                                      # Topic to publish file names post optimization for ondemand
 
 
   #config for historic search engine
@@ -479,8 +479,8 @@ global:
         seconds: 60                                          # timeout for search while querying
     topic:
       index:
-        live: "stagefile-fixed"                              # Topic for internal publish indexed files for fixed search
-        optimized: "optfile-fixed"                           # Topic to publish file names post optimization for fixed search
+        live: "episilia-stagefile-fixed"                              # Topic for internal publish indexed files for fixed search
+        optimized: "episilia-optfile-fixed"                           # Topic to publish file names post optimization for fixed search
 
 
 # tail server configurations
