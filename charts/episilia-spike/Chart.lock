@@ -27,4 +27,4 @@ dependencies:
   repository: file://../redpanda
   version: 0.1.10
 digest: sha256:36a39a13b9e9ed22546eb23090b7dfadd8fc6b1e5f23aa67b08d74a6b7fe8b34
-generated: "2024-08-07T13:04:00.396011805+05:30"
+generated: "2024-08-27T11:07:59.088361564+05:30"
