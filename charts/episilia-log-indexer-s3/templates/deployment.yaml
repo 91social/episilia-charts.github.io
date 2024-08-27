@@ -30,16 +30,7 @@ spec:
         emptyDir: {}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                - episilia-log-indexer-s3
-            topologyKey: kubernetes.io/hostname
+
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
