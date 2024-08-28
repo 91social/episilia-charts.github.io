@@ -112,7 +112,7 @@ global:
       key: episilia 
     release:
       version: *release
-    arn: ""                                                                        # arn
+    arn: ""                                                                        # to annotate service account "optional"
 
   kafka:
     group: 
@@ -163,10 +163,26 @@ global:
       logs:
         topics: logs                                                                  # Topic from where logs are loaded.
       group: episilia-indexer-group                                                   # Kafka consumer-group for indexer
+      live:
+        block:
+          maxbytes:
+            mb: "10"
+          maxrecord:
+            count: "10000"
+          maxwait:
+            ms: "30000"
+        file:
+          maxblocks:
+            count: "100"
+          maxbytes:
+            mb: "100"
+          maxwait:
+            ms: "120000"  
       
     internal:
       broker:
-        list: redpanda:9092                                                            # The kafka broker for internal communication
+        list: redpanda:9092  
+                                                                # The kafka broker for internal communication
   
   spike:
     JVM_MAX_SIZE: "1536m"
@@ -203,7 +219,7 @@ global:
 
   ops:
     log:
-      debug: "off"
+      debug: "off"                                                                           # Enable to get debug logs in all the servers
       metrics:
         publish:
           interval:
