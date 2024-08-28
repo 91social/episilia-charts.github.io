@@ -72,12 +72,12 @@ data:
   indexer.logs.source: {{.Values.global.indexer.logs.source | quote }}
   indexer.alert.rules.file.url: {{.Values.global.indexer.alert.rules.file.url | quote }}
   indexer.alert.prometheus.gateway: {{.Values.global.indexer.alert.prometheus.gateway | quote }}
-  indexer.live.block.maxbytes.mb: {{.Values.global.kafka.indexer.live.block.maxbytes.mb | quote }}
-  indexer.live.block.maxrecord.count: {{.Values.global.kafka.indexer.live.block.maxrecord.count | quote }}
-  indexer.live.block.maxwait.ms: {{.Values.global.kafka.indexer.live.block.maxwait.ms | quote }}
-  indexer.live.file.maxblocks.count: {{.Values.global.kafka.indexer.live.file.maxblocks.count | quote }}
-  indexer.live.file.maxbytes.mb: {{.Values.global.kafka.indexer.live.file.maxbytes.mb | quote }}
-  indexer.live.file.maxwait.ms: {{.Values.global.kafka.indexer.live.file.maxwait.ms | quote }}
+  indexer.live.block.maxbytes.mb: {{.Values.global.indexer.live.block.maxbytes.mb | quote }}
+  indexer.live.block.maxrecord.count: {{.Values.global.indexer.live.block.maxrecord.count | quote }}
+  indexer.live.block.maxwait.ms: {{.Values.global.indexer.live.block.maxwait.ms | quote }}
+  indexer.live.file.maxblocks.count: {{.Values.global.indexer.live.file.maxblocks.count | quote }}
+  indexer.live.file.maxbytes.mb: {{.Values.global.indexer.live.file.maxbytes.mb | quote }}
+  indexer.live.file.maxwait.ms: {{.Values.global.indexer.live.file.maxwait.ms | quote }}
   kafka.group.spike: {{ .Values.global.kafka.group.spike | quote }}
   kafka.group.search: {{ .Values.global.kafka.group.search | quote }}
   kafka.group.cpanel: {{ .Values.global.kafka.group.cpanel | quote }}

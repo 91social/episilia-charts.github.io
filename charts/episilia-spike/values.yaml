@@ -79,7 +79,7 @@ redpanda:
   enabled: &redpanda false
 
 episilia-log-indexer:
-  enabled: true
+  enabled: false
 
 episilia-log-indexer-s3:
   enabled: false
@@ -163,21 +163,7 @@ global:
       logs:
         topics: logs                                                                  # Topic from where logs are loaded.
       group: episilia-indexer-group                                                   # Kafka consumer-group for indexer
-      live:
-        block:
-          maxbytes:
-            mb: "10"
-          maxrecord:
-            count: "10000"
-          maxwait:
-            ms: "30000"
-        file:
-          maxblocks:
-            count: "100"
-          maxbytes:
-            mb: "100"
-          maxwait:
-            ms: "120000"  
+      
       
     internal:
       broker:
@@ -372,6 +358,21 @@ global:
       block:
         maxbytes:
           mb: "10"
+    live:
+      block:
+        maxbytes:
+          mb: "10"
+        maxrecord:
+          count: "10000"
+        maxwait:
+          ms: "30000"
+      file:
+        maxblocks:
+          count: "100"
+        maxbytes:
+          mb: "100"
+        maxwait:
+          ms: "120000"  
 
 
   # Indexing s3 logs
